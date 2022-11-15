@@ -24,12 +24,9 @@ V-Angkringan adalah aplikasi mobile UMKM yang dikembangkan oleh Kelompok Vincent
 
 <p align="center">
   <a href="https://github.com/MaulanaAkbarF/AngkringanMbahSingo2#minimum-spesification">Minimum Spesification</a> •
-  <a href="https://github.com/MAULANAAKBARFIRDAUSYA-cmd/mafv8#installation">Installation</a> •
-  <a href="https://github.com/MAULANAAKBARFIRDAUSYA-cmd/mafv8#%EF%B8%8F-changing-language">Changing Language</a> •
-  <a href="https://github.com/MAULANAAKBARFIRDAUSYA-cmd/mafv8#%EF%B8%8F-editing-the-file">Editing the File</a> •
-  <a href="https://github.com/MAULANAAKBARFIRDAUSYA-cmd/mafv8#features">Features</a> •
-  <a href="https://github.com/MAULANAAKBARFIRDAUSYA-cmd/mafv8#thanks-to">Thanks to</a> •
-  <a href="https://github.com/MAULANAAKBARFIRDAUSYA-cmd/mafv8#license">License</a>
+  <a href="https://github.com/MaulanaAkbarF/AngkringanMbahSingo2#requirements">Requirements</a> •
+  <a href="https://github.com/MaulanaAkbarF/AngkringanMbahSingo2#installation">Installation</a> •
+  <a href="https://github.com/MaulanaAkbarF/AngkringanMbahSingo2#features">Features and License</a> •
 </p>
 
 <h4 align="center">
