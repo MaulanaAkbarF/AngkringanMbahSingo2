@@ -4,16 +4,6 @@
 # V-Angkringan
 
 V-Angkringan adalah aplikasi mobile yang dikembangkan oleh Kelompok Vincent A5
-Terdiri dari 6 Anggota :
-1. Ahmad Ansori (E41210577)
-2. Ahmad Edzam Prasetya (E41211384)
-3. Ahmad Firdaus Tarmidzi (E41211991)
-4.Maulana Akbar Firdausya (E41211342)
-5. Nova Nur Anggraini (E41211952)
-6. Rani Eka Tamara (E41210767)
-
-
-
 
 <p align="center">
   <a href="https://github.com/MAULANAAKBARFIRDAUSYA-cmd"><img title="Author" src="https://img.shields.io/badge/Author-Maulana Akbar F.-purple.svg?style=for-the-badge&logo=github" /></a>
