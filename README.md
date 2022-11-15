@@ -55,9 +55,9 @@ Download Project :
 * Penyimpanan SSD NVME Gen 4 dengan kapasitas minimal 256TB keatas
 
 # Requirements
-* [Java Software Development Kit](https://nodejs.org/en/)
-* [Java Runtime Environment](https://git-scm.com/downloads)
-* [Android API](https://www.gyan.dev/ffmpeg/builds/) (for Sticker GIF Command)
+* [Java Software Development Kit](https://www.oracle.com/java/technologies/downloads/#java8)
+* [Java Runtime Environment](https://download.cnet.com/Java-Runtime-Environment-JRE/3000-2213_4-10009607.html)
+* Android API  (dapat didownload di aplikasi Android Studio)
 * IDE dan Emulator
 
 # Android IDE & Emulator
@@ -70,7 +70,7 @@ Download Project :
 * Belum Tersedia
 
 # Installation
-## 📝 Cloning this Project
+## 📝 Download Projectnya
 ```bash
 > git clone https://github.com/MAULANAAKBARFIRDAUSYA-cmd/mafv8
 > cd mafv8
