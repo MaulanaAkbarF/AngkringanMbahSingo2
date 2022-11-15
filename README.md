@@ -70,41 +70,46 @@ Download Project :
 * Belum Tersedia
 
 # Installation
-## 📝 Download Projectnya
+## 📝 Download Project dan Ekstrak
 ```bash
-> git clone https://github.com/MAULANAAKBARFIRDAUSYA-cmd/mafv8
-> cd mafv8
+> Download filenya
+> Cari filenya dengan nama : AngkringanMbahSingo2-master.zip
+> Klik kanan dan pilih Exctract All...
+> Klik Exctract untuk memulai. Sekarang filenya telah berhasil diekstrak.
 ```
 
-## 🔍 Installing the Dependencies
+## 🔍 Import ke dalam Android Studio
 ```bash
-> npm i
-> npm install gify-cli -g
-```
-If you are using Termux and not yet install Node.js before, install it before entering the "npm i" command:
-```bash
-> pkg install nodejs
-```
-
-## 🆗 Running the BOT
-Regular node:
-```bash
-> npm start
+> Buka Android Studio
+> Klik pada opsi Open / pergi ke File > Open
+> Cari dimana lokasi file project yang telah diekstrak tadi
+> Klik pada gambar nama projectnya (buka pada folder nama projectnya)
+> Klik Trust Project dan pilih New Window
+> Tunggu hingga proses Build Gradle selesai (dan lakukan update jika ada perubahan) dan selesai
 ```
 
-PM2:
+## 🆗 Jalankan Programmnya
+Melalui Android Studio AVD:
+```bash
+> Pergo ke Tools > Device Manager
+> Jika belum mempunyai AVD, klik Create Device
+> Pilih tipe Ponsel yang akan digunakan, lalu klik Next
+> Tentukan API / Versi Android pada AVD nantinya, kamu harus mengunduhnya sesuai kebutuhan (tidak semua) untuk bisa menjalankan.
+> Tulis Nama AVD, dan jika dirasa sesuai bisa klik Finish.
+> Tekan simbol Run pada Action dan Aplikasi berhasil dijalankan.
+```
+
+Melalui External Emulator:
 ```bash
 > pm2 start index.js
 > pm2 monit
 ```
 
-PM2 with cron job (restart after 5 hours):
+Melalui Device Kamu:
 ```bash
 > pm2 start index.js --cron "* */5 * * *"
 > pm2 monit
 ```
-
-After that scan the QR code using your WhatsApp in your phone!
 
 ## ✍️ Editing the file
 Edit the required value in [config.json](https://github.com/MAULANAAKBARFIRDAUSYA-cmd/mafv8/blob/main/config.json).
@@ -152,7 +157,6 @@ If you want to unlock premium commands, please contact me~
 | Set bar color    |      Soon      |
 
 # Thanks to
-* [`open-wa/wa-automate-nodejs`](https://github.com/open-wa/wa-automate-nodejs)
 * [`MAF's Assistant V5`](https://github.com/MAULANAAKBARFIRDAUSYA-cmd/mafv5)
 
 # License
