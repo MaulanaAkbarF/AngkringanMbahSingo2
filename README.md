@@ -113,50 +113,22 @@ Melalui Device Kamu:
 > Pilih Ya pada pesan "Percaya Perangkat Ini" dan pilih Install pada pesan Instalasi.
 ```
 
-## ✍️ Editing the file
-Edit the required value in [config.json](https://github.com/MAULANAAKBARFIRDAUSYA-cmd/mafv8/blob/main/config.json).
-```json
-{
-    "ownerBot": "62852xxxxxxxx@c.us", 
-    "prefix": "$",
-    "uaOverride": "WhatsApp/2.2037.6 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36",
-    "token": "api-key",
-    "nao": "api-key",
-    "vhtear": "api-key",
-    "melodic": "administrator"
-}
-```
-
-`ownerBot`: your WhatsApp number.  
-`prefix`: bot's prefix.  
-`uaOverride`: your user agent.  
-`token`: API token. You can get it [here](https://api.i-tech.id) by creating an account. After that, set your server/host static IP in [here](https://api.i-tech.id/settings/profile).  
-`nao`: SauceNAO API token. You can get it [here](https://saucenao.com/user.php) by creating an account.  
-`vhtear`: VHTear API token. You can get it [here](https://api.vhtear.com/) by purchasing his API key.  
-`melodic`: MelodicXT API token. You can use `administrator` key.  
-
-## 🗣️ Changing language
-If you want to change the language, replace all `ind` function to `eng`.   
-Example:
-```js
-ind.wrongFormat()
-```
-To:
-```js
-eng.wrongFormat()
-```
 
 # Features
-If you want to unlock premium commands, please contact me~
+Karena aplikasi ini masih dalam tahap pengembangan, hanya beberapa fitur yang tersedia saat ini :
 
-|     Leveling     |  Availability  |
+|       Fitur      |  Ketersediaan  |
 | :--------------: | :------------: |
-| Leveling         |       ✔️       |
-| Set background   |       ✔️       |
-| Set status color |      Soon      |
-| Set level color  |      Soon      |
-| Set XP color     |      Soon      |
-| Set bar color    |      Soon      |
+| Login            |       ✔️       |
+| Register         |       ✔️       |
+
+|   Coming Soon    |  Ketersediaan  |
+| :--------------: | :------------: |
+| Homepage         |      Soon      |
+| List Menu Makanan|      Soon      |
+| List Menu Minuman|      Soon      |
+| Riwayat          |      Soon      |
+| Keranjang        |      Soon      |
 
 # Thanks to
 * [`MAF's Assistant V5`](https://github.com/MAULANAAKBARFIRDAUSYA-cmd/mafv5)
