@@ -6,20 +6,20 @@
 V-Angkringan adalah aplikasi mobile UMKM yang dikembangkan oleh Kelompok Vincent A5
 
 <p align="center">
-  <a href="https://github.com/MAULANAAKBARFIRDAUSYA-cmd"><img title="Author" src="https://img.shields.io/badge/Author-Maulana Akbar F.-purple.svg?style=for-the-badge&logo=github" /></a>
+  <a href="https://github.com/MaulanaAkbarF/AngkringanMbahSingo2"><img title="Author" src="https://img.shields.io/badge/Author-Maulana Akbar F.-purple.svg?style=for-the-badge&logo=github" /></a>
 </p>
 <p align="center">
-  <a href="https://github.com/MAULANAAKBARFIRDAUSYA-cmd/mafv8"><img title="RATING" src="https://img.shields.io/badge/BASIC RATING-45%20%2F%20100-green?colorA=%23555555&colorB=%23FC5E00&style=for-the-badge"></a>
+  <a href="https://github.com/MaulanaAkbarF/AngkringanMbahSingo2"><img title="RATING" src="https://img.shields.io/badge/BASIC RATING-45%20%2F%20100-green?colorA=%23555555&colorB=%23FC5E00&style=for-the-badge"></a>
 </p>
 <p align="center">
-  <a href="https://github.com/MAULANAAKBARFIRDAUSYA-cmd/mafv8"><img title="RATING" src="https://img.shields.io/badge/PREMIUM RATING-97%20%2F%20100-green?colorA=%23555555&colorB=%23017e40&style=for-the-badge"></a>
+  <a href="https://github.com/MaulanaAkbarF/AngkringanMbahSingo2"><img title="RATING" src="https://img.shields.io/badge/PREMIUM RATING-97%20%2F%20100-green?colorA=%23555555&colorB=%23017e40&style=for-the-badge"></a>
 </p>
 <p align="center">
-  <a href="https://github.com/MAULANAAKBARFIRDAUSYA-cmd/mafv8"><img title="Stars" src="https://img.shields.io/github/stars/MAULANAAKBARFIRDAUSYA-cmd/mafv8?color=red&style=flat-square" /></a>
-  <a href="https://github.com/MAULANAAKBARFIRDAUSYA-cmd/mafv8/network/members"><img title="Forks" src="https://img.shields.io/github/forks/MAULANAAKBARFIRDAUSYA-cmd/mafv8?color=red&style=flat-square" /></a>
-  <a href="https://github.com/MAULANAAKBARFIRDAUSYA-cmd/mafv8/watchers"><img title="Watching" src="https://img.shields.io/github/watchers/MAULANAAKBARFIRDAUSYA-cmd/mafv8?label=watchers&color=blue&style=flat-square" /></a>
+  <a href="https://github.com/MaulanaAkbarF/AngkringanMbahSingo2"><img title="Stars" src="https://img.shields.io/github/stars/MaulanaAkbarF/AngkringanMbahSingo2?color=red&style=flat-square" /></a>
+  <a href="https://github.com/MaulanaAkbarF/AngkringanMbahSingo2/network/members"><img title="Forks" src="https://img.shields.io/github/forks/MaulanaAkbarF/AngkringanMbahSingo2?color=red&style=flat-square" /></a>
+  <a href="https://github.com/MaulanaAkbarF/AngkringanMbahSingo2/watchers"><img title="Watching" src="https://img.shields.io/github/watchers/MaulanaAkbarF/AngkringanMbahSingo2?label=watchers&color=blue&style=flat-square" /></a>
   <img src="https://img.shields.io/badge/maintained%3F-yes-green.svg?style=flat" />
-  <img src="https://img.shields.io/github/repo-size/MAULANAAKBARFIRDAUSYA-cmd/mafv8" /> <br>
+  <img src="https://img.shields.io/github/repo-size/MaulanaAkbarF/AngkringanMbahSingo2" /> <br>
 </p>
 
 <p align="center">
