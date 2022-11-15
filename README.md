@@ -34,11 +34,15 @@ V-Angkringan adalah aplikasi mobile UMKM yang dikembangkan oleh Kelompok Vincent
 
 <h4 align="center">
 <details>
- <summary>Contact Me!</summary></a></p>
+ <summary>Contact the Developers!</summary></a></p>
  
 [GitHub](https://github.com/MAULANAAKBARFIRDAUSYA-cmd)</a></p>
-[My WhatsApp](https://wa.me/+6285236167349)</a></p>
-[My WhatsApp BOT](https://wa.me/+6289504990855)</a></p>
+[WhatsApp - Ahmad Ansori](https://wa.me/+6288805517338)</a></p>
+[WhatsApp - Ahmad Edzam Prasetya](https://wa.me/+6285731318313)</a></p>
+[WhatsApp - Ahmad Firdaus Tarmidzi](https://wa.me/+6282233814533)</a></p>
+[WhatsApp - Maulana Akbar Firdausya](https://wa.me/+6285236167349)</a></p>
+[WhatsApp - Nova Nur Anggraini](https://wa.me/+6285607649302)</a></p>
+[WhatsApp - Rani Eka Tamara](https://wa.me/+6285234153747)</a></p>
 [Telegram](https://t.me/maulanaakbarf)</a></p>
 </h4>
 
