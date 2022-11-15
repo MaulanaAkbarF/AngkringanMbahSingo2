@@ -1,9 +1,17 @@
 <div align="center">
-<img src="https://images3.alphacoders.com/128/1288825.png" alt="MAF's Assistant V8" width="1920" />
+<img src="https://images3.alphacoders.com/128/1288825.png" alt="V Angkringan" width="1920" />
 
-# MAF's Assistant V8
+# V-Angkringan
 
- MAF's Assistant is a multipurpose WhatsApp BOT using wa-automate-nodejs library!
+V-Angkringan adalah aplikasi mobile yang dikembangkan oleh Kelompok Vincent A5
+Terdiri dari 6 Anggota :
+1. Ahmad Ansori (E41210577)
+2. Ahmad Edzam Prasetya (E41211384)
+3. Ahmad Firdaus Tarmidzi (E41211991)
+4.Maulana Akbar Firdausya (E41211342)
+5. Nova Nur Anggraini (E41211952)
+6. Rani Eka Tamara (E41210767)
+
 
 
 
