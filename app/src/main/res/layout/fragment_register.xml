@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity.MainLogin">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <androidx.cardview.widget.CardView
+                android:id="@+id/frxcardlayouttop"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-50dp"
+                android:backgroundTint="@color/dark_blue"
+                app:cardCornerRadius="50dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:layout_width="270dp"
+                    android:layout_height="120dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginBottom="20dp"
+                    android:src="@drawable/logovincentputihpanjang" />
+            </androidx.cardview.widget.CardView>
+            <LinearLayout
+                android:id="@+id/frxlinearinput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/lp.ukuranpaddinginput"
+                android:paddingRight="@dimen/lp.ukuranpaddinginput"
+                app:layout_constraintBottom_toTopOf="@id/frxlinearbutton"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/frxcardlayouttop">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="20dp"
+                    android:fontFamily="@font/be_vietnam_extrabold"
+                    android:text="Buat Akun Baru"
+                    android:textColor="@color/dark_blue"
+                    android:textSize="@dimen/lp.ukuranfonttombol"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    app:boxBackgroundMode="outline"
+                    app:boxStrokeColor="@color/dark_blue"
+                    app:passwordToggleTint="@color/teal_200">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/rpxnama"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/lp.ukuranmarginbawahinput"
+                        android:drawableLeft="@drawable/usernameicon"
+                        android:drawablePadding="10dp"
+                        android:hint="Nama Lengkap"
+                        android:inputType="text"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/dark_blue"
+                        android:textSize="@dimen/lp.ukuranteksinput" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    app:boxBackgroundMode="outline"
+                    app:boxStrokeColor="@color/dark_blue"
+                    app:passwordToggleTint="@color/teal_200">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/rpxalamat"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/lp.ukuranmarginbawahinput"
+                        android:drawableLeft="@drawable/usernameicon"
+                        android:drawablePadding="10dp"
+                        android:hint="Alamat"
+                        android:inputType="text"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/dark_blue"
+                        android:textSize="@dimen/lp.ukuranteksinput" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    app:boxBackgroundMode="outline"
+                    app:boxStrokeColor="@color/dark_blue"
+                    app:passwordToggleTint="@color/teal_200">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/rpxnohp"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/lp.ukuranmarginbawahinput"
+                        android:drawableLeft="@drawable/usernameicon"
+                        android:drawablePadding="10dp"
+                        android:hint="Nomor Handphone"
+                        android:inputType="number"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/dark_blue"
+                        android:textSize="@dimen/lp.ukuranteksinput" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    app:boxBackgroundMode="outline"
+                    app:boxStrokeColor="@color/dark_blue"
+                    app:passwordToggleTint="@color/teal_200">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/rpxusername"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/lp.ukuranmarginbawahinput"
+                        android:drawableLeft="@drawable/usernameicon"
+                        android:drawablePadding="10dp"
+                        android:hint="Username"
+                        android:inputType="textEmailAddress"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/dark_blue"
+                        android:textSize="@dimen/lp.ukuranteksinput" />
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:passwordToggleEnabled="true"
+                    android:layout_margin="10dp"
+                    app:passwordToggleTint="@color/teal_200">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/rpxpassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/lp.ukuranmarginbawahinput"
+                        android:drawablePadding="10dp"
+                        android:drawableLeft="@drawable/passwordicon"
+                        android:hint="Password"
+                        android:inputType="textPassword"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/dark_blue"
+                        android:textSize="@dimen/lp.ukuranteksinput" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp">
+                <LinearLayout
+                    android:id="@+id/frxlinearbutton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <Button
+                        android:id="@+id/frxbtndaftar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/dark_blue"
+                        android:onClick="rpxDaftar"
+                        android:paddingLeft="@dimen/lp.panjangtombol"
+                        android:paddingTop="@dimen/lp.lebartombol"
+                        android:paddingRight="@dimen/lp.panjangtombol"
+                        android:paddingBottom="@dimen/lp.lebartombol"
+                        android:text="DAFTAR"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/lp.ukuranfonttombol"
+                        android:textStyle="bold"
+                        app:cornerRadius="50dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="30dp"
+                        android:text="Anda sudah punya akun?"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/lp.ukuranfontdaftar" />
+
+                    <TextView
+                        android:id="@+id/frxtxtLogin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="10dp"
+                        android:text="Login Sekarang"
+                        android:textColor="@color/dark_blue"
+                        android:textSize="@dimen/lp.ukuranfontdaftar"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

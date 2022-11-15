@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity.MainLogin">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:id="@+id/flxlinearimage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="60dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/logovincentbiru"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/flxlinearinput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/flxlinearimage"
+                app:layout_constraintBottom_toTopOf="@id/flxlinearbutton"
+                android:layout_marginTop="50dp"
+                android:layout_marginBottom="50dp"
+                android:paddingLeft="@dimen/lp.ukuranpaddinginput"
+                android:paddingRight="@dimen/lp.ukuranpaddinginput"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/be_vietnam_extrabold"
+                    android:text="Masukkan Data Anda"
+                    android:textColor="@color/dark_blue"
+                    android:textSize="@dimen/lp.ukuranfonttombol" />
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    app:boxBackgroundMode="outline"
+                    app:boxStrokeColor="@color/dark_blue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView"
+                    app:passwordToggleTint="@color/teal_200">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/lpxusername"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/lp.ukuranmarginbawahinput"
+                        android:drawableLeft="@drawable/usernameicon"
+                        android:drawablePadding="10dp"
+                        android:hint="Username"
+                        android:inputType="textEmailAddress"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/dark_blue"
+                        android:textSize="@dimen/lp.ukuranteksinput" />
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    app:passwordToggleEnabled="true"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView"
+                    app:passwordToggleTint="@color/teal_200">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/lpxpassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/lp.ukuranmarginbawahinput"
+                        android:drawableLeft="@drawable/passwordicon"
+                        android:drawablePadding="10dp"
+                        android:hint="Password"
+                        android:inputType="textPassword"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/dark_blue"
+                        android:textSize="@dimen/lp.ukuranteksinput" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/flxlinearbutton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <Button
+                    android:id="@+id/lpxbtnMasuk"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/dark_blue"
+                    android:paddingTop="@dimen/lp.lebartombol"
+                    android:paddingBottom="@dimen/lp.lebartombol"
+                    android:paddingRight="@dimen/lp.panjangtombol"
+                    android:paddingLeft="@dimen/lp.panjangtombol"
+                    android:text="MASUK"
+                    android:textSize="@dimen/lp.ukuranfonttombol"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    app:cornerRadius="50dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="30dp"
+                    android:text="Anda belum punya akun?"
+                    android:textSize="@dimen/lp.ukuranfontdaftar"
+                    android:textColor="@color/black"/>
+
+                <TextView
+                    android:id="@+id/flxtxtDaftar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="10dp"
+                    android:text="Daftar Gratis!"
+                    android:textColor="@color/dark_blue"
+                    android:textSize="@dimen/lp.ukuranfontdaftar"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</FrameLayout>

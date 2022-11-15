@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Pengaturan Ukuran pada WelcomePage-->
+    <dimen name="wp.ukuranfontwelcome">24sp</dimen>
+    <dimen name="wp.ukuranfontmasuk">20sp</dimen>
+    <dimen name="wp.ukuranfontdaftar">16sp</dimen>
+    <dimen name="wp.panjangtombol">50dp</dimen>
+    <dimen name="wp.lebartombol">10dp</dimen>
+
+    <!--Pengaturan Ukuran pada LoginPage dan RegisterPage-->
+    <dimen name="lp.ukuranpaddinginput">20dp</dimen>
+    <dimen name="lp.ukuranmarginbawahinput">60dp</dimen>
+    <dimen name="lp.ukuranteksinput">16sp</dimen>
+    <dimen name="lp.ukuranfonttombol">20sp</dimen>
+    <dimen name="lp.ukuranfontdaftar">16sp</dimen>
+    <dimen name="lp.panjangtombol">50dp</dimen>
+    <dimen name="lp.lebartombol">10dp</dimen>
+
+    <!--Pengaturan Ukuran pada HomePage-->
+    <dimen name="hp.ukuranteksatas">16sp</dimen>
+    <dimen name="hp.ukuraninputndankeranjang">40dp</dimen>
+    <dimen name="hp.ukuranteksjudul">16sp</dimen>
+    <dimen name="hp.marginlayoutjudul">10dp</dimen>
+    <dimen name="hp.marginteksjudul">15dp</dimen>
+
+    <!--Pengaturan Ukuran pada HomePage_RecycleView-->
+    <dimen name="hpr.ukurangambar">115dp</dimen>
+    <dimen name="hpr.panjanglayoutjudul">53dp</dimen>
+    <dimen name="hpr.panjanglayoutharga">40dp</dimen>
+    <dimen name="hpr.ukuranjudul">12sp</dimen>
+    <dimen name="hpr.ukuranharga">14sp</dimen>
+    <dimen name="hpr.ukurantekstombol">12sp</dimen>
+    <dimen name="hpr.suduttombol">5dp</dimen>
+</resources>

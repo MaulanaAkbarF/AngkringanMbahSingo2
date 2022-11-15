@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/hfxmenu1"
+        android:title="Beranda"
+        android:icon="@drawable/bucketicon"/>
+    <item android:id="@+id/hfxmenu2"
+        android:title="Makanan"
+        android:icon="@drawable/bucketicon"/>
+    <item android:id="@+id/hfxmenu3"
+        android:title="Minuman"
+        android:icon="@drawable/bucketicon"/>
+    <item android:id="@+id/hfxmenu4"
+        android:title="Riwayat"
+        android:icon="@drawable/bucketicon"/>
+    <item android:id="@+id/hfxmenu5"
+        android:title="Profil"
+        android:icon="@drawable/bucketicon"/>
+</menu>
