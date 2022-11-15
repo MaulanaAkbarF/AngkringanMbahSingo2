@@ -44,24 +44,30 @@ V-Angkringan adalah aplikasi mobile yang dikembangkan oleh Kelompok Vincent A5
 
 </div>
 
+Download Project :
+* [Direct Link Download](https://github.com/MaulanaAkbarF/AngkringanMbahSingo2/archive/refs/heads/master.zip) (Zip File)
+
+# Minimum Spesification
+* Intel Xeon Platinum / AMD Ryzen Threadripper / AMD Epyc
+* RAM Minimal DDR4 dengan kapasitas 8TB keatas
+* Kartu Grafis RTX 4090 keatas
+* Windows 12 Pro
+* Penyimpanan SSD NVME Gen 4 dengan kapasitas minimal 256TB keatas
+
 # Requirements
-* [Node.js](https://nodejs.org/en/)
-* [Git](https://git-scm.com/downloads)
-* [FFmpeg - All Available Version](https://www.gyan.dev/ffmpeg/builds/) (for Sticker GIF Command)
-* [libwebp](https://developers.google.com/speed/webp/download) (for sticker watermarks)
+* [Java Software Development Kit](https://nodejs.org/en/)
+* [Java Runtime Environment](https://git-scm.com/downloads)
+* [Android API](https://www.gyan.dev/ffmpeg/builds/) (for Sticker GIF Command)
+* IDE dan Emulator
 
-Download all Requirements :
-* [All Requirements - Direct Link Download](https://drive.google.com/file/d/1hgU4iMXYd_8cwuYsWHMNoG9AweH40Eys/view) (Google Drive)
+# Android IDE & Emulator
 
-Any text editor
-
-[ PC ] (it only takes one application to run it)
-* [VS Code](https://code.visualstudio.com/)
-* Windows PowerShell / Windows PowerShell ISE
-* Command Prompt
+[ PC ]
+* [Android Studio](https://developer.android.com/studio)
+* External Emulator/Android Virtual Device (AVD) di Android Studio Emulator/Ponsel Kamu sebagai Emulator
 
 [ Android ]
-* [Termux](https://play.google.com/store/apps/details?id=com.termux)
+* Belum Tersedia
 
 # Installation
 ## 📝 Cloning this Project
