@@ -1,5 +1,5 @@
 <div align="center">
-<img src="https://wall.alphacoders.com/big.php?i=1288810" alt="MAF's Assistant V8" width="528" />
+<img src="https://images3.alphacoders.com/128/1288810.png" alt="MAF's Assistant V8" width="528" />
 
 # MAF's Assistant V8
 
