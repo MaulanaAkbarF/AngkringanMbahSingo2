@@ -126,7 +126,7 @@ Karena aplikasi ini masih dalam tahap pengembangan, hanya beberapa fitur yang te
 
 Fitur yang masih dikembangkan :
 
-|   Coming Soon    |  Ketersediaan  |
+|      Fitur       |  Ketersediaan  |
 | :--------------: | :------------: |
 | Homepage         |      Soon      |
 | List Menu Makanan|      Soon      |
