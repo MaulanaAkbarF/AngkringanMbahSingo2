@@ -9,9 +9,6 @@ V-Angkringan adalah aplikasi mobile yang dikembangkan oleh Kelompok Vincent A5
   <a href="https://github.com/MAULANAAKBARFIRDAUSYA-cmd"><img title="Author" src="https://img.shields.io/badge/Author-Maulana Akbar F.-purple.svg?style=for-the-badge&logo=github" /></a>
 </p>
 <p align="center">
-<a href="https://github.com/MAULANAAKBARFIRDAUSYA-cmd/mafv8"><img title="COMMANDS" src="https://img.shields.io/badge/TOTAL COMMANDS-118 %5B46 FREE%5D-green?colorA=%23555555&colorB=%231A00A7&style=for-the-badge"></a>
-</p>
-<p align="center">
   <a href="https://github.com/MAULANAAKBARFIRDAUSYA-cmd/mafv8"><img title="RATING" src="https://img.shields.io/badge/BASIC RATING-45%20%2F%20100-green?colorA=%23555555&colorB=%23FC5E00&style=for-the-badge"></a>
 </p>
 <p align="center">
@@ -21,9 +18,6 @@ V-Angkringan adalah aplikasi mobile yang dikembangkan oleh Kelompok Vincent A5
   <a href="https://github.com/MAULANAAKBARFIRDAUSYA-cmd/mafv8"><img title="Stars" src="https://img.shields.io/github/stars/MAULANAAKBARFIRDAUSYA-cmd/mafv8?color=red&style=flat-square" /></a>
   <a href="https://github.com/MAULANAAKBARFIRDAUSYA-cmd/mafv8/network/members"><img title="Forks" src="https://img.shields.io/github/forks/MAULANAAKBARFIRDAUSYA-cmd/mafv8?color=red&style=flat-square" /></a>
   <a href="https://github.com/MAULANAAKBARFIRDAUSYA-cmd/mafv8/watchers"><img title="Watching" src="https://img.shields.io/github/watchers/MAULANAAKBARFIRDAUSYA-cmd/mafv8?label=watchers&color=blue&style=flat-square" /></a>
-  <a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FArugaZ%2Fwhatsapp-bot&count_bg=%2379C83D&title_bg=%23555555&icon=probot.svg&icon_color=%2300FF6D&title=hits&edge_flat=false"/></a><br>
-  <a href="https://www.npmjs.com/package/@open-wa/wa-automate"><img src="https://img.shields.io/npm/v/@open-wa/wa-automate.svg?color=green" /></a>
-  <img src="https://img.shields.io/node/v/@open-wa/wa-automate" />
   <img src="https://img.shields.io/badge/maintained%3F-yes-green.svg?style=flat" />
   <img src="https://img.shields.io/github/repo-size/MAULANAAKBARFIRDAUSYA-cmd/mafv8" /> <br>
 </p>
