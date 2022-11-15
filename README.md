@@ -122,6 +122,9 @@ Karena aplikasi ini masih dalam tahap pengembangan, hanya beberapa fitur yang te
 | Login            |       ✔️       |
 | Register         |       ✔️       |
 
+
+Fitur yang masih dikembangkan :
+
 |   Coming Soon    |  Ketersediaan  |
 | :--------------: | :------------: |
 | Homepage         |      Soon      |
