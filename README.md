@@ -128,11 +128,11 @@ Fitur yang masih dikembangkan :
 
 |      Fitur       |  Ketersediaan  |
 | :--------------: | :------------: |
-| Homepage         |      Soon      |
-| List Menu Makanan|      Soon      |
-| List Menu Minuman|      Soon      |
-| Riwayat          |      Soon      |
-| Keranjang        |      Soon      |
+| Homepage         |  Belum Selesai |
+| List Menu Makanan|  Belum Selesai |
+| List Menu Minuman|  Belum Selesai |
+| Riwayat          |  Belum Selesai |
+| Keranjang        |  Belum Selesai |
 
 # Thanks to
 * [`Maulana Akbar Firdausya`](https://github.com/MaulanaAkbarF/AngkringanMbahSingo2)
