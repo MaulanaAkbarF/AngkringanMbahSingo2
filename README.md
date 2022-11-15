@@ -134,7 +134,7 @@ Fitur yang masih dikembangkan :
 | Keranjang        |      Soon      |
 
 # Thanks to
-* [`MAF's Assistant V5`](https://github.com/MAULANAAKBARFIRDAUSYA-cmd/mafv5)
+* [`Maulana Akbar Firdausya`](https://github.com/MaulanaAkbarF/AngkringanMbahSingo2)
 
 # License
 Released under the MIT License.
