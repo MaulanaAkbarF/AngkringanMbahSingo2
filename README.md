@@ -101,14 +101,16 @@ Melalui Android Studio AVD:
 
 Melalui External Emulator:
 ```bash
-> pm2 start index.js
-> pm2 monit
+> YO NDAK TAU KOK TANYA SAYA
 ```
 
 Melalui Device Kamu:
 ```bash
-> pm2 start index.js --cron "* */5 * * *"
-> pm2 monit
+> Pergi ke Setting dan temukan Versi Pita Basis / Versi namaUI kamu dan tekan sebanyak 5x untuk mengakfikan opsi pengembang/developer mode.
+> Pergi ke Setelan Tambahan > Opsi Pengembang/Developer Mode > Aktifkan Debugging USB dan Install via USB
+> Hubungkan Device kamu dengan Komputer/Laptop. Pastikan di Android Studio muncul nama/ID Device kamu.
+> Jalankan Programnya, maka akan muncul notifikasi di Device kamu.
+> Pilih Ya pada pesan "Percaya Perangkat Ini" dan pilih Install pada pesan Instalasi.
 ```
 
 ## ✍️ Editing the file
