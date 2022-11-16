@@ -1,4 +1,4 @@
-package vincent.angkringanmbahsingo2.Dependencies;
+package vincent.angkringanmbahsingo2.RecycleviewAdapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import vincent.angkringanmbahsingo2.RecycleviewModel.HomeRvModel;
 import vincent.angkringanmbahsingo2.R;
 
 public class HomeRvAdapter extends RecyclerView.Adapter<HomeRvAdapter.ViewHolder> {
@@ -41,11 +42,6 @@ public class HomeRvAdapter extends RecyclerView.Adapter<HomeRvAdapter.ViewHolder
     @Override
     public int getItemCount() {
         return listDataAdapter.size();
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        return position % 3;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{

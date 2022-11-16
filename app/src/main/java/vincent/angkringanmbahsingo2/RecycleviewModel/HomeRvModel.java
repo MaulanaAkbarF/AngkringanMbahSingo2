@@ -1,4 +1,4 @@
-package vincent.angkringanmbahsingo2.Dependencies;
+package vincent.angkringanmbahsingo2.RecycleviewModel;
 
 public class HomeRvModel {
     private String judul;

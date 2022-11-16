@@ -32,7 +32,7 @@ public class LoginFragment extends Fragment {
     private String KEY_NAME = "NAMA";
 
     // Digunakan ketika Login menggunakan fungai cekLogin()
-    String dataUser = "daus";
+    String dataUser = "";
     String dataPassword = "";
 
     @Override

@@ -89,10 +89,10 @@
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            android:layout_marginTop="@dimen/hp.marginteksjudul"
-                            android:layout_marginBottom="@dimen/hp.marginteksjudul"
+                            android:layout_marginTop="@dimen/fh.margintekssubjudul"
+                            android:layout_marginBottom="@dimen/fh.margintekssubjudul"
                             android:text="Makanan"
-                            android:textSize="@dimen/hp.ukuranteksjudul"
+                            android:textSize="@dimen/fh.ukurantekssubjudul"
                             android:textStyle="bold"/>
                         <TextView
                             android:layout_width="wrap_content"
@@ -100,10 +100,10 @@
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            android:layout_marginTop="@dimen/hp.marginteksjudul"
-                            android:layout_marginBottom="@dimen/hp.marginteksjudul"
+                            android:layout_marginTop="@dimen/fh.margintekssubjudul"
+                            android:layout_marginBottom="@dimen/fh.margintekssubjudul"
                             android:text="Lebih banyak >"
-                            android:textSize="@dimen/hp.ukuranteksjudul"
+                            android:textSize="@dimen/fh.ukurantekssubjudul"
                             android:textColor="@color/light_blue"
                             android:textStyle="bold"/>
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -129,10 +129,10 @@
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            android:layout_marginTop="@dimen/hp.marginteksjudul"
-                            android:layout_marginBottom="@dimen/hp.marginteksjudul"
+                            android:layout_marginTop="@dimen/fh.margintekssubjudul"
+                            android:layout_marginBottom="@dimen/fh.margintekssubjudul"
                             android:text="Minuman"
-                            android:textSize="@dimen/hp.ukuranteksjudul"
+                            android:textSize="@dimen/fh.ukurantekssubjudul"
                             android:textStyle="bold"/>
                         <TextView
                             android:layout_width="wrap_content"
@@ -140,10 +140,10 @@
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            android:layout_marginTop="@dimen/hp.marginteksjudul"
-                            android:layout_marginBottom="@dimen/hp.marginteksjudul"
+                            android:layout_marginTop="@dimen/fh.margintekssubjudul"
+                            android:layout_marginBottom="@dimen/fh.margintekssubjudul"
                             android:text="Lebih banyak >"
-                            android:textSize="@dimen/hp.ukuranteksjudul"
+                            android:textSize="@dimen/fh.ukurantekssubjudul"
                             android:textColor="@color/light_blue"
                             android:textStyle="bold"/>
                     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -18,10 +18,12 @@
 
     <!--Pengaturan Ukuran pada HomePage-->
     <dimen name="hp.ukuranteksatas">16sp</dimen>
-    <dimen name="hp.ukuraninputndankeranjang">40dp</dimen>
-    <dimen name="hp.ukuranteksjudul">16sp</dimen>
-    <dimen name="hp.marginlayoutjudul">10dp</dimen>
-    <dimen name="hp.marginteksjudul">15dp</dimen>
+    <dimen name="fh.ukuranteksjudul">20sp</dimen>
+    <dimen name="fh.ukuraninput">10dp</dimen>
+    <dimen name="fh.margininput">5dp</dimen>
+    <dimen name="fh.suduttekssubjudul">10dp</dimen>
+    <dimen name="fh.margintekssubjudul">12dp</dimen>
+    <dimen name="fh.ukurantekssubjudul">18sp</dimen>
 
     <!--Pengaturan Ukuran pada HomePage_RecycleView-->
     <dimen name="hpr.ukurangambar">115dp</dimen>
@@ -31,4 +33,8 @@
     <dimen name="hpr.ukuranharga">14sp</dimen>
     <dimen name="hpr.ukurantekstombol">12sp</dimen>
     <dimen name="hpr.suduttombol">5dp</dimen>
+
+    <dimen name="hp.ukuraninputndankeranjang">25dp</dimen>
+    <dimen name="hp.marginlayoutjudul">25dp</dimen>
+
 </resources>
