@@ -17,7 +17,8 @@
     <dimen name="lp.lebartombol">10dp</dimen>
 
     <!--Pengaturan Ukuran pada HomePage-->
-    <dimen name="hp.ukuranteksatas">16sp</dimen>
+    <dimen name="hp.ukuranteksatas">20sp</dimen>
+    <dimen name="hp.ukuranteksinfo">16sp</dimen>
     <dimen name="fh.ukuranteksjudul">20sp</dimen>
     <dimen name="fh.ukuraninput">10dp</dimen>
     <dimen name="fh.margininput">5dp</dimen>

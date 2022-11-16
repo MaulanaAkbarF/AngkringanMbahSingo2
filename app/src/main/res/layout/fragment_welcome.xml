@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="@color/dark_blue"
     tools:context=".MainActivity.MainLogin">
-
     <LinearLayout
         android:id="@+id/fwxlinearjudul"
         android:layout_width="wrap_content"
