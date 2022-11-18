@@ -3,6 +3,7 @@ package vincent.angkringanmbahsingo2.RecycleviewAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -37,6 +38,7 @@ public class HomeRvAdapter extends RecyclerView.Adapter<HomeRvAdapter.ViewHolder
     public void onBindViewHolder(@NonNull HomeRvAdapter.ViewHolder holder, int position) {
         holder.judul.setText(listDataAdapter.get(position).getJudul());
         holder.harga.setText(String.valueOf(listDataAdapter.get(position).getHarga()));
+        holder.gambar.setImageResource(listDataAdapter.get(position).getGambar());
     }
 
     @Override
@@ -46,10 +48,12 @@ public class HomeRvAdapter extends RecyclerView.Adapter<HomeRvAdapter.ViewHolder
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView judul , harga;
+        ImageView gambar;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             judul = itemView.findViewById(R.id.hpxjudul);
             harga = itemView.findViewById(R.id.hpxharga);
+            gambar = itemView.findViewById(R.id.hpximage);
             itemView.setOnClickListener(this);
         }
 

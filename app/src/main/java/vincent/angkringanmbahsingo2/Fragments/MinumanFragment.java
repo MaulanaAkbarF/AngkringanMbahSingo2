@@ -34,8 +34,10 @@ public class MinumanFragment extends Fragment {
         if(listDataDaftar == null){
             listDataDaftar = new ArrayList<>();
         }
-        listDataDaftar.add(new HomeRvModel("Es Teh",2500));
-        listDataDaftar.add(new HomeRvModel("Es Teh Manis",3000));
+        listDataDaftar.add(new HomeRvModel("Es Teh",2500, R.drawable.imagedrink));
+        listDataDaftar.add(new HomeRvModel("Es Teh Manis",3000, R.drawable.imagedrink2));
+        listDataDaftar.add(new HomeRvModel("Nasi Pecel",3000, R.drawable.imagefood2));
+        listDataDaftar.add(new HomeRvModel("Nasi Goreng Spesial",3000, R.drawable.imagefood));
     }
 
     @Override
@@ -46,7 +48,7 @@ public class MinumanFragment extends Fragment {
         recyclerView = view.findViewById(R.id.fminxrecycleminuman);
 
         // List Data pada Spinner
-        String[] jenis = {"Makanan", "Cemilan", "Frozen Food", "Lainnya"};
+        String[] jenis = {"Minuman Panas", "Minuman Dingin", "Minuman Sachet", "Herbal", "Lainnya"};
         ArrayList<String> arr = new ArrayList<>(Arrays.asList(jenis));
         ArrayAdapter<String> arrAdapt = new ArrayAdapter<>(getActivity(), R.layout.spinner_text, arr);
         spinner.setAdapter(arrAdapt);

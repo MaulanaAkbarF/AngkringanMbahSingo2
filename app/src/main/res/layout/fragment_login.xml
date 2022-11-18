@@ -69,6 +69,7 @@
                         android:drawableLeft="@drawable/usernameicon"
                         android:drawablePadding="10dp"
                         android:hint="Username"
+                        android:maxLength="20"
                         android:inputType="textEmailAddress"
                         android:textColor="@color/black"
                         android:textColorHint="@color/dark_blue"
@@ -84,15 +85,16 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/imageView"
-                    app:passwordToggleTint="@color/teal_200">
+                    app:passwordToggleTint="@color/dark_blue">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/lpxpassword"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/lp.ukuranmarginbawahinput"
-                        android:drawableLeft="@drawable/passwordicon"
+                        android:drawableStart="@drawable/passwordicon"
                         android:drawablePadding="10dp"
                         android:hint="Password"
+                        android:maxLength="20"
                         android:inputType="textPassword"
                         android:textColor="@color/black"
                         android:textColorHint="@color/dark_blue"

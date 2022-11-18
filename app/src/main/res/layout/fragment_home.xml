@@ -163,7 +163,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
                         <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/hpxrvmakanan"
+                            android:id="@+id/hpxrvpromo"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
@@ -187,29 +187,17 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             android:layout_marginTop="@dimen/fh.margintekssubjudul"
                             android:layout_marginBottom="@dimen/fh.margintekssubjudul"
-                            android:text="Minuman"
+                            android:text="Terakhir dibeli"
                             android:textSize="@dimen/fh.ukurantekssubjudul"
-                            android:textStyle="bold"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            android:layout_marginTop="@dimen/fh.margintekssubjudul"
-                            android:layout_marginBottom="@dimen/fh.margintekssubjudul"
-                            android:text="Lebih banyak >"
-                            android:textSize="@dimen/fh.ukurantekssubjudul"
-                            android:textColor="@color/light_blue"
                             android:textStyle="bold"/>
                     </androidx.constraintlayout.widget.ConstraintLayout>
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/hpxrvminuman"
+                        android:id="@+id/hpxrvterakhir"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        tools:listitem="@layout/homepage_rvminuman"/>
+                        tools:listitem="@layout/homepage_rvterakhir"/>
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>

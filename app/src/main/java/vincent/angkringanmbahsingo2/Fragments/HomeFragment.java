@@ -3,6 +3,7 @@ package vincent.angkringanmbahsingo2.Fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,16 +12,38 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationBarView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import vincent.angkringanmbahsingo2.R;
+import vincent.angkringanmbahsingo2.RecycleviewAdapter.HomeRvAdapter;
+import vincent.angkringanmbahsingo2.RecycleviewModel.HomeRvModel;
 
 public class HomeFragment extends Fragment {
 
     Animation easeOutSineTop, easeOutQuadLeft;
     LinearLayout judul;
     ScrollView rvdatalayout;
+
+    RecyclerView recyclerView1, recyclerView2;
+    List<HomeRvModel> listDataDaftar;
+    HomeRvAdapter adapterItemDaftar;
+    HomeRvAdapter.AdapterItemListener adapterItemListenerInterface;
+
+    // List Data pada Recycle View
+    void isiDataTerakhir(){
+        if(listDataDaftar == null){
+            listDataDaftar = new ArrayList<>();
+        }
+        listDataDaftar.add(new HomeRvModel("Pecel",8000, R.drawable.imagefood2));
+        listDataDaftar.add(new HomeRvModel("Pecel Lele",12000, R.drawable.imagefood));
+        listDataDaftar.add(new HomeRvModel("Rice with Peanut Sauce",80000, R.drawable.imagefood2));
+        listDataDaftar.add(new HomeRvModel("Rice with Peanut Sauce and Fried Catfish",120000, R.drawable.imagefood2));
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -36,6 +59,21 @@ public class HomeFragment extends Fragment {
 
         judul.startAnimation(easeOutSineTop);
         rvdatalayout.startAnimation(easeOutQuadLeft);
+
+        // RECYCLE TERAKHIR DIBELI ------------------
+        recyclerView2 = view.findViewById(R.id.hpxrvterakhir);
+
+        // Memanggil List Data pada Recycle View
+        isiDataTerakhir();
+
+        adapterItemListenerInterface = new HomeRvAdapter.AdapterItemListener() {
+            @Override
+            public void clickItemListener(int adapterPosition) {
+                Toast.makeText(getActivity(),listDataDaftar.get(adapterPosition).getJudul(), Toast.LENGTH_SHORT).show();
+            }
+        };
+        adapterItemDaftar = new HomeRvAdapter(listDataDaftar,adapterItemListenerInterface);
+        recyclerView2.setAdapter(adapterItemDaftar);
 
         return view;
     }

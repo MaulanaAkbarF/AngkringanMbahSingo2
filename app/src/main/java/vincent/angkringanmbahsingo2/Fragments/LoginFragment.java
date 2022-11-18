@@ -104,10 +104,9 @@ public class LoginFragment extends Fragment {
         }else if (password.getText().toString().equals("") && password.getText().toString().isEmpty()){
             password.setError("Password belum diisi!");
         }else if (res == true){
-            Toast.makeText(getActivity(), "Login Berhasil", Toast.LENGTH_SHORT).show();
-            Intent i = new Intent(getActivity(), MainHome.class);
-            i.putExtra(KEY_NAME, nama);
-            startActivity(i);
+            FragmentTransaction fragtr = getFragmentManager().beginTransaction();
+            fragtr.replace(R.id.fragmentcontainer, new HomeSplashScreenFragment());
+            fragtr.commit();
         }else {
             Toast.makeText(getActivity(), "Login Gagal!", Toast.LENGTH_SHORT).show();
         }
