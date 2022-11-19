@@ -6,11 +6,12 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import vincent.angkringanmbahsingo2.Fragments.MakananFragment;
 import vincent.angkringanmbahsingo2.R;
 
 public class MainInterfaces extends AppCompatActivity {
 
-    TextView interdatajudul, interdatadesc, interdataharga;
+    public static TextView makfragsign, interdatajudul, interdatadesc, interdataharga, interdatastok;
     ImageView interdataimage;
 
     @Override
@@ -20,11 +21,19 @@ public class MainInterfaces extends AppCompatActivity {
 
         interdatajudul = findViewById(R.id.interxjudulmenu);
         interdatadesc = findViewById(R.id.interxdescmenu);
+        interdataharga = findViewById(R.id.interxhargamenu);
+        interdatastok = findViewById(R.id.interxstokmenu);
 
-        String datajudul = getIntent().getStringExtra("datajudul");
-        String datadesc = getIntent().getStringExtra("datadesc");
+        MakananFragment makfrag = new MakananFragment();
 
-        interdatajudul.setText(datajudul);
-        interdatadesc.setText(datadesc);
+        getData();
+    }
+
+    public static void getData(){
+        MakananFragment makfrag = new MakananFragment();
+        interdatajudul.setText(makfrag.datajudul.getText());
+        interdatadesc.setText(makfrag.datadesc.getText());
+        interdataharga.setText(makfrag.dataharga.getText());
+        interdatastok.setText(makfrag.datastok.getText());
     }
 }

@@ -88,8 +88,7 @@ public class RegisterFragment extends Fragment {
 
                     Toast.makeText(getActivity(), "Register successful", Toast.LENGTH_SHORT).show();
                     FragmentTransaction fragtr = getFragmentManager().beginTransaction();
-                    fragtr.replace(R.id.fragmentcontainer, new LoginFragment());
-                    fragtr.commit();
+                    fragtr.replace(R.id.fragmentcontainer, new LoginFragment()).addToBackStack("tag").commit();
                 }
             }
         });
@@ -99,8 +98,7 @@ public class RegisterFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 FragmentTransaction fragtr = getFragmentManager().beginTransaction();
-                fragtr.replace(R.id.fragmentcontainer, new LoginFragment());
-                fragtr.commit();
+                fragtr.replace(R.id.fragmentcontainer, new LoginFragment()).addToBackStack("tag").commit();
             }
         });
         return view;

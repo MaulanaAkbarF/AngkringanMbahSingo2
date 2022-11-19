@@ -15,6 +15,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:orientation="vertical">
         <TextView
+            android:id="@+id/fmakxsign"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -61,18 +62,24 @@
             <TextView
                 android:id="@+id/dataxjudul"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="invisible"/>
+                android:layout_height="wrap_content"/>
             <TextView
                 android:id="@+id/dataxdesc"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="invisible"/>
+                android:layout_height="wrap_content"/>
             <TextView
                 android:id="@+id/dataxharga"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/dataxstok"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <ImageView
+                android:id="@+id/dataximage"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="invisible"/>
+                android:src="@drawable/imageplus"/>
         </LinearLayout>
     </LinearLayout>
     <ScrollView

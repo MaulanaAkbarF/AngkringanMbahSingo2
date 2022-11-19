@@ -36,13 +36,41 @@
                     android:textStyle="bold"
                     android:textColor="@color/black"/>
                 <TextView
+                    android:id="@+id/hpxdesc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="0dp"
+                    android:textColor="@color/red"/>
+                <TextView
                     android:id="@+id/hpxharga"
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/hpr.panjanglayoutharga"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:text="Rp. 10000"
                     android:textSize="@dimen/hpr.ukuranharga"
                     android:textColor="@color/red"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="10dp"
+                        android:text="Stok : "
+                        android:textSize="@dimen/hpr.ukuranjudul"
+                        android:textStyle="italic"
+                        android:textColor="@color/black"/>
+                    <TextView
+                        android:id="@+id/hpxstok"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="10dp"
+                        android:text="100"
+                        android:textSize="@dimen/hpr.ukuranjudul"
+                        android:textStyle="italic"
+                        android:textColor="@color/black"/>
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>

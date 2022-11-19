@@ -39,10 +39,10 @@ public class HomeFragment extends Fragment {
         if(listDataDaftar == null){
             listDataDaftar = new ArrayList<>();
         }
-        listDataDaftar.add(new HomeRvModel("Pecel",8000, R.drawable.imagefood2));
-        listDataDaftar.add(new HomeRvModel("Pecel Lele",12000, R.drawable.imagefood));
-        listDataDaftar.add(new HomeRvModel("Rice with Peanut Sauce",80000, R.drawable.imagefood2));
-        listDataDaftar.add(new HomeRvModel("Rice with Peanut Sauce and Fried Catfish",120000, R.drawable.imagefood2));
+        listDataDaftar.add(new HomeRvModel("Pecel", "deskripsi1", 8000, 210, R.drawable.imagefood2));
+        listDataDaftar.add(new HomeRvModel("Pecel Lele", "deskripsi2", 12000, 240, R.drawable.imagefood));
+        listDataDaftar.add(new HomeRvModel("Rice with Peanut Sauce", "deskripsi3", 80000, 330, R.drawable.imagefood2));
+        listDataDaftar.add(new HomeRvModel("Rice with Peanut Sauce and Fried Catfish","deskripsi4", 120000, 385, R.drawable.imagefood2));
     }
 
     @Override

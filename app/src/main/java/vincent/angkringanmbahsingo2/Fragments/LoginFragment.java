@@ -63,7 +63,7 @@ public class LoginFragment extends Fragment {
         btnmasuk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cekLogin();
+                cekLogin ();
             }
         });
 
@@ -72,8 +72,7 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 FragmentTransaction fragtr = getFragmentManager().beginTransaction();
-                fragtr.replace(R.id.fragmentcontainer, new RegisterFragment());
-                fragtr.commit();
+                fragtr.replace(R.id.fragmentcontainer, new RegisterFragment()).addToBackStack("tag").commit();
             }
         });
         return view;
@@ -84,8 +83,7 @@ public class LoginFragment extends Fragment {
         String nama = username.getText().toString();
         if (dataUser.contentEquals(username.getText()) && dataPassword.contentEquals(password.getText())){
             FragmentTransaction fragtr = getFragmentManager().beginTransaction();
-            fragtr.replace(R.id.fragmentcontainer, new HomeSplashScreenFragment());
-            fragtr.commit();
+            fragtr.replace(R.id.fragmentcontainer, new HomeSplashScreenFragment()).addToBackStack("tag").commit();
         } else {
             Toast.makeText(getActivity(), "Username atau Password salah!", Toast.LENGTH_SHORT).show();
         }
@@ -105,8 +103,7 @@ public class LoginFragment extends Fragment {
             password.setError("Password belum diisi!");
         }else if (res == true){
             FragmentTransaction fragtr = getFragmentManager().beginTransaction();
-            fragtr.replace(R.id.fragmentcontainer, new HomeSplashScreenFragment());
-            fragtr.commit();
+            fragtr.replace(R.id.fragmentcontainer, new HomeSplashScreenFragment()).addToBackStack("tag").commit();
         }else {
             Toast.makeText(getActivity(), "Login Gagal!", Toast.LENGTH_SHORT).show();
         }

@@ -49,8 +49,7 @@ public class WelcomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 FragmentTransaction fragtr = getFragmentManager().beginTransaction();
-                fragtr.replace(R.id.fragmentcontainer, new LoginFragment());
-                fragtr.commit();
+                fragtr.replace(R.id.fragmentcontainer, new LoginFragment()).addToBackStack("tag").commit();
             }
         });
 
@@ -59,8 +58,7 @@ public class WelcomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 FragmentTransaction fragtr = getFragmentManager().beginTransaction();
-                fragtr.replace(R.id.fragmentcontainer, new RegisterFragment());
-                fragtr.commit();
+                fragtr.replace(R.id.fragmentcontainer, new RegisterFragment()).addToBackStack("tag").commit();
             }
         });
         return view;

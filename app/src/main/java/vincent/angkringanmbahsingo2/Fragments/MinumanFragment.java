@@ -34,10 +34,10 @@ public class MinumanFragment extends Fragment {
         if(listDataDaftar == null){
             listDataDaftar = new ArrayList<>();
         }
-        listDataDaftar.add(new HomeRvModel("Es Teh",2500, R.drawable.imagedrink));
-        listDataDaftar.add(new HomeRvModel("Es Teh Manis",3000, R.drawable.imagedrink2));
-        listDataDaftar.add(new HomeRvModel("Nasi Pecel",3000, R.drawable.imagefood2));
-        listDataDaftar.add(new HomeRvModel("Nasi Goreng Spesial",3000, R.drawable.imagefood));
+        listDataDaftar.add(new HomeRvModel("Es Teh", "desc1", 2500, 400, R.drawable.imagedrink));
+        listDataDaftar.add(new HomeRvModel("Es Teh Manis","desc2", 3000, 450, R.drawable.imagedrink2));
+        listDataDaftar.add(new HomeRvModel("Nasi Pecel", "desc3", 3000, 460, R.drawable.imagefood2));
+        listDataDaftar.add(new HomeRvModel("Nasi Goreng Spesial", "desc4", 3000, 660, R.drawable.imagefood));
     }
 
     @Override

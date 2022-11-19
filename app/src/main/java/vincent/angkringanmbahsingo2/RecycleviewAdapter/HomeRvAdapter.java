@@ -37,7 +37,9 @@ public class HomeRvAdapter extends RecyclerView.Adapter<HomeRvAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull HomeRvAdapter.ViewHolder holder, int position) {
         holder.judul.setText(listDataAdapter.get(position).getJudul());
-        holder.harga.setText(String.valueOf(listDataAdapter.get(position).getHarga()));
+        holder.desc.setText(listDataAdapter.get(position).getDesc());
+        holder.harga.setText("Rp. "+String.valueOf(listDataAdapter.get(position).getHarga()));
+        holder.stok.setText(" "+String.valueOf(listDataAdapter.get(position).getStok()));
         holder.gambar.setImageResource(listDataAdapter.get(position).getGambar());
     }
 
@@ -47,12 +49,14 @@ public class HomeRvAdapter extends RecyclerView.Adapter<HomeRvAdapter.ViewHolder
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        TextView judul , harga;
+        TextView judul, desc, harga, stok;
         ImageView gambar;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             judul = itemView.findViewById(R.id.hpxjudul);
+            desc = itemView.findViewById(R.id.hpxdesc);
             harga = itemView.findViewById(R.id.hpxharga);
+            stok = itemView.findViewById(R.id.hpxstok);
             gambar = itemView.findViewById(R.id.hpximage);
             itemView.setOnClickListener(this);
         }
