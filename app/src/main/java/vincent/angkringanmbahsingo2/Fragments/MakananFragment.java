@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import vincent.angkringanmbahsingo2.MainActivity.MainInterfaces;
+import vincent.angkringanmbahsingo2.Interfaces.InterfaceMakanan;
 import vincent.angkringanmbahsingo2.R;
 import vincent.angkringanmbahsingo2.RecycleviewAdapter.HomeRvAdapter;
 import vincent.angkringanmbahsingo2.RecycleviewModel.HomeRvModel;
@@ -25,7 +26,7 @@ import vincent.angkringanmbahsingo2.RecycleviewModel.HomeRvModel;
 public class MakananFragment extends Fragment {
 
     Spinner spinner;
-    public static TextView sign, datajudul, datadesc, dataharga, datastok;
+    public static TextView datajudul, datadesc, dataharga, datastok;
     List<HomeRvModel> listDataDaftar;
     RecyclerView recyclerView;
     HomeRvAdapter adapterItemDaftar;
@@ -43,13 +44,21 @@ public class MakananFragment extends Fragment {
         listDataDaftar.add(new HomeRvModel("Nasi Goreng Spesial Mbah Singo","sssssiiiiiiiiiiiiiiippppppppppp", 20000, 70, R.drawable.imagefood2));
     }
 
+    void isiDataCemilan(){
+        if(listDataDaftar == null){
+            listDataDaftar = new ArrayList<>();
+        }
+        listDataDaftar.add(new HomeRvModel("Sundukan", "Sundukan seng paling wenak sak Nganjuk", 2000, 20, R.drawable.imagefood2));
+        listDataDaftar.add(new HomeRvModel("Baceman", "Baceman ndek kene paling wenak", 2000, 30, R.drawable.imagefood2));
+        listDataDaftar.add(new HomeRvModel("Gorengan", "pokok e enak", 1500, 40, R.drawable.imagefood));
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_makanan, container, false);
 
         spinner = (Spinner) view.findViewById(R.id.fmakxspinner);
         recyclerView = view.findViewById(R.id.fmakxrecyclemakanan);
-        sign = view.findViewById(R.id.fmakxsign);
         datajudul = view.findViewById(R.id.dataxjudul);
         datadesc = view.findViewById(R.id.dataxdesc);
         dataharga = view.findViewById(R.id.dataxharga);
@@ -63,20 +72,48 @@ public class MakananFragment extends Fragment {
 
         // Memanggil List Data pada Recycle View
         isiDataMakanan();
+        adapterItemDaftar = new HomeRvAdapter(listDataDaftar,adapterItemListenerInterface);
+        recyclerView.setAdapter(adapterItemDaftar);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long id) {
+                Object item = adapterView.getItemAtPosition(pos);
+                if (item == adapterView.getItemAtPosition(0)){
+                    listDataDaftar.clear();
+                    adapterItemDaftar.notifyDataSetChanged();
+                    isiDataMakanan();
+                    adapterItemDaftar = new HomeRvAdapter(listDataDaftar,adapterItemListenerInterface);
+                    recyclerView.setAdapter(adapterItemDaftar);
+                } else if (item == adapterView.getItemAtPosition(1)){
+                    listDataDaftar.clear();
+                    adapterItemDaftar.notifyDataSetChanged();
+                    isiDataCemilan();
+                    adapterItemDaftar = new HomeRvAdapter(listDataDaftar,adapterItemListenerInterface);
+                    recyclerView.setAdapter(adapterItemDaftar);
+                }
+                // Bingung menu panganan ne opo ae
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        getMakananClicked();
+        return view;
+    }
+
+    public boolean getMakananClicked(){
         adapterItemListenerInterface = new HomeRvAdapter.AdapterItemListener() {
             @Override
             public void clickItemListener(int adapterPosition) {
                 datajudul.setText(listDataDaftar.get(adapterPosition).getJudul());
                 datadesc.setText(listDataDaftar.get(adapterPosition).getDesc());
-                dataharga.setText("Rp. "+String.valueOf(listDataDaftar.get(adapterPosition).getHarga()));
-                datastok.setText(" "+String.valueOf(listDataDaftar.get(adapterPosition).getStok()));
-                startActivity(new Intent(getActivity(), MainInterfaces.class));
+                dataharga.setText(String.valueOf(listDataDaftar.get(adapterPosition).getHarga()));
+                datastok.setText(String.valueOf(listDataDaftar.get(adapterPosition).getStok()));
+                startActivity(new Intent(getActivity(), InterfaceMakanan.class));
             }
         };
-        adapterItemDaftar = new HomeRvAdapter(listDataDaftar,adapterItemListenerInterface);
-        recyclerView.setAdapter(adapterItemDaftar);
-
-        return view;
+        return true;
     }
 }

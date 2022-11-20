@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity.MainInterfaces">
+    tools:context=".Interfaces.InterfaceMinuman">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/interxconsimage"
         android:layout_width="match_parent"
@@ -14,7 +14,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="250dp"
-            android:src="@drawable/imagefood"
+            android:src="@drawable/imagedrink3"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:scaleType="centerCrop"/>
@@ -86,65 +86,104 @@
                 android:textStyle="bold|italic"
                 android:textColor="@color/black"/>
         </LinearLayout>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
         android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="30dp"
         app:layout_constraintTop_toBottomOf="@id/interxconsmenu">
-        <View
-            android:id="@+id/interxline1"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:background="#bdbdbd"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            app:layout_constraintTop_toBottomOf="@id/interxline1"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:text="Tentukan Jumlah :"
-            android:textSize="@dimen/hp.ukuranteksinfo"
-            android:textColor="@color/black"/>
-        <ImageView
-            android:id="@+id/interximageplus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            app:layout_constraintTop_toBottomOf="@id/interxline1"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:src="@drawable/imageplus"/>
-        <TextView
-            android:id="@+id/interxteksjumlah"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="20dp"
-            app:layout_constraintTop_toBottomOf="@id/interxline1"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/interximageplus"
-            android:text="100"
-            android:textSize="@dimen/hp.ukuranteksinfo"
-            android:textColor="@color/black"
-            android:textStyle="bold"/>
-        <ImageView
-            android:id="@+id/interximagemin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="20dp"
-            app:layout_constraintTop_toBottomOf="@id/interxline1"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/interxteksjumlah"
-            android:src="@drawable/imagemin"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_height="wrap_content">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:background="#bdbdbd" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/interxconsjumlah"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="15dp"
+                app:layout_constraintTop_toTopOf="parent">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:text="Tentukan Jumlah :"
+                    android:textSize="@dimen/hp.ukuranteksinfo"
+                    android:textColor="@color/black"/>
+                <ImageView
+                    android:id="@+id/interximageplus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:src="@drawable/imageplus"/>
+                <TextView
+                    android:id="@+id/interxteksjumlah"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:paddingHorizontal="20dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/interximageplus"
+                    android:text="0"
+                    android:textSize="@dimen/hp.ukuranteksinfo"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"/>
+                <ImageView
+                    android:id="@+id/interximagemin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/interxteksjumlah"
+                    android:src="@drawable/imagemin"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                app:layout_constraintTop_toBottomOf="@id/interxconsjumlah"
+                app:layout_constraintStart_toStartOf="parent"
+                android:background="#bdbdbd"
+                />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="15dp"
+                app:layout_constraintTop_toBottomOf="@id/interxconsjumlah">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:text="Total Pesanan :"
+                    android:textSize="@dimen/hp.ukuranteksinfo"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:id="@+id/interxtotalharga"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:text="Rp. 10000"
+                    android:textSize="@dimen/hp.ukuranteksinfo"
+                    android:textColor="@color/red"
+                    android:textStyle="bold"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -164,7 +203,7 @@
             android:textSize="@dimen/hp.ukuranteksinfo"
             android:textColor="@color/white"
             android:textStyle="bold"
-            app:cornerRadius="10dp" />
+            app:cornerRadius="5dp" />
         <Button
             android:id="@+id/interxbtnbeli"
             android:layout_width="0dp"
@@ -179,6 +218,6 @@
             android:textSize="@dimen/hp.ukuranteksinfo"
             android:textColor="@color/white"
             android:textStyle="bold"
-            app:cornerRadius="10dp" />
+            app:cornerRadius="5dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

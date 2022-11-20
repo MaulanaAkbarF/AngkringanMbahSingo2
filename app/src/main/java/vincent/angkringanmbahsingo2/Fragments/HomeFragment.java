@@ -12,6 +12,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationBarView;
@@ -29,12 +30,25 @@ public class HomeFragment extends Fragment {
     LinearLayout judul;
     ScrollView rvdatalayout;
 
+    public static TextView datajudul, datadesc, dataharga, datastok;
     RecyclerView recyclerView1, recyclerView2;
     List<HomeRvModel> listDataDaftar;
     HomeRvAdapter adapterItemDaftar;
     HomeRvAdapter.AdapterItemListener adapterItemListenerInterface;
 
-    // List Data pada Recycle View
+    // List Data Promo pada Recycle View
+    void isiDataPromo(){
+        if(listDataDaftar == null){
+            listDataDaftar = new ArrayList<>();
+        }
+        listDataDaftar.add(new HomeRvModel("Nasi Goreng", "Wenak tenaann, gass tukuo boss selak stok e entek diborong abang gojek", 10000, 20, R.drawable.imagefood));
+        listDataDaftar.add(new HomeRvModel("Nasi Goreng Kecap", "wis to percoyo o lek iki enak", 12000, 30, R.drawable.imagefood));
+        listDataDaftar.add(new HomeRvModel("Nasi Goreng Pedas", "dikandani ngeyel", 13000, 40, R.drawable.imagefood2));
+        listDataDaftar.add(new HomeRvModel("Nasi Goreng Ayam", "wuuuuuuuuuuuuuuuuuuuuuuueeeeeeeeeeeeennnnnnnnaaaaaaaaakkkkkkkkkkkk", 15000, 15, R.drawable.imagefood));
+        listDataDaftar.add(new HomeRvModel("Nasi Goreng Spesial Mbah Singo","sssssiiiiiiiiiiiiiiippppppppppp", 20000, 70, R.drawable.imagefood2));
+    }
+
+    // List Data Terakhir Dibeli pada Recycle View
     void isiDataTerakhir(){
         if(listDataDaftar == null){
             listDataDaftar = new ArrayList<>();
@@ -60,10 +74,18 @@ public class HomeFragment extends Fragment {
         judul.startAnimation(easeOutSineTop);
         rvdatalayout.startAnimation(easeOutQuadLeft);
 
+        // RECYCLE PROMOSI ------------------
+        recyclerView1 = view.findViewById(R.id.hpxrvpromo);
+
         // RECYCLE TERAKHIR DIBELI ------------------
         recyclerView2 = view.findViewById(R.id.hpxrvterakhir);
 
-        // Memanggil List Data pada Recycle View
+        datajudul = view.findViewById(R.id.dataxjudul);
+        datadesc = view.findViewById(R.id.dataxdesc);
+        dataharga = view.findViewById(R.id.dataxharga);
+        datastok = view.findViewById(R.id.dataxstok);
+
+        // Memanggil List Data Terakhir Dibeli pada Recycle View
         isiDataTerakhir();
 
         adapterItemListenerInterface = new HomeRvAdapter.AdapterItemListener() {

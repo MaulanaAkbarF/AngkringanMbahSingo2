@@ -13,6 +13,6 @@
         android:title="Riwayat"
         android:icon="@drawable/bucketicon"/>
     <item android:id="@+id/hfxmenu5"
-        android:title="Profil"
+        android:title="Keranjang"
         android:icon="@drawable/bucketicon"/>
 </menu>

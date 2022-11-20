@@ -13,7 +13,21 @@
         android:theme="@style/Theme.AngkringanMbahSingo2"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity.MainInterfaces"
+            android:name=".Interfaces.InterfaceHome"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".Interfaces.InterfaceMinuman"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".Interfaces.InterfaceMakanan"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
