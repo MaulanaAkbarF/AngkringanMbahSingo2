@@ -135,7 +135,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/interximageplus"
-                    android:text="0"
+                    android:text="1"
                     android:textSize="@dimen/hp.ukuranteksinfo"
                     android:textColor="@color/black"
                     android:textStyle="bold"/>
