@@ -1,83 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:backgroundTint="@color/semiwhite"
     android:layout_margin="10dp">
-    <androidx.cardview.widget.CardView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        app:layout_constraintTop_toTopOf="parent"
-        android:backgroundTint="@color/semiwhite"
-        app:cardElevation="7dp"
-        app:cardCornerRadius="10dp">
-        <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/alertxjudul"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/alertxjudul"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="Tentukan Jumlah Pesanan"
+            android:gravity="center"
+            android:textSize="@dimen/hp.ukuranteksinfo"
+            android:textColor="@color/black"
+            android:textStyle="bold"/>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/alertxlayoutinput"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxBackgroundMode="outline"
+            app:boxStrokeColor="@color/dark_blue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            app:layout_constraintTop_toBottomOf="@id/alertxjudul">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/alertxinputjumlah"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                app:layout_constraintTop_toTopOf="parent"
-                android:text="Tentukan Jumlah Pesanan"
-                android:gravity="center"
-                android:textSize="@dimen/hp.ukuranteksinfo"
+                android:drawableLeft="@drawable/searchgreyicon"
+                android:drawablePadding="10dp"
+                android:hint="Ketik Jumlah Pesanan..."
+                android:focusable="auto"
+                android:inputType="text"
                 android:textColor="@color/black"
-                android:textStyle="bold"/>
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/alertxlayoutinput"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                app:boxBackgroundMode="outline"
-                app:boxStrokeColor="@color/dark_blue"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                app:layout_constraintTop_toBottomOf="@id/alertxjudul">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/alertxinputjumlah"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/searchgreyicon"
-                    android:drawablePadding="10dp"
-                    android:hint="Ketik Jumlah Pesanan..."
-                    android:focusable="auto"
-                    android:inputType="text"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/dark_blue"
-                    android:textSize="@dimen/lp.ukuranteksinput" />
-            </com.google.android.material.textfield.TextInputLayout>
+                android:textColorHint="@color/dark_blue"
+                android:textSize="@dimen/lp.ukuranteksinput" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-            <Button
-                android:id="@+id/alertxbtnbatal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/alertxbtnkirim"
-                android:layout_margin="20dp"
-                android:paddingVertical="5dp"
-                android:backgroundTint="@color/dark_red"
-                android:text="BATAL"
-                android:textSize="@dimen/hp.ukuranteksinfo"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                app:cornerRadius="5dp" />
-            <Button
-                android:id="@+id/alertxbtnkirim"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/alertxlayoutinput"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_margin="20dp"
-                android:paddingVertical="5dp"
-                android:backgroundTint="@color/dark_blue"
-                android:text="KIRIM"
-                android:textSize="@dimen/hp.ukuranteksinfo"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                app:cornerRadius="5dp" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:id="@+id/alertxbtnbatal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/alertxbtnkirim"
+            android:layout_margin="20dp"
+            android:paddingVertical="5dp"
+            android:backgroundTint="@color/dark_red"
+            android:text="BATAL"
+            android:textSize="@dimen/hp.ukuranteksinfo"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:cornerRadius="5dp" />
+        <Button
+            android:id="@+id/alertxbtnkirim"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/alertxlayoutinput"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_margin="20dp"
+            android:paddingVertical="5dp"
+            android:backgroundTint="@color/dark_blue"
+            android:text="KIRIM"
+            android:textSize="@dimen/hp.ukuranteksinfo"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:cornerRadius="5dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
