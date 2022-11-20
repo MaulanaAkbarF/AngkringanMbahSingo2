@@ -17,6 +17,8 @@ import vincent.angkringanmbahsingo2.R;
 public class HomeRvAdapter extends RecyclerView.Adapter<HomeRvAdapter.ViewHolder> {
     List<HomeRvModel> listDataAdapter;
     HomeRvAdapter.AdapterItemListener adapterItemListener;
+    static String currency = "Rp. %,d";
+    static String stock = "%,d";
 
     public interface AdapterItemListener{
         void clickItemListener(int adapterPosition);
@@ -38,8 +40,8 @@ public class HomeRvAdapter extends RecyclerView.Adapter<HomeRvAdapter.ViewHolder
     public void onBindViewHolder(@NonNull HomeRvAdapter.ViewHolder holder, int position) {
         holder.judul.setText(listDataAdapter.get(position).getJudul());
         holder.desc.setText(listDataAdapter.get(position).getDesc());
-        holder.harga.setText("Rp. "+String.valueOf(listDataAdapter.get(position).getHarga()));
-        holder.stok.setText(" "+String.valueOf(listDataAdapter.get(position).getStok()));
+        holder.harga.setText(String.format(currency, listDataAdapter.get(position).getHarga()));
+        holder.stok.setText(String.format(stock, listDataAdapter.get(position).getStok()));
         holder.gambar.setImageResource(listDataAdapter.get(position).getGambar());
     }
 

@@ -30,6 +30,8 @@ import vincent.angkringanmbahsingo2.RecycleviewModel.HomeRvModel;
 public class MinumanFragment extends Fragment {
 
     Spinner spinner;
+    static String currency = "Rp. %,d,00";
+    static String stock = "%,d";
     public static TextView sign, datajudul, datadesc, dataharga, datastok;
     List<HomeRvModel> listDataDaftar;
     RecyclerView recyclerView;

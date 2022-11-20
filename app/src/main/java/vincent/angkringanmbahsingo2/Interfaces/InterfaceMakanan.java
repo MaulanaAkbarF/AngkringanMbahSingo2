@@ -21,7 +21,7 @@ public class InterfaceMakanan extends AppCompatActivity {
     ImageView interdataimage, plusimage, minimage;
     Dialog dialog;
 
-    static String currency = "Rp. %,d,00";
+    static String currency = "Rp. %,d";
     static String stock = "%,d";
     int currentNumber = 1;
     int total;
