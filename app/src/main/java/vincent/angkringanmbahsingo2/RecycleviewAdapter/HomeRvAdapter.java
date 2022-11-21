@@ -32,7 +32,7 @@ public class HomeRvAdapter extends RecyclerView.Adapter<HomeRvAdapter.ViewHolder
     @NonNull
     @Override
     public HomeRvAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.homepage_rvmakanan,parent,false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.homepage_rvmenu,parent,false);
         return new ViewHolder(v);
     }
 

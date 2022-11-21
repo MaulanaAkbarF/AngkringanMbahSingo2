@@ -1,5 +1,6 @@
 package vincent.angkringanmbahsingo2.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -46,7 +47,7 @@ public class RiwayatFragment extends Fragment {
         datajudul = view.findViewById(R.id.dataxjudul);
 //        datatanggal = view.findViewById(R.id.dataxtanggal);
         dataharga = view.findViewById(R.id.dataxharga);
-        datajumlah = view.findViewById(R.id.dataxstok);
+        datajumlah = view.findViewById(R.id.dataxjumlah);
 
         isiDataRiwayat();
         adapterItemDaftar = new HistRvAdapter(listDataDaftar,adapterItemListenerInterface);
@@ -60,12 +61,12 @@ public class RiwayatFragment extends Fragment {
         adapterItemListenerInterface = new HistRvAdapter.AdapterItemListener() {
             @Override
             public void clickItemListener(int adapterPosition) {
-//                datajudul.setText(listDataDaftar.get(adapterPosition).getJudul());
-////                datatanggal.setText(listDataDaftar.get(adapterPosition).getTanggal());
-//                dataharga.setText(String.valueOf(listDataDaftar.get(adapterPosition).getHarga()));
-//                datajumlah.setText(String.valueOf(listDataDaftar.get(adapterPosition).getJumlah()));
+                datajudul.setText(listDataDaftar.get(adapterPosition).getJudul());
+//                datatanggal.setText(listDataDaftar.get(adapterPosition).getTanggal());
+                dataharga.setText(String.valueOf(listDataDaftar.get(adapterPosition).getHarga()));
+                datajumlah.setText(String.valueOf(listDataDaftar.get(adapterPosition).getJumlah()));
 //                startActivity(new Intent(getActivity(), InterfaceMakanan.class));
-                Toast.makeText(getActivity(), "Dipilih", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), listDataDaftar.get(adapterPosition).getJudul(), Toast.LENGTH_SHORT).show();
             }
         };
         return true;

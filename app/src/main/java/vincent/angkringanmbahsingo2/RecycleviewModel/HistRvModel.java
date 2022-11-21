@@ -1,12 +1,11 @@
 package vincent.angkringanmbahsingo2.RecycleviewModel;
 
 public class HistRvModel {
-    private String judul, tanggal;
+    private String judul;
     private int harga, jumlah, gambar;
 
     public HistRvModel(String judul, int harga, int jumlah, int gambar) {
         this.judul = judul;
-//        this.tanggal = tanggal;
         this.harga = harga;
         this.jumlah = jumlah;
         this.gambar = gambar;
@@ -19,14 +18,6 @@ public class HistRvModel {
     public void setJudul(String judul) {
         this.judul = judul;
     }
-
-//    public String getTanggal() {
-//        return tanggal;
-//    }
-//
-//    public void setTanggal(String tanggal) {
-//        this.tanggal = tanggal;
-//    }
 
     public int getHarga() {
         return harga;
@@ -50,5 +41,10 @@ public class HistRvModel {
 
     public void setGambar(int gambar) {
         this.gambar = gambar;
+    }
+
+    public int addPlus(){
+        int total = jumlah * harga;
+        return total;
     }
 }

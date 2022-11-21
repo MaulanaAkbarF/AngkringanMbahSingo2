@@ -106,11 +106,15 @@ public class InterfaceMakanan extends AppCompatActivity {
         kirim.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                txtjumlah.setText(String.valueOf(input.getText()));
-                int jumlah = Integer.parseInt(String.valueOf(txtjumlah.getText()));
-                totalPrice = total * jumlah;
-                txttotal.setText(String.format(currency, Integer.parseInt(String.valueOf(totalPrice))));
-                dialog.dismiss();
+                if (input.getText().toString().isEmpty()){
+                    input.setError("Anda belum mengetik jumlah pesanan");
+                } else {
+                    txtjumlah.setText(String.valueOf(input.getText()));
+                    int jumlah = Integer.parseInt(String.valueOf(txtjumlah.getText()));
+                    totalPrice = total * jumlah;
+                    txttotal.setText(String.format(currency, Integer.parseInt(String.valueOf(totalPrice))));
+                    dialog.dismiss();
+                }
             }
         });
         batal.setOnClickListener(new View.OnClickListener() {

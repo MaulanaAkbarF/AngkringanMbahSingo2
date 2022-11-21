@@ -39,7 +39,6 @@ public class HistRvAdapter extends RecyclerView.Adapter<HistRvAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull HistRvAdapter.ViewHolder holder, int position) {
         holder.judul.setText(listDataAdapter.get(position).getJudul());
-//        holder.tanggal.setText(listDataAdapter.get(position).getTanggal());
         holder.harga.setText(String.format(currency, listDataAdapter.get(position).getHarga()));
         holder.jumlah.setText(String.format(stock, listDataAdapter.get(position).getJumlah()));
         holder.gambar.setImageResource(listDataAdapter.get(position).getGambar());
@@ -51,12 +50,11 @@ public class HistRvAdapter extends RecyclerView.Adapter<HistRvAdapter.ViewHolder
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        TextView judul, tanggal, harga, jumlah;
+        TextView judul, harga, jumlah;
         ImageView gambar;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             judul = itemView.findViewById(R.id.hpxjudul);
-//            tanggal = itemView.findViewById(R.id.hpx);
             harga = itemView.findViewById(R.id.hpxharga);
             jumlah = itemView.findViewById(R.id.hpxjumlah);
             gambar = itemView.findViewById(R.id.hpximage);
