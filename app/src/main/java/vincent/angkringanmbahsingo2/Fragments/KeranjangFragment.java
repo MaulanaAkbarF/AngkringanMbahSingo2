@@ -35,7 +35,7 @@ public class KeranjangFragment extends Fragment {
         listDataDaftar.add(new HistRvModel("Nasi Goreng Kecap", 12000, 30, R.drawable.imagefood));
         listDataDaftar.add(new HistRvModel("Nasi Goreng Pedas", 13000, 40, R.drawable.imagefood2));
         listDataDaftar.add(new HistRvModel("Nasi Goreng Ayam", 15000, 15, R.drawable.imagefood));
-        listDataDaftar.add(new HistRvModel("Nasi Goreng Spesial Mbah Singo",20000, 70000, R.drawable.imagefood2));
+        listDataDaftar.add(new HistRvModel("Nasi Goreng Spesial Mbah Singo",20000, 12, R.drawable.imagefood2));
     }
 
     @Override
@@ -52,7 +52,7 @@ public class KeranjangFragment extends Fragment {
         adapterItemDaftar = new CartRvAdapter(listDataDaftar,adapterItemListenerInterface);
         recyclerView.setAdapter(adapterItemDaftar);
 
-        getKeranjangClicked();
+        getKeranjangClicked(); //Penyebab data ne looping mergo fungsi ini dijalanno meneh pas jarak 4 bottom navmenu di klik/geser
         return view;
     }
 

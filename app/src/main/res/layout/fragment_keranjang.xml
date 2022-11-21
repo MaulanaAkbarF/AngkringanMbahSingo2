@@ -35,7 +35,7 @@
                 android:padding="8dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                android:text="Pilih Semua"
+                android:text="Filter"
                 android:textSize="@dimen/hp.ukuranteksinfo"
                 android:textColor="@color/dark_blue"/>
             <TextView
@@ -81,7 +81,7 @@
         android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@id/fkerxlinear"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/fkerxconsbottom"
         app:layout_constraintBottom_toBottomOf="parent">
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/fkerxrecyclekeranjang"
@@ -92,4 +92,37 @@
             android:orientation="vertical"
             tools:listitem="@layout/homepage_rvkeranjang"/>
     </ScrollView>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/fkerxconsbottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@color/white">
+        <CheckBox
+            android:id="@+id/fkerxcheckboxall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/fkerxbtnbeli"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/fkerxcheckboxall"
+            app:layout_constraintBottom_toTopOf="@id/fkerxbtnbeli"
+            android:text="Pilih Semua"
+            android:textSize="@dimen/hp.ukuranteksinfo"
+            android:textColor="@color/dark_blue"/>
+        <Button
+            android:id="@+id/fkerxbtnbeli"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/dark_red"
+            android:text="BELI"
+            android:textSize="@dimen/hp.ukuranteksinfo"
+            app:cornerRadius="10dp"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

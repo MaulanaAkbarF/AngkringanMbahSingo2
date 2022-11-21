@@ -43,7 +43,6 @@ public class CartRvAdapter extends RecyclerView.Adapter<CartRvAdapter.ViewHolder
         holder.judul.setText(listDataAdapter.get(position).getJudul());
         holder.harga.setText(String.format(currency, listDataAdapter.get(position).getHarga()));
         holder.jumlah.setText(String.format(stock, listDataAdapter.get(position).getJumlah()));
-        holder.totalharga.setText(String.valueOf(holder.harga.getText()));
         holder.gambar.setImageResource(listDataAdapter.get(position).getGambar());
         holder.plusimage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,6 +68,9 @@ public class CartRvAdapter extends RecyclerView.Adapter<CartRvAdapter.ViewHolder
                 }
             }
         });
+        currentNumber = Integer.parseInt(String.valueOf(holder.jumlah.getText()));
+        totalPrice = currentNumber * listDataAdapter.get(holder.getAdapterPosition()).getHarga();
+        holder.totalharga.setText(String.format(currency, Integer.parseInt(String.valueOf(totalPrice))));
     }
 
     @Override
