@@ -42,9 +42,4 @@ public class HistRvModel {
     public void setGambar(int gambar) {
         this.gambar = gambar;
     }
-
-    public int addPlus(){
-        int total = jumlah * harga;
-        return total;
-    }
 }

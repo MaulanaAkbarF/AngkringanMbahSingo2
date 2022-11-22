@@ -14,13 +14,14 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import vincent.angkringanmbahsingo2.MainActivity.MainHome;
 import vincent.angkringanmbahsingo2.R;
 import vincent.angkringanmbahsingo2.RecycleviewAdapter.CartRvAdapter;
 import vincent.angkringanmbahsingo2.RecycleviewModel.HistRvModel;
 
 public class KeranjangFragment extends Fragment {
 
-    public static TextView datajudul, datatanggal, dataharga, datajumlah;
+    public static TextView datajudul, datatanggal, dataharga, datajumlah, hargabelitotal;
     List<HistRvModel> listDataDaftar;
     RecyclerView recyclerView;
     CartRvAdapter adapterItemDaftar;
@@ -47,10 +48,20 @@ public class KeranjangFragment extends Fragment {
 //        datatanggal = view.findViewById(R.id.dataxtanggal);
         dataharga = view.findViewById(R.id.dataxharga);
         datajumlah = view.findViewById(R.id.dataxjumlah);
+        hargabelitotal = view.findViewById(R.id.dataxhargabelitotal);
 
-        isiDataKeranjang();
+        // Memanggil List Data pada Recycle View
+        MainHome mh = new MainHome();
+        if (String.valueOf(mh.set5.getText()).equals("0")){
+            System.out.println("");
+        } else if (String.valueOf(mh.set5.getText()).equals("1")){
+            isiDataKeranjang();
+            mh.set5.setText("0");
+        }
         adapterItemDaftar = new CartRvAdapter(listDataDaftar,adapterItemListenerInterface);
         recyclerView.setAdapter(adapterItemDaftar);
+
+//        hargabelitotal.setText(String.valueOf(listDataDaftar.get(adapterItemDaftar).getHarga()) * listDataDaftar.size());
 
         getKeranjangClicked(); //Penyebab data ne looping mergo fungsi ini dijalanno meneh pas jarak 4 bottom navmenu di klik/geser
         return view;

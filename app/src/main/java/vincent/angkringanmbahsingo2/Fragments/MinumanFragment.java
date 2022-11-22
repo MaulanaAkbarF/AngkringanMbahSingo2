@@ -23,6 +23,7 @@ import java.util.List;
 
 import vincent.angkringanmbahsingo2.Interfaces.InterfaceMakanan;
 import vincent.angkringanmbahsingo2.Interfaces.InterfaceMinuman;
+import vincent.angkringanmbahsingo2.MainActivity.MainHome;
 import vincent.angkringanmbahsingo2.R;
 import vincent.angkringanmbahsingo2.RecycleviewAdapter.HomeRvAdapter;
 import vincent.angkringanmbahsingo2.RecycleviewModel.HomeRvModel;
@@ -32,7 +33,7 @@ public class MinumanFragment extends Fragment {
     Spinner spinner;
     static String currency = "Rp. %,d,00";
     static String stock = "%,d";
-    public static TextView sign, datajudul, datadesc, dataharga, datastok;
+    public static TextView datajudul, datadesc, dataharga, datastok;
     List<HomeRvModel> listDataDaftar;
     RecyclerView recyclerView;
     HomeRvAdapter adapterItemDaftar;
@@ -74,8 +75,13 @@ public class MinumanFragment extends Fragment {
         ArrayAdapter<String> arrAdapt = new ArrayAdapter<>(getActivity(), R.layout.spinner_text, arr);
         spinner.setAdapter(arrAdapt);
 
-        // Memanggil List Data pada Recycle View
-        isiDataMinumanPanas();
+        MainHome mh = new MainHome();
+        if (String.valueOf(mh.set3.getText()).equals("0")){
+            System.out.println("");
+        } else if (String.valueOf(mh.set3.getText()).equals("1")){
+            isiDataMinumanPanas();
+            mh.set3.setText("0");
+        }
         adapterItemDaftar = new HomeRvAdapter(listDataDaftar,adapterItemListenerInterface);
         recyclerView.setAdapter(adapterItemDaftar);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

@@ -20,6 +20,7 @@ import com.google.android.material.navigation.NavigationBarView;
 import java.util.ArrayList;
 import java.util.List;
 
+import vincent.angkringanmbahsingo2.MainActivity.MainHome;
 import vincent.angkringanmbahsingo2.R;
 import vincent.angkringanmbahsingo2.RecycleviewAdapter.HomeRvAdapter;
 import vincent.angkringanmbahsingo2.RecycleviewModel.HomeRvModel;
@@ -85,8 +86,14 @@ public class HomeFragment extends Fragment {
         dataharga = view.findViewById(R.id.dataxharga);
         datastok = view.findViewById(R.id.dataxstok);
 
-        // Memanggil List Data Terakhir Dibeli pada Recycle View
-        isiDataTerakhir();
+        // Memanggil List Data pada Recycle View
+        MainHome mh = new MainHome();
+        if (String.valueOf(mh.set1.getText()).equals("0")){
+            System.out.println("");
+        } else if (String.valueOf(mh.set1.getText()).equals("1")){
+            isiDataTerakhir();
+            mh.set1.setText("0");
+        }
 
         adapterItemListenerInterface = new HomeRvAdapter.AdapterItemListener() {
             @Override

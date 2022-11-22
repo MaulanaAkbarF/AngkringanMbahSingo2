@@ -2,7 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".Fragments.RiwayatAdapterItem">
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -52,7 +54,9 @@
                     android:text="Judul Menu"
                     android:textSize="@dimen/hp.ukuranteksinfo"
                     android:textColor="@color/black"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold"
+                    android:ellipsize="end"
+                    android:maxLines="1"/>
                 <TextView
                     android:id="@+id/hpxharga"
                     android:layout_width="match_parent"

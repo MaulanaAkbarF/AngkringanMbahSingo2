@@ -19,6 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import vincent.angkringanmbahsingo2.Interfaces.InterfaceMakanan;
+import vincent.angkringanmbahsingo2.MainActivity.MainHome;
 import vincent.angkringanmbahsingo2.R;
 import vincent.angkringanmbahsingo2.RecycleviewAdapter.HomeRvAdapter;
 import vincent.angkringanmbahsingo2.RecycleviewModel.HomeRvModel;
@@ -71,7 +72,13 @@ public class MakananFragment extends Fragment {
         spinner.setAdapter(arrAdapt);
 
         // Memanggil List Data pada Recycle View
-        isiDataMakanan();
+        MainHome mh = new MainHome();
+        if (String.valueOf(mh.set2.getText()).equals("0")){
+            System.out.println("");
+        } else if (String.valueOf(mh.set2.getText()).equals("1")){
+            isiDataMakanan();
+            mh.set2.setText("0");
+        }
         adapterItemDaftar = new HomeRvAdapter(listDataDaftar,adapterItemListenerInterface);
         recyclerView.setAdapter(adapterItemDaftar);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

@@ -52,7 +52,9 @@
                     android:text="Judul Menu"
                     android:textSize="@dimen/hp.ukuranteksinfo"
                     android:textColor="@color/black"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold"
+                    android:ellipsize="end"
+                    android:maxLines="1"/>
                 <ImageView
                     android:id="@+id/fkerximagemin"
                     android:layout_width="30dp"
@@ -130,7 +132,9 @@
                     android:text="Rp. 40000"
                     android:textSize="@dimen/hp.ukuranteksinfo"
                     android:textColor="@color/red"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold"
+                    android:ellipsize="end"
+                    android:maxLines="1"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -31,6 +32,7 @@ public class MainHome extends AppCompatActivity {
     Animation easeOutSineBottom;
     ViewPager2 pagerMain;
     BottomNavigationView navbar;
+    public static TextView set1, set2, set3, set4, set5;
 
     ArrayList<Fragment> fragarr = new ArrayList<>();
 
@@ -44,71 +46,85 @@ public class MainHome extends AppCompatActivity {
 
         // Inisiasi komponen utama
         pagerMain = findViewById(R.id.fragmentcontainerhome);
+        set1 = findViewById(R.id.mainxtxtset1);
+        set2 = findViewById(R.id.mainxtxtset2);
+        set3 = findViewById(R.id.mainxtxtset3);
+        set4 = findViewById(R.id.mainxtxtset4);
+        set5 = findViewById(R.id.mainxtxtset5);
 
         // Membuat animasi
         easeOutSineBottom = AnimationUtils.loadAnimation(this, R.anim.ease_out_sine_bottom);
 
         navbar.startAnimation(easeOutSineBottom);
 
-        // Menambahkan Array Fragment ke dalam Bottom Navigation
-        fragarr.add(new HomeFragment());
-        fragarr.add(new MakananFragment());
-        fragarr.add(new MinumanFragment());
-        fragarr.add(new RiwayatFragment());
-        fragarr.add(new KeranjangFragment());
+        set1.setText("1");
+        set2.setText("1");
+        set3.setText("1");
+        set4.setText("1");
+        set5.setText("1");
+        if (set1.getText().toString().equals("1")&&set2.getText().toString().equals("1")&&set3.getText().toString().equals("1")&&set4.getText().toString().equals("1")&&set5.getText().toString().equals("1")){
+            // Menambahkan Array Fragment ke dalam Bottom Navigation
+            fragarr.add(new HomeFragment());
+            fragarr.add(new MakananFragment());
+            fragarr.add(new MinumanFragment());
+            fragarr.add(new RiwayatFragment());
+            fragarr.add(new KeranjangFragment());
 
-        AdapterViewPager adapterViewPager = new AdapterViewPager(this, fragarr);
-        pagerMain.setAdapter(adapterViewPager);
+            AdapterViewPager adapterViewPager = new AdapterViewPager(this, fragarr);
+            pagerMain.setAdapter(adapterViewPager);
 
-        // Fungsi ketika Bottom Navigation di swipe
-        pagerMain.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageSelected(int position) {
-                switch (position){
-                    case 0:
-                        navbar.setSelectedItemId(R.id.hfxmenu1);
-                        break;
-                    case 1:
-                        navbar.setSelectedItemId(R.id.hfxmenu2);
-                        break;
-                    case 2:
-                        navbar.setSelectedItemId(R.id.hfxmenu3);
-                        break;
-                    case 3:
-                        navbar.setSelectedItemId(R.id.hfxmenu4);
-                        break;
-                    case 4:
-                        navbar.setSelectedItemId(R.id.hfxmenu5);
-                        break;
+            // Fungsi ketika Bottom Navigation di swipe
+            pagerMain.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+                @Override
+                public void onPageSelected(int position) {
+                    switch (position){
+                        case 0:
+                            navbar.setSelectedItemId(R.id.hfxmenu1);
+                            break;
+                        case 1:
+                            navbar.setSelectedItemId(R.id.hfxmenu2);
+                            break;
+                        case 2:
+                            navbar.setSelectedItemId(R.id.hfxmenu3);
+                            break;
+                        case 3:
+                            navbar.setSelectedItemId(R.id.hfxmenu4);
+                            break;
+                        case 4:
+                            navbar.setSelectedItemId(R.id.hfxmenu5);
+                            break;
+                    }
+                    navbar.setSelectedItemId(position);
+                    super.onPageSelected(position);
                 }
-                navbar.setSelectedItemId(position);
-                super.onPageSelected(position);
-            }
-        });
+            });
 
-        // Fungsi ketika Bottom Navigation di klik
-        navbar.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.hfxmenu1:
-                        pagerMain.setCurrentItem(0);
-                        break;
-                    case R.id.hfxmenu2:
-                        pagerMain.setCurrentItem(1);
-                        break;
-                    case R.id.hfxmenu3:
-                        pagerMain.setCurrentItem(2);
-                        break;
-                    case R.id.hfxmenu4:
-                        pagerMain.setCurrentItem(3);
-                        break;
-                    case R.id.hfxmenu5:
-                        pagerMain.setCurrentItem(4);
-                        break;
+            // Fungsi ketika Bottom Navigation di klik
+            navbar.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    switch (item.getItemId()){
+                        case R.id.hfxmenu1:
+                            pagerMain.setCurrentItem(0);
+                            break;
+                        case R.id.hfxmenu2:
+                            pagerMain.setCurrentItem(1);
+                            break;
+                        case R.id.hfxmenu3:
+                            pagerMain.setCurrentItem(2);
+                            break;
+                        case R.id.hfxmenu4:
+                            pagerMain.setCurrentItem(3);
+                            break;
+                        case R.id.hfxmenu5:
+                            pagerMain.setCurrentItem(4);
+                            break;
+                    }
+                    return true;
                 }
-                return true;
-            }
-        });
+            });
+        } else if (set1.getText().toString().equals("0")&&set2.getText().toString().equals("0")&&set3.getText().toString().equals("0")&&set4.getText().toString().equals("0")&&set5.getText().toString().equals("0")){
+            System.out.println("Done");
+        }
     }
 }
