@@ -38,14 +38,12 @@ public class RiwayatFragment extends Fragment {
     Animation easeOutQuadLeft, easeOutQuadRight, easeOutQuadLeftOut, easeOutQuadRightOut;
     public static TextView datajudul, datatanggal, dataharga, datajumlah, btnfilter, btnubah, btnhapussemua, btnselesai;
     CheckBox check;
-    List<HistRvModel> listDataDaftar;
+    public static List<HistRvModel> listDataDaftar;
     RecyclerView recyclerView;
-    HistRvAdapter adapterItemDaftar;
-    HistRvAdapter.AdapterItemListener adapterItemListenerInterface;
+    public static HistRvAdapter adapterItemDaftar;
+    public static HistRvAdapter.AdapterItemListener adapterItemListenerInterface;
     Dialog dialog;
     DatePickerDialog picker;
-
-    static RiwayatAdapterItem rav = new RiwayatAdapterItem();
 
     // List Data pada Recycle View
     void isiDataRiwayat(){
@@ -77,7 +75,6 @@ public class RiwayatFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.friwxrecycleriwayat);
         datajudul = view.findViewById(R.id.dataxjudul);
-//        datatanggal = view.findViewById(R.id.dataxtanggal);
         dataharga = view.findViewById(R.id.dataxharga);
         datajumlah = view.findViewById(R.id.dataxjumlah);
 
@@ -86,13 +83,13 @@ public class RiwayatFragment extends Fragment {
         if (String.valueOf(mh.set4.getText()).equals("0")){
             System.out.println("");
         } else if (String.valueOf(mh.set4.getText()).equals("1")){
+            btnhapussemua.setVisibility(View.GONE);
+            btnselesai.setVisibility(View.GONE);
             isiDataRiwayat();
             mh.set4.setText("0");
         }
         adapterItemDaftar = new HistRvAdapter(listDataDaftar,adapterItemListenerInterface);
         recyclerView.setAdapter(adapterItemDaftar);
-        btnhapussemua.setVisibility(View.GONE);
-        btnselesai.setVisibility(View.GONE);
 
         getRiwayatClicked();
         ubahClickable();
@@ -106,10 +103,8 @@ public class RiwayatFragment extends Fragment {
             @Override
             public void clickItemListener(int adapterPosition) {
                 datajudul.setText(listDataDaftar.get(adapterPosition).getJudul());
-//                datatanggal.setText(listDataDaftar.get(adapterPosition).getTanggal());
                 dataharga.setText(String.valueOf(listDataDaftar.get(adapterPosition).getHarga()));
                 datajumlah.setText(String.valueOf(listDataDaftar.get(adapterPosition).getJumlah()));
-//                startActivity(new Intent(getActivity(), InterfaceMakanan.class));
                 Toast.makeText(getActivity(), listDataDaftar.get(adapterPosition).getJudul(), Toast.LENGTH_SHORT).show();
             }
         };

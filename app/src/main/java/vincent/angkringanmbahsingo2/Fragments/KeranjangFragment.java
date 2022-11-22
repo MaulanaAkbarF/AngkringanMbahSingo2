@@ -45,7 +45,6 @@ public class KeranjangFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.fkerxrecyclekeranjang);
         datajudul = view.findViewById(R.id.dataxjudul);
-//        datatanggal = view.findViewById(R.id.dataxtanggal);
         dataharga = view.findViewById(R.id.dataxharga);
         datajumlah = view.findViewById(R.id.dataxjumlah);
         hargabelitotal = view.findViewById(R.id.dataxhargabelitotal);
@@ -72,10 +71,8 @@ public class KeranjangFragment extends Fragment {
             @Override
             public void clickItemListener(int adapterPosition) {
                 datajudul.setText(listDataDaftar.get(adapterPosition).getJudul());
-//                datatanggal.setText(listDataDaftar.get(adapterPosition).getTanggal());
                 dataharga.setText(String.valueOf(listDataDaftar.get(adapterPosition).getHarga()));
                 datajumlah.setText(String.valueOf(listDataDaftar.get(adapterPosition).getJumlah()));
-//                startActivity(new Intent(getActivity(), InterfaceMakanan.class));
                 Toast.makeText(getActivity(), listDataDaftar.get(adapterPosition).getJudul(), Toast.LENGTH_SHORT).show();
             }
         };

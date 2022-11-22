@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--duration bisa diganti dengan value integer, contoh : android:duration="600"-->
+<!--default : @android:integer/config_longAnimTime-->
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="@android:integer/config_longAnimTime"
+    android:startOffset="100"
+    android:shareInterpolator="@android:anim/accelerate_interpolator">
+    <translate
+        android:fromYDelta="0"
+        android:toYDelta="-400"/>
+    <alpha
+        android:fromAlpha="1.0"
+        android:toAlpha="0.0"/>
+</set>

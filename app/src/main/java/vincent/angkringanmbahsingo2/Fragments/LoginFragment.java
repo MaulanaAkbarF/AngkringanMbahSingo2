@@ -28,7 +28,7 @@ public class LoginFragment extends Fragment {
     DataHelper dbhelper;
     Button btnmasuk;
     public static EditText username, password;
-    TextView daftar;
+    TextView daftar, lupapass;
     private String KEY_NAME = "NAMA";
 
     // Digunakan ketika Login menggunakan fungai cekLogin()
@@ -50,6 +50,8 @@ public class LoginFragment extends Fragment {
         password = (EditText) view.findViewById(R.id.lpxpassword);
         btnmasuk = (Button) view.findViewById(R.id.lpxbtnMasuk);
         daftar = (TextView) view.findViewById(R.id.flxtxtDaftar);
+        lupapass = (TextView) view.findViewById(R.id.lpxtxtlupapass);
+        lupapass.setVisibility(View.INVISIBLE);
 
         // Membuat animasi
         easeOutSineTop = AnimationUtils.loadAnimation(getActivity(), R.anim.ease_out_sine_top);
@@ -64,6 +66,15 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 cekLogin ();
+            }
+        });
+
+        // Fungsi Tombol Lupa Password
+        lupapass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction fragtr = getFragmentManager().beginTransaction();
+                fragtr.replace(R.id.fragmentcontainer, new LupaPasswordFragment()).addToBackStack("tag").commit();
             }
         });
 
@@ -86,6 +97,7 @@ public class LoginFragment extends Fragment {
             fragtr.replace(R.id.fragmentcontainer, new HomeSplashScreenFragment()).addToBackStack("tag").commit();
         } else {
             Toast.makeText(getActivity(), "Username atau Password salah!", Toast.LENGTH_SHORT).show();
+            lupapass.setVisibility(View.VISIBLE);
         }
     }
 
@@ -106,6 +118,7 @@ public class LoginFragment extends Fragment {
             fragtr.replace(R.id.fragmentcontainer, new HomeSplashScreenFragment()).addToBackStack("tag").commit();
         }else {
             Toast.makeText(getActivity(), "Login Gagal!", Toast.LENGTH_SHORT).show();
+            lupapass.setVisibility(View.VISIBLE);
         }
     }
 }
