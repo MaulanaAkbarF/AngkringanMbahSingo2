@@ -18,7 +18,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import vincent.angkringanmbahsingo2.API.API;
+import vincent.angkringanmbahsingo2.API.APIInterface;
 import vincent.angkringanmbahsingo2.Dependencies.DataHelper;
+import vincent.angkringanmbahsingo2.ModelAPI.ResponseRegister;
 import vincent.angkringanmbahsingo2.R;
 
 public class RegisterFragment extends Fragment {
@@ -27,9 +33,10 @@ public class RegisterFragment extends Fragment {
     CardView image;
     LinearLayout input, button;
     DataHelper dbhelper;
-    EditText user, pass, nama, alamat, nohp;
+    EditText user, email,  pass, nama, alamat, nohp;
     Button register;
     TextView login;
+    APIInterface apiInterface;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -43,6 +50,7 @@ public class RegisterFragment extends Fragment {
         // Inisiasi komponen utama
         dbhelper = new DataHelper(getActivity());
         user = (EditText) view.findViewById(R.id.rpxusername);
+        email = (EditText) view.findViewById(R.id.rpxemail);
         pass = (EditText) view.findViewById(R.id.rpxpassword);
         nama = (EditText) view.findViewById(R.id.rpxnama);
         alamat = (EditText) view.findViewById(R.id.rpxalamat);
@@ -62,34 +70,7 @@ public class RegisterFragment extends Fragment {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String username = user.getText().toString().trim();
-                String password = pass.getText().toString().trim();
-                String namalengkap = nama.getText().toString().trim();
-                String alamatlengkap = alamat.getText().toString().trim();
-                String nomorhp = nohp.getText().toString().trim();
-
-                ContentValues values = new ContentValues();
-
-                if (nama.getText().toString().equals("") && nama.getText().toString().isEmpty()){
-                    nama.setError("Nama Lengkap tidak boleh kosong!");
-                }else if (nohp.getText().toString().equals("") && nohp.getText().toString().isEmpty()){
-                    nohp.setError("Nomor HP tidak boleh kosong!");
-                }else if (user.getText().toString().equals("") && user.getText().toString().isEmpty()){
-                    user.setError("Username tidak boleh kosong!");
-                }else if (pass.getText().toString().equals("") && pass.getText().toString().isEmpty()){
-                    pass.setError("Password tidak boleh kosong!");
-                }else {
-                    values.put(DataHelper.row_username, username);
-                    values.put(DataHelper.row_password, password);
-                    values.put(DataHelper.row_nama, namalengkap);
-                    values.put(DataHelper.row_alamat, alamatlengkap);
-                    values.put(DataHelper.row_nohp, nomorhp);
-                    dbhelper.insertData(values);
-
-                    Toast.makeText(getActivity(), "Register successful", Toast.LENGTH_SHORT).show();
-                    FragmentTransaction fragtr = getFragmentManager().beginTransaction();
-                    fragtr.replace(R.id.fragmentcontainer, new LoginFragment()).addToBackStack("tag").commit();
-                }
+                registerRetrofit();
             }
         });
 
@@ -102,5 +83,75 @@ public class RegisterFragment extends Fragment {
             }
         });
         return view;
+    }
+
+    public void registerSQLite(){
+        String username = user.getText().toString().trim();
+        String emailkamu = email.getText().toString().trim();
+        String password = pass.getText().toString().trim();
+        String namalengkap = nama.getText().toString().trim();
+        String alamatlengkap = alamat.getText().toString().trim();
+        String nomorhp = nohp.getText().toString().trim();
+
+        ContentValues values = new ContentValues();
+
+        if (nama.getText().toString().equals("") && nama.getText().toString().isEmpty()){
+            nama.setError("Nama Lengkap tidak boleh kosong!");
+        }else if (nohp.getText().toString().equals("") && nohp.getText().toString().isEmpty()){
+            nohp.setError("Nomor HP tidak boleh kosong!");
+        }else if (user.getText().toString().equals("") && user.getText().toString().isEmpty()){
+            user.setError("Username tidak boleh kosong!");
+        }else if (pass.getText().toString().equals("") && pass.getText().toString().isEmpty()){
+            pass.setError("Password tidak boleh kosong!");
+        }else {
+            values.put(DataHelper.row_username, username);
+            values.put(DataHelper.row_password, password);
+            values.put(DataHelper.row_nama, namalengkap);
+            values.put(DataHelper.row_alamat, alamatlengkap);
+            values.put(DataHelper.row_nohp, nomorhp);
+            dbhelper.insertData(values);
+
+            Toast.makeText(getActivity(), "Register successful", Toast.LENGTH_SHORT).show();
+            FragmentTransaction fragtr = getFragmentManager().beginTransaction();
+            fragtr.replace(R.id.fragmentcontainer, new LoginFragment()).addToBackStack("tag").commit();
+        }
+    }
+
+    public void registerRetrofit(){
+        String username = user.getText().toString().trim();
+        String emailkamu = email.getText().toString().trim();
+        String password = pass.getText().toString().trim();
+        String namalengkap = nama.getText().toString().trim();
+        String alamatlengkap = alamat.getText().toString().trim();
+        String nomorhp = nohp.getText().toString().trim();
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                apiInterface = API.getService().create(APIInterface.class);
+                Call<ResponseRegister> simpan = apiInterface.registerResponse(username,
+                        emailkamu,password,namalengkap,nomorhp, alamatlengkap);
+                simpan.enqueue(new Callback<ResponseRegister>() {
+                    @Override
+                    public void onResponse(Call<ResponseRegister> call, Response<ResponseRegister> response) {
+                        int kode = response.body().getKode();
+                        if (kode == 1){
+                            Toast.makeText(getActivity(), "Register successful", Toast.LENGTH_SHORT).show();
+                            FragmentTransaction fragtr = getFragmentManager().beginTransaction();
+                            fragtr.replace(R.id.fragmentcontainer, new LoginFragment()).addToBackStack("tag").commit();
+                        } else {
+                            Toast.makeText(getActivity(), "Register gagal", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseRegister> call, Throwable t) {
+                        Toast.makeText(getActivity(),t.getMessage(),Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+
+
+
     }
 }

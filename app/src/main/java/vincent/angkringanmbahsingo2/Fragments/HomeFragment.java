@@ -2,7 +2,10 @@ package vincent.angkringanmbahsingo2.Fragments;
 
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -32,6 +35,7 @@ public class HomeFragment extends Fragment {
     ScrollView rvdatalayout;
 
     public static TextView datajudul, datadesc, dataharga, datastok;
+    CardView btnprofil;
     RecyclerView recyclerView1, recyclerView2;
     List<HomeRvModel> listDataDaftar;
     HomeRvAdapter adapterItemDaftar;
@@ -85,6 +89,7 @@ public class HomeFragment extends Fragment {
         datadesc = view.findViewById(R.id.dataxdesc);
         dataharga = view.findViewById(R.id.dataxharga);
         datastok = view.findViewById(R.id.dataxstok);
+        btnprofil = view.findViewById(R.id.fhxbtnprofil);
 
         // Memanggil List Data pada Recycle View
         MainHome mh = new MainHome();
@@ -103,6 +108,14 @@ public class HomeFragment extends Fragment {
         };
         adapterItemDaftar = new HomeRvAdapter(listDataDaftar,adapterItemListenerInterface);
         recyclerView2.setAdapter(adapterItemDaftar);
+
+        btnprofil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction fragtr = getFragmentManager().beginTransaction();
+                fragtr.replace(R.id.fragmentcontainersplash, new ProfilFragment()).addToBackStack("tag").commit();
+            }
+        });
 
         return view;
     }

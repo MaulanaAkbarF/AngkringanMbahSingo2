@@ -17,8 +17,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import vincent.angkringanmbahsingo2.API.API;
+import vincent.angkringanmbahsingo2.API.APIInterface;
 import vincent.angkringanmbahsingo2.Dependencies.DataHelper;
 import vincent.angkringanmbahsingo2.MainActivity.MainHome;
+import vincent.angkringanmbahsingo2.ModelAPI.ResponseLogin;
 import vincent.angkringanmbahsingo2.R;
 
 public class LoginFragment extends Fragment {
@@ -29,6 +35,7 @@ public class LoginFragment extends Fragment {
     Button btnmasuk;
     public static EditText username, password;
     TextView daftar, lupapass;
+    APIInterface apiInterface;
     private String KEY_NAME = "NAMA";
 
     // Digunakan ketika Login menggunakan fungai cekLogin()
@@ -65,7 +72,7 @@ public class LoginFragment extends Fragment {
         btnmasuk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cekLogin ();
+                cekLoginRetrofit();
             }
         });
 
@@ -120,5 +127,29 @@ public class LoginFragment extends Fragment {
             Toast.makeText(getActivity(), "Login Gagal!", Toast.LENGTH_SHORT).show();
             lupapass.setVisibility(View.VISIBLE);
         }
+    }
+
+    // Deklarasi Fungsi Login menggunakan Retrofit
+    private void cekLoginRetrofit() {
+        String dataUser = username.getText().toString().trim();
+        String dataPass = password.getText().toString().trim();
+        apiInterface = API.getService().create(APIInterface.class);
+        Call<ResponseLogin> loginCall = apiInterface.setLogin(dataUser, dataPass);
+        loginCall.enqueue(new Callback<ResponseLogin>() {
+            @Override
+            public void onResponse(Call<ResponseLogin> call, Response<ResponseLogin> response) {
+                if (response.body().getKode() == 1) {
+                    Toast.makeText(getActivity(), "Welcome Bolo...!!", Toast.LENGTH_SHORT).show();
+                    FragmentTransaction fragtr = getFragmentManager().beginTransaction();
+                    fragtr.replace(R.id.fragmentcontainer, new HomeSplashScreenFragment()).addToBackStack("tag").commit();
+                }else{
+                    Toast.makeText(getActivity(), "Login Gagal", Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void onFailure(Call<ResponseLogin> call, Throwable t) {
+                Toast.makeText(getActivity(),t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

@@ -124,7 +124,27 @@
                         android:textColorHint="@color/dark_blue"
                         android:textSize="@dimen/lp.ukuranteksinput" />
                 </com.google.android.material.textfield.TextInputLayout>
-
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    app:boxBackgroundMode="outline"
+                    app:boxStrokeColor="@color/dark_blue"
+                    app:passwordToggleTint="@color/teal_200">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/rpxusername"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/lp.ukuranmarginbawahinput"
+                        android:drawableLeft="@drawable/usernameicon"
+                        android:drawablePadding="10dp"
+                        android:hint="Username"
+                        android:maxLength="20"
+                        android:inputType="text"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/dark_blue"
+                        android:textSize="@dimen/lp.ukuranteksinput" />
+                </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
@@ -135,7 +155,7 @@
                     app:passwordToggleTint="@color/teal_200">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/rpxusername"
+                        android:id="@+id/rpxemail"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/lp.ukuranmarginbawahinput"
                         android:drawableLeft="@drawable/usernameicon"
