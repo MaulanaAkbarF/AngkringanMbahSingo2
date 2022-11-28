@@ -1,24 +1,30 @@
-package vincent.angkringanmbahsingo2.Interfaces;
+package vincent.angkringanmbahsingo2.Fragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
+
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import vincent.angkringanmbahsingo2.Fragments.MakananFragment;
-import vincent.angkringanmbahsingo2.Fragments.MinumanFragment;
 import vincent.angkringanmbahsingo2.R;
 
-public class InterfaceMakanan extends AppCompatActivity {
+public class InterfaceMakananFragment extends Fragment {
 
+    Animation easeOutQuadRight, easeOutQuadRightOut;
+    ConstraintLayout consmain;
     public static TextView interdatajudul, interdatadesc, interdataharga, interdatastok, txtjumlah, txttotal;
-    ImageView interdataimage, plusimage, minimage;
+    ImageView interdataimage, plusimage, minimage, imageback;
     Dialog dialog;
 
     static String currency = "Rp. %,d";
@@ -30,25 +36,42 @@ public class InterfaceMakanan extends AppCompatActivity {
     static MakananFragment makfrag = new MakananFragment();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_interfaces_makanan);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_interface_makanan, container, false);
 
-        interdatajudul = findViewById(R.id.interxjudulmenu);
-        interdatadesc = findViewById(R.id.interxdescmenu);
-        interdataharga = findViewById(R.id.interxhargamenu);
-        interdatastok = findViewById(R.id.interxstokmenu);
-        txtjumlah = findViewById(R.id.interxteksjumlah);
-        txttotal = findViewById(R.id.interxtotalharga);
-        plusimage = findViewById(R.id.interximageplus);
-        minimage = findViewById(R.id.interximagemin);
+        consmain = view.findViewById(R.id.fmakxconsmain);
+        interdatajudul = view.findViewById(R.id.interxjudulmenu);
+        interdatadesc = view.findViewById(R.id.interxdescmenu);
+        interdataharga = view.findViewById(R.id.interxhargamenu);
+        interdatastok = view.findViewById(R.id.interxstokmenu);
+        txtjumlah = view.findViewById(R.id.interxteksjumlah);
+        txttotal = view.findViewById(R.id.interxtotalharga);
+        plusimage = view.findViewById(R.id.interximageplus);
+        minimage = view.findViewById(R.id.interximagemin);
+        imageback = view.findViewById(R.id.fmakxback);
+
+        // Membuat animasi
+        easeOutQuadRight = AnimationUtils.loadAnimation(getActivity(), R.anim.ease_out_quad_right);
+        easeOutQuadRightOut = AnimationUtils.loadAnimation(getActivity(), R.anim.ease_out_quad_right_out);
+
+        consmain.setVisibility(View.VISIBLE);
+        consmain.startAnimation(easeOutQuadRight);
 
         if (makfrag.getMakananClicked()){
             getDataMakanan();
         }
 
+        imageback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                consmain.startAnimation(easeOutQuadRightOut);
+                consmain.setVisibility(View.GONE);
+            }
+        });
+
         countJumlah();
         jumlahClickable();
+        return view;
     }
 
     public static void getDataMakanan(){
@@ -96,7 +119,7 @@ public class InterfaceMakanan extends AppCompatActivity {
     private void showAlertJumlah(){
         EditText input;
         Button batal, kirim;
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         View view = getLayoutInflater().inflate(R.layout.alert_jumlah,null);
         input = view.findViewById(R.id.alertxinputjumlah);
         batal = view.findViewById(R.id.alertxbtnbatal);

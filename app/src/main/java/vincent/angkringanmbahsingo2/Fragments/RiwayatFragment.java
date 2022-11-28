@@ -3,7 +3,6 @@ package vincent.angkringanmbahsingo2.Fragments;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -15,10 +14,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.DatePicker;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,11 +33,10 @@ public class RiwayatFragment extends Fragment {
 
     Animation easeOutQuadLeft, easeOutQuadRight, easeOutQuadLeftOut, easeOutQuadRightOut;
     public static TextView datajudul, datatanggal, dataharga, datajumlah, btnfilter, btnubah, btnhapussemua, btnselesai;
-    CheckBox check;
-    public static List<HistRvModel> listDataDaftar;
+    List<HistRvModel> listDataDaftar;
     RecyclerView recyclerView;
-    public static HistRvAdapter adapterItemDaftar;
-    public static HistRvAdapter.AdapterItemListener adapterItemListenerInterface;
+    HistRvAdapter adapterItemDaftar;
+    HistRvAdapter.AdapterItemListener adapterItemListenerInterface;
     Dialog dialog;
     DatePickerDialog picker;
 
@@ -54,7 +49,7 @@ public class RiwayatFragment extends Fragment {
         listDataDaftar.add(new HistRvModel("Nasi Goreng Kecap", 12000, 30, R.drawable.imagefood));
         listDataDaftar.add(new HistRvModel("Nasi Goreng Pedas", 13000, 40, R.drawable.imagefood2));
         listDataDaftar.add(new HistRvModel("Nasi Goreng Ayam", 15000, 15, R.drawable.imagefood));
-        listDataDaftar.add(new HistRvModel("Nasi Goreng Spesial Mbah Singo",20000, 70000, R.drawable.imagefood2));
+        listDataDaftar.add(new HistRvModel("Nasi Goreng Spesial Mbah Singo dengan Bumbu Unik",20000, 70000, R.drawable.imagefood2));
     }
 
     @Override
@@ -125,10 +120,10 @@ public class RiwayatFragment extends Fragment {
                 btnselesai.startAnimation(easeOutQuadRight);
             }
         });
-        return true;
+        return false;
     }
 
-    private void selesaiClickable(){
+    public boolean selesaiClickable(){
         btnselesai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -142,6 +137,7 @@ public class RiwayatFragment extends Fragment {
                 btnselesai.startAnimation(easeOutQuadRightOut);
             }
         });
+        return false;
     }
 
     private void filterClickable(){

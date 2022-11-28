@@ -123,7 +123,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/fkerxbtnbeli"
-            android:text="Rp. 120000"
+            android:text="Rp. Gratis"
             android:textSize="@dimen/hp.ukuranteksinfo"
             android:textColor="@color/red"
             android:textStyle="bold"/>

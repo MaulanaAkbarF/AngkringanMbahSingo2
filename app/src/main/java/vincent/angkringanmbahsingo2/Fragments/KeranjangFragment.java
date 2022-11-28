@@ -1,13 +1,16 @@
 package vincent.angkringanmbahsingo2.Fragments;
 
+import android.opengl.Visibility;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +25,7 @@ import vincent.angkringanmbahsingo2.RecycleviewModel.HistRvModel;
 public class KeranjangFragment extends Fragment {
 
     public static TextView datajudul, datatanggal, dataharga, datajumlah, hargabelitotal;
+    Button btnbeli;
     List<HistRvModel> listDataDaftar;
     RecyclerView recyclerView;
     CartRvAdapter adapterItemDaftar;
@@ -48,6 +52,7 @@ public class KeranjangFragment extends Fragment {
         dataharga = view.findViewById(R.id.dataxharga);
         datajumlah = view.findViewById(R.id.dataxjumlah);
         hargabelitotal = view.findViewById(R.id.dataxhargabelitotal);
+        btnbeli = view.findViewById(R.id.fkerxbtnbeli);
 
         // Memanggil List Data pada Recycle View
         MainHome mh = new MainHome();
@@ -60,9 +65,17 @@ public class KeranjangFragment extends Fragment {
         adapterItemDaftar = new CartRvAdapter(listDataDaftar,adapterItemListenerInterface);
         recyclerView.setAdapter(adapterItemDaftar);
 
+        btnbeli.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction fragtr = getFragmentManager().beginTransaction();
+                fragtr.replace(R.id.fragmentcontainersplash, new DetailPesananFragment()).addToBackStack("tag").commit();
+            }
+        });
+
 //        hargabelitotal.setText(String.valueOf(listDataDaftar.get(adapterItemDaftar).getHarga()) * listDataDaftar.size());
 
-        getKeranjangClicked(); //Penyebab data ne looping mergo fungsi ini dijalanno meneh pas jarak 4 bottom navmenu di klik/geser
+        getKeranjangClicked();
         return view;
     }
 

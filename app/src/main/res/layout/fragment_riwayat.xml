@@ -6,8 +6,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="10dp"
     tools:context=".Fragments.RiwayatFragment">
-    <include layout="@layout/homepage_rvriwayat"
-        android:visibility="invisible"/>
     <LinearLayout
         android:id="@+id/friwxlinear"
         android:layout_width="match_parent"
@@ -107,6 +105,10 @@
                 android:layout_height="wrap_content"/>
             <TextView
                 android:id="@+id/dataxjumlah"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/dataxset"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <ImageView

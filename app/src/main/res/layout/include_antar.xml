@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <TextView
+        android:id="@+id/damxlabel1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="Alamat Kamu"
+        android:textSize="@dimen/fh.ukurantekssubjudul"
+        android:textColor="@color/dark_green"
+        android:fontFamily="@font/inter_semibold"/>
+    <TextView
+        android:id="@+id/daxdataalamat3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="5dp"
+        app:layout_constraintTop_toBottomOf="@id/damxlabel1"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="Jl Jalan ke Kota Nganjuk, Nganjuk, Nganjuk, Nganjuk, Nganjuk, Kota Nganjuk."
+        android:textSize="@dimen/hp.ukuranteksinfo"
+        android:textColor="@color/black"
+        android:fontFamily="@font/inter_regular"/>
+    <Button
+        android:id="@+id/daxbtntetapkan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@id/daxdataalamat3"
+        android:backgroundTint="@color/dark_blue"
+        android:paddingVertical="10dp"
+        android:text="Tetapkan Alamat"
+        android:textSize="@dimen/fh.ukuranteksjudul"
+        app:cornerRadius="8dp"
+        app:layout_constraintBottom_toBottomOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

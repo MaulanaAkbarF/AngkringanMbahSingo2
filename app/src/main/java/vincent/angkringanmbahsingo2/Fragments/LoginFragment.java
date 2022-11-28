@@ -72,7 +72,7 @@ public class LoginFragment extends Fragment {
         btnmasuk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cekLoginRetrofit();
+                cekLogin();
             }
         });
 

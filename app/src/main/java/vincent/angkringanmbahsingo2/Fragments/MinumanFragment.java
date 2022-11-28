@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -21,8 +22,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import vincent.angkringanmbahsingo2.Interfaces.InterfaceMakanan;
-import vincent.angkringanmbahsingo2.Interfaces.InterfaceMinuman;
 import vincent.angkringanmbahsingo2.MainActivity.MainHome;
 import vincent.angkringanmbahsingo2.R;
 import vincent.angkringanmbahsingo2.RecycleviewAdapter.HomeRvAdapter;
@@ -121,7 +120,8 @@ public class MinumanFragment extends Fragment {
                 datadesc.setText(listDataDaftar.get(adapterPosition).getDesc());
                 dataharga.setText(String.valueOf(listDataDaftar.get(adapterPosition).getHarga()));
                 datastok.setText(String.valueOf(listDataDaftar.get(adapterPosition).getStok()));
-                startActivity(new Intent(getActivity(), InterfaceMinuman.class));
+                FragmentTransaction fragtr = getFragmentManager().beginTransaction();
+                fragtr.replace(R.id.fragmentcontainersplash, new InterfaceMinumanFragment()).addToBackStack("tag").commit();
             }
         };
         return true;

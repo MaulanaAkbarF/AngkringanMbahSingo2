@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import vincent.angkringanmbahsingo2.Fragments.RiwayatFragment;
 import vincent.angkringanmbahsingo2.R;
 import vincent.angkringanmbahsingo2.RecycleviewModel.HistRvModel;
 
@@ -22,6 +23,7 @@ public class HistRvAdapter extends RecyclerView.Adapter<HistRvAdapter.ViewHolder
     HistRvAdapter.AdapterItemListener adapterItemListener;
     static String currency = "Rp. %,d";
     static String stock = "x%,d";
+    static RiwayatFragment rf = new RiwayatFragment();
 
     public interface AdapterItemListener{
         void clickItemListener(int adapterPosition);
@@ -45,9 +47,6 @@ public class HistRvAdapter extends RecyclerView.Adapter<HistRvAdapter.ViewHolder
         holder.harga.setText(String.format(currency, listDataAdapter.get(position).getHarga()));
         holder.jumlah.setText(String.format(stock, listDataAdapter.get(position).getJumlah()));
         holder.gambar.setImageResource(listDataAdapter.get(position).getGambar());
-        if (String.valueOf(holder.set.getText()).equals("0")){
-            holder.check.setVisibility(View.GONE);
-        }
     }
 
     @Override
@@ -56,9 +55,8 @@ public class HistRvAdapter extends RecyclerView.Adapter<HistRvAdapter.ViewHolder
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        Animation easeOutQuadLeft, easeOutQuadRight, easeOutQuadLeftOut, easeOutQuadRightOut;
-        CheckBox check;
         TextView set, judul, harga, jumlah;
+        CheckBox check;
         ImageView gambar;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -67,15 +65,7 @@ public class HistRvAdapter extends RecyclerView.Adapter<HistRvAdapter.ViewHolder
             harga = itemView.findViewById(R.id.hpxharga);
             jumlah = itemView.findViewById(R.id.hpxjumlah);
             gambar = itemView.findViewById(R.id.hpximage);
-
-            // Inisiasi komponen animasi
             check = itemView.findViewById(R.id.friwxcheckbox);
-
-            // Membuat animasi
-            easeOutQuadLeft = AnimationUtils.loadAnimation(itemView.getContext(), R.anim.ease_out_quad_left);
-            easeOutQuadRight = AnimationUtils.loadAnimation(itemView.getContext(), R.anim.ease_out_quad_right);
-            easeOutQuadLeftOut = AnimationUtils.loadAnimation(itemView.getContext(), R.anim.ease_out_quad_left_out);
-            easeOutQuadRightOut = AnimationUtils.loadAnimation(itemView.getContext(), R.anim.ease_out_quad_right_out);
             itemView.setOnClickListener(this);
         }
 
