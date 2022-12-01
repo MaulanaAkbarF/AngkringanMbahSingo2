@@ -128,8 +128,7 @@ public class RegisterFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 apiInterface = API.getService().create(APIInterface.class);
-                Call<ResponseRegister> simpan = apiInterface.registerResponse(username,
-                        emailkamu,password,namalengkap,nomorhp, alamatlengkap);
+                Call<ResponseRegister> simpan = apiInterface.registerResponse(username,emailkamu,password,namalengkap,nomorhp, alamatlengkap);
                 simpan.enqueue(new Callback<ResponseRegister>() {
                     @Override
                     public void onResponse(Call<ResponseRegister> call, Response<ResponseRegister> response) {
@@ -150,8 +149,5 @@ public class RegisterFragment extends Fragment {
                 });
             }
         });
-
-
-
     }
 }

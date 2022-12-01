@@ -23,7 +23,7 @@ public class InterfaceMakananFragment extends Fragment {
 
     Animation easeOutQuadRight, easeOutQuadRightOut;
     ConstraintLayout consmain;
-    public static TextView interdatajudul, interdatadesc, interdataharga, interdatastok, txtjumlah, txttotal;
+    public static TextView interidmenu, interdatajudul, interdatadesc, interdataharga, interdatastok, txtjumlah, txttotal;
     ImageView interdataimage, plusimage, minimage, imageback;
     Dialog dialog;
 
@@ -40,6 +40,7 @@ public class InterfaceMakananFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_interface_makanan, container, false);
 
         consmain = view.findViewById(R.id.fmakxconsmain);
+        interidmenu = view.findViewById(R.id.interxidmenu);
         interdatajudul = view.findViewById(R.id.interxjudulmenu);
         interdatadesc = view.findViewById(R.id.interxdescmenu);
         interdataharga = view.findViewById(R.id.interxhargamenu);
@@ -75,6 +76,7 @@ public class InterfaceMakananFragment extends Fragment {
     }
 
     public static void getDataMakanan(){
+        interidmenu.setText(makfrag.dataidmenu.getText());
         interdatajudul.setText(makfrag.datajudul.getText());
         interdatadesc.setText(makfrag.datadesc.getText());
         interdataharga.setText(String.format(currency, Integer.parseInt(String.valueOf(makfrag.dataharga.getText()))));

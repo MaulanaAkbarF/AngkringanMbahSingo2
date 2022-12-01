@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,6 +21,13 @@ public class DetailPesananFragment extends Fragment {
     LinearLayout linearlay, btnalamat, btnmetode;
     public static TextView teksalamat, teksmetode;
     ImageView btnback;
+    Button btnpesan;
+
+    private String alamatFromDetailAlamat;
+    public DetailPesananFragment(String alamat) {
+        this.alamatFromDetailAlamat = alamat;
+    }
+    public DetailPesananFragment(){}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -31,6 +39,11 @@ public class DetailPesananFragment extends Fragment {
         teksalamat = view.findViewById(R.id.dpxtxtalamat);
         teksmetode = view.findViewById(R.id.dpxtxtmetode);
         btnback = view.findViewById(R.id.dpxbtnback);
+        btnpesan = view.findViewById(R.id.dpxbtnpesan);
+
+        if(alamatFromDetailAlamat !=null) {
+            teksalamat.setText(alamatFromDetailAlamat);
+        }
 
         btnalamat.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,10 +61,18 @@ public class DetailPesananFragment extends Fragment {
             }
         });
 
+        btnpesan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction fragtr = getFragmentManager().beginTransaction();
+                fragtr.replace(R.id.fragmentcontainersplash, new SplashSelesaiFragment()).addToBackStack("tag").commit();
+            }
+        });
+
         btnback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                closeFragment();
             }
         });
 
@@ -66,5 +87,10 @@ public class DetailPesananFragment extends Fragment {
                 System.out.print(".");
             }
         });
+    }
+
+    private void closeFragment(){
+        FragmentTransaction fragtr = getFragmentManager().beginTransaction().remove(this);
+        fragtr.commit();
     }
 }

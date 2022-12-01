@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -15,12 +16,21 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import vincent.angkringanmbahsingo2.API.API;
+import vincent.angkringanmbahsingo2.API.APIInterface;
 import vincent.angkringanmbahsingo2.MainActivity.MainHome;
+import vincent.angkringanmbahsingo2.ModelAPI.DataItemProduk;
+import vincent.angkringanmbahsingo2.ModelAPI.ResponseLogin;
+import vincent.angkringanmbahsingo2.ModelAPI.ResponseProduk;
 import vincent.angkringanmbahsingo2.R;
 import vincent.angkringanmbahsingo2.RecycleviewAdapter.HomeRvAdapter;
 import vincent.angkringanmbahsingo2.RecycleviewModel.HomeRvModel;
@@ -28,31 +38,35 @@ import vincent.angkringanmbahsingo2.RecycleviewModel.HomeRvModel;
 public class MakananFragment extends Fragment {
 
     Spinner spinner;
-    public static TextView datajudul, datadesc, dataharga, datastok;
+    public static TextView dataidmenu, datajudul, datadesc, dataharga, datastok;
     List<HomeRvModel> listDataDaftar;
     RecyclerView recyclerView;
     HomeRvAdapter adapterItemDaftar;
     HomeRvAdapter.AdapterItemListener adapterItemListenerInterface;
+
+    APIInterface apiInterface;
+    RecyclerView.Adapter addData;
+    private List<DataItemProduk> produkList = new ArrayList<>();
 
     // List Data pada Recycle View
     void isiDataMakanan(){
         if(listDataDaftar == null){
             listDataDaftar = new ArrayList<>();
         }
-        listDataDaftar.add(new HomeRvModel("Nasi Goreng", "Wenak tenaann, gass tukuo boss selak stok e entek diborong abang gojek", 10000, 20, R.drawable.imagefood));
-        listDataDaftar.add(new HomeRvModel("Nasi Goreng Kecap", "wis to percoyo o lek iki enak", 12000, 30, R.drawable.imagefood));
-        listDataDaftar.add(new HomeRvModel("Nasi Goreng Pedas", "dikandani ngeyel", 13000, 40, R.drawable.imagefood2));
-        listDataDaftar.add(new HomeRvModel("Nasi Goreng Ayam", "wuuuuuuuuuuuuuuuuuuuuuuueeeeeeeeeeeeennnnnnnnaaaaaaaaakkkkkkkkkkkk", 15000, 15, R.drawable.imagefood));
-        listDataDaftar.add(new HomeRvModel("Nasi Goreng Spesial Mbah Singo","sssssiiiiiiiiiiiiiiippppppppppp", 20000, 70, R.drawable.imagefood2));
+        listDataDaftar.add(new HomeRvModel("MK0001", "Nasi Goreng", "Wenak tenaann, gass tukuo boss selak stok e entek diborong abang gojek", 10000, 20, R.drawable.imagefood));
+        listDataDaftar.add(new HomeRvModel("MK0002", "Nasi Goreng Kecap", "wis to percoyo o lek iki enak", 12000, 30, R.drawable.imagefood));
+        listDataDaftar.add(new HomeRvModel("MK0003", "Nasi Goreng Pedas", "dikandani ngeyel", 13000, 40, R.drawable.imagefood2));
+        listDataDaftar.add(new HomeRvModel("MK0004", "Nasi Goreng Ayam", "wuuuuuuuuuuuuuuuuuuuuuuueeeeeeeeeeeeennnnnnnnaaaaaaaaakkkkkkkkkkkk", 15000, 15, R.drawable.imagefood));
+        listDataDaftar.add(new HomeRvModel("MK0005", "Nasi Goreng Spesial Mbah Singo","sssssiiiiiiiiiiiiiiippppppppppp", 20000, 70, R.drawable.imagefood2));
     }
 
     void isiDataCemilan(){
         if(listDataDaftar == null){
             listDataDaftar = new ArrayList<>();
         }
-        listDataDaftar.add(new HomeRvModel("Sundukan", "Sundukan seng paling wenak sak Nganjuk", 2000, 20, R.drawable.imagefood2));
-        listDataDaftar.add(new HomeRvModel("Baceman", "Baceman ndek kene paling wenak", 2000, 30, R.drawable.imagefood2));
-        listDataDaftar.add(new HomeRvModel("Gorengan", "pokok e enak", 1500, 40, R.drawable.imagefood));
+        listDataDaftar.add(new HomeRvModel("CM0001", "Sundukan", "Sundukan seng paling wenak sak Nganjuk", 2000, 20, R.drawable.imagefood2));
+        listDataDaftar.add(new HomeRvModel("CM0002", "Baceman", "Baceman ndek kene paling wenak", 2000, 30, R.drawable.imagefood2));
+        listDataDaftar.add(new HomeRvModel("CM0003", "Gorengan", "pokok e enak", 1500, 40, R.drawable.imagefood));
     }
 
     @Override
@@ -60,7 +74,7 @@ public class MakananFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_makanan, container, false);
 
         spinner = (Spinner) view.findViewById(R.id.fmakxspinner);
-        recyclerView = view.findViewById(R.id.fmakxrecyclemakanan);
+        dataidmenu = view.findViewById(R.id.dataxidmenu);
         datajudul = view.findViewById(R.id.dataxjudul);
         datadesc = view.findViewById(R.id.dataxdesc);
         dataharga = view.findViewById(R.id.dataxharga);
@@ -77,27 +91,18 @@ public class MakananFragment extends Fragment {
         if (String.valueOf(mh.set2.getText()).equals("0")){
             System.out.println("");
         } else if (String.valueOf(mh.set2.getText()).equals("1")){
-            isiDataMakanan();
+            retriveDataMakanan();
             mh.set2.setText("0");
         }
-        adapterItemDaftar = new HomeRvAdapter(listDataDaftar,adapterItemListenerInterface);
-        recyclerView.setAdapter(adapterItemDaftar);
+        retriveDataMakanan();
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long id) {
                 Object item = adapterView.getItemAtPosition(pos);
                 if (item == adapterView.getItemAtPosition(0)){
-                    listDataDaftar.clear();
-                    adapterItemDaftar.notifyDataSetChanged();
-                    isiDataMakanan();
-                    adapterItemDaftar = new HomeRvAdapter(listDataDaftar,adapterItemListenerInterface);
-                    recyclerView.setAdapter(adapterItemDaftar);
+                    retriveDataMakanan();
                 } else if (item == adapterView.getItemAtPosition(1)){
-                    listDataDaftar.clear();
-                    adapterItemDaftar.notifyDataSetChanged();
-                    isiDataCemilan();
-                    adapterItemDaftar = new HomeRvAdapter(listDataDaftar,adapterItemListenerInterface);
-                    recyclerView.setAdapter(adapterItemDaftar);
+                    retriveDataCemilan();
                 }
                 // Bingung menu panganan ne opo ae
             }
@@ -115,10 +120,11 @@ public class MakananFragment extends Fragment {
         adapterItemListenerInterface = new HomeRvAdapter.AdapterItemListener() {
             @Override
             public void clickItemListener(int adapterPosition) {
-                datajudul.setText(listDataDaftar.get(adapterPosition).getJudul());
-                datadesc.setText(listDataDaftar.get(adapterPosition).getDesc());
-                dataharga.setText(String.valueOf(listDataDaftar.get(adapterPosition).getHarga()));
-                datastok.setText(String.valueOf(listDataDaftar.get(adapterPosition).getStok()));
+//                dataidmenu.setText(produkList.get(adapterPosition).getIdmenu());
+                datajudul.setText(produkList.get(adapterPosition).getNamaProduk());
+//                datadesc.setText(listDataDaftar.get(adapterPosition).getDesc());
+                dataharga.setText(String.valueOf(produkList.get(adapterPosition).getHarga()));
+                datastok.setText(String.valueOf(produkList.get(adapterPosition).getStok()));
 
                 MakananFragment makfrag = new MakananFragment();
                 FragmentTransaction fragtr = getActivity().getSupportFragmentManager().beginTransaction();
@@ -126,5 +132,49 @@ public class MakananFragment extends Fragment {
             }
         };
         return true;
+    }
+
+    public void retriveDataMakanan(){
+        APIInterface apiInterface = API.getService().create(APIInterface.class);
+        Call<ResponseProduk> produkCall = apiInterface.getRetriveMakanan();
+        produkCall.enqueue(new Callback<ResponseProduk>() {
+            @Override
+            public void onResponse(Call<ResponseProduk> call, Response<ResponseProduk> response) {
+                produkList = response.body().getData();
+                addData = new HomeRvAdapter(getContext(), produkList, adapterItemListenerInterface);
+                recyclerView = getView().findViewById(R.id.fmakxrecyclemakanan);
+                recyclerView.setHasFixedSize(true);
+                recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),3));
+                recyclerView.setAdapter(addData);
+                addData.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseProduk> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void retriveDataCemilan(){
+        APIInterface apiInterface = API.getService().create(APIInterface.class);
+        Call<ResponseProduk> produkCall = apiInterface.getRetriveCemilan();
+        produkCall.enqueue(new Callback<ResponseProduk>() {
+            @Override
+            public void onResponse(Call<ResponseProduk> call, Response<ResponseProduk> response) {
+                produkList = response.body().getData();
+                addData = new HomeRvAdapter(getContext(), produkList, adapterItemListenerInterface);
+                recyclerView = getView().findViewById(R.id.fmakxrecyclemakanan);
+                recyclerView.setHasFixedSize(true);
+                recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),3));
+                recyclerView.setAdapter(addData);
+                addData.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseProduk> call, Throwable t) {
+
+            }
+        });
     }
 }

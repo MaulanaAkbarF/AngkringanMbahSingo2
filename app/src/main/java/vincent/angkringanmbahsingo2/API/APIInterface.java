@@ -3,8 +3,10 @@ package vincent.angkringanmbahsingo2.API;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 import vincent.angkringanmbahsingo2.ModelAPI.ResponseLogin;
+import vincent.angkringanmbahsingo2.ModelAPI.ResponseProduk;
 import vincent.angkringanmbahsingo2.ModelAPI.ResponseRegister;
 
 public interface APIInterface {
@@ -25,4 +27,13 @@ public interface APIInterface {
             @Field("no_hp") String no_hp,
             @Field("alamat") String alamat
     );
+
+    @GET("produk.php")
+    Call<ResponseProduk> getRetrive();
+
+    @GET ("makanan.php")
+    Call<ResponseProduk> getRetriveMakanan();
+
+    @GET ("cemilan.php")
+    Call<ResponseProduk> getRetriveCemilan();
 }

@@ -1,15 +1,24 @@
 package vincent.angkringanmbahsingo2.RecycleviewModel;
 
 public class HomeRvModel {
-    private String judul, desc;
+    private String idmenu, judul, desc;
     private int harga, stok, gambar;
 
-    public HomeRvModel(String judul, String desc, int harga, int stok, int gambar) {
+    public HomeRvModel(String idmenu, String judul, String desc, int harga, int stok, int gambar) {
+        this.idmenu = idmenu;
         this.judul = judul;
         this.desc = desc;
         this.harga = harga;
         this.stok = stok;
         this.gambar = gambar;
+    }
+
+    public String getIdmenu() {
+        return idmenu;
+    }
+
+    public void setIdmenu(String idmenu) {
+        this.idmenu = idmenu;
     }
 
     public String getJudul() {

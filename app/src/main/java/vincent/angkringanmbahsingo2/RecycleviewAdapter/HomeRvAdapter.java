@@ -1,5 +1,6 @@
 package vincent.angkringanmbahsingo2.RecycleviewAdapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,11 +12,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import vincent.angkringanmbahsingo2.ModelAPI.DataItemProduk;
 import vincent.angkringanmbahsingo2.RecycleviewModel.HomeRvModel;
 import vincent.angkringanmbahsingo2.R;
 
 public class HomeRvAdapter extends RecyclerView.Adapter<HomeRvAdapter.ViewHolder> {
-    List<HomeRvModel> listDataAdapter;
+    Context context;
+    List<DataItemProduk> listDataAdapter;
     HomeRvAdapter.AdapterItemListener adapterItemListener;
     static String currency = "Rp. %,d";
     static String stock = "%,d";
@@ -24,7 +27,8 @@ public class HomeRvAdapter extends RecyclerView.Adapter<HomeRvAdapter.ViewHolder
         void clickItemListener(int adapterPosition);
     }
 
-    public HomeRvAdapter(List<HomeRvModel> listDataAdapter, AdapterItemListener adapterItemListener) {
+    public HomeRvAdapter(Context context, List<DataItemProduk> listDataAdapter, AdapterItemListener adapterItemListener) {
+        this.context = context;
         this.listDataAdapter = listDataAdapter;
         this.adapterItemListener = adapterItemListener;
     }
@@ -38,11 +42,14 @@ public class HomeRvAdapter extends RecyclerView.Adapter<HomeRvAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull HomeRvAdapter.ViewHolder holder, int position) {
-        holder.judul.setText(listDataAdapter.get(position).getJudul());
-        holder.desc.setText(listDataAdapter.get(position).getDesc());
-        holder.harga.setText(String.format(currency, listDataAdapter.get(position).getHarga()));
-        holder.stok.setText(String.format(stock, listDataAdapter.get(position).getStok()));
-        holder.gambar.setImageResource(listDataAdapter.get(position).getGambar());
+        DataItemProduk db = listDataAdapter.get(position);
+
+//        holder.idmenu.setText(db.getNamaProduk());
+        holder.judul.setText(db.getNamaProduk());
+//        holder.desc.setText(db.getDesc());
+        holder.harga.setText(String.format(currency, Integer.parseInt(db.getHarga())));
+        holder.stok.setText(String.format(stock, Integer.parseInt(db.getStok())));
+//        holder.gambar.setImageResource(listDataAdapter.get(position).getGambar());
     }
 
     @Override
@@ -51,10 +58,11 @@ public class HomeRvAdapter extends RecyclerView.Adapter<HomeRvAdapter.ViewHolder
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        TextView judul, desc, harga, stok;
+        TextView idmenu, judul, desc, harga, stok;
         ImageView gambar;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            idmenu = itemView.findViewById(R.id.hpxidmenu);
             judul = itemView.findViewById(R.id.hpxjudul);
             desc = itemView.findViewById(R.id.hpxdesc);
             harga = itemView.findViewById(R.id.hpxharga);

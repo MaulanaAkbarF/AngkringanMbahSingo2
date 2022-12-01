@@ -32,7 +32,7 @@ public class MinumanFragment extends Fragment {
     Spinner spinner;
     static String currency = "Rp. %,d,00";
     static String stock = "%,d";
-    public static TextView datajudul, datadesc, dataharga, datastok;
+    public static TextView dataidmenu, datajudul, datadesc, dataharga, datastok;
     List<HomeRvModel> listDataDaftar;
     RecyclerView recyclerView;
     HomeRvAdapter adapterItemDaftar;
@@ -43,18 +43,18 @@ public class MinumanFragment extends Fragment {
         if(listDataDaftar == null){
             listDataDaftar = new ArrayList<>();
         }
-        listDataDaftar.add(new HomeRvModel("Teh Anget", "desc1", 2500, 400, R.drawable.imagedrink));
-        listDataDaftar.add(new HomeRvModel("Teh Manis","desc2", 3000, 450, R.drawable.imagedrink2));
-        listDataDaftar.add(new HomeRvModel("Jeruk Anget", "desc3", 3000, 460, R.drawable.imagedrink3));
-        listDataDaftar.add(new HomeRvModel("Jahe Anget", "desc4", 4000, 660, R.drawable.imagedrink));
+        listDataDaftar.add(new HomeRvModel("MP0001", "Teh Anget", "desc1", 2500, 400, R.drawable.imagedrink));
+        listDataDaftar.add(new HomeRvModel("MP0002", "Teh Manis","desc2", 3000, 450, R.drawable.imagedrink2));
+        listDataDaftar.add(new HomeRvModel("MP0003", "Jeruk Anget", "desc3", 3000, 460, R.drawable.imagedrink3));
+        listDataDaftar.add(new HomeRvModel("MP0004", "Jahe Anget", "desc4", 4000, 660, R.drawable.imagedrink));
     }
 
     void isiDataMinumanDingin(){
         if(listDataDaftar == null){
             listDataDaftar = new ArrayList<>();
         }
-        listDataDaftar.add(new HomeRvModel("Es Teh", "desc1", 2500, 400, R.drawable.imagedrink));
-        listDataDaftar.add(new HomeRvModel("Es Teh Manis","desc2", 3000, 450, R.drawable.imagedrink2));
+        listDataDaftar.add(new HomeRvModel("MD0001", "Es Teh", "desc1", 2500, 400, R.drawable.imagedrink));
+        listDataDaftar.add(new HomeRvModel("MD0002", "Es Teh Manis","desc2", 3000, 450, R.drawable.imagedrink2));
     }
 
     @Override
@@ -63,6 +63,7 @@ public class MinumanFragment extends Fragment {
 
         spinner = (Spinner) view.findViewById(R.id.fminxspinner);
         recyclerView = view.findViewById(R.id.fminxrecycleminuman);
+        dataidmenu = view.findViewById(R.id.dataxidmenu);
         datajudul = view.findViewById(R.id.dataxjudul);
         datadesc = view.findViewById(R.id.dataxdesc);
         dataharga = view.findViewById(R.id.dataxharga);
@@ -81,33 +82,33 @@ public class MinumanFragment extends Fragment {
             isiDataMinumanPanas();
             mh.set3.setText("0");
         }
-        adapterItemDaftar = new HomeRvAdapter(listDataDaftar,adapterItemListenerInterface);
-        recyclerView.setAdapter(adapterItemDaftar);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long id) {
-                Object item = adapterView.getItemAtPosition(pos);
-                if (item == adapterView.getItemAtPosition(0)){
-                    listDataDaftar.clear();
-                    adapterItemDaftar.notifyDataSetChanged();
-                    isiDataMinumanPanas();
-                    adapterItemDaftar = new HomeRvAdapter(listDataDaftar,adapterItemListenerInterface);
-                    recyclerView.setAdapter(adapterItemDaftar);
-                } else if (item == adapterView.getItemAtPosition(1)){
-                    listDataDaftar.clear();
-                    adapterItemDaftar.notifyDataSetChanged();
-                    isiDataMinumanDingin();
-                    adapterItemDaftar = new HomeRvAdapter(listDataDaftar,adapterItemListenerInterface);
-                    recyclerView.setAdapter(adapterItemDaftar);
-                }
-                // Bingung menu ngombe ne opo ae
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
+//        adapterItemDaftar = new HomeRvAdapter(listDataDaftar,adapterItemListenerInterface);
+//        recyclerView.setAdapter(adapterItemDaftar);
+//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long id) {
+//                Object item = adapterView.getItemAtPosition(pos);
+//                if (item == adapterView.getItemAtPosition(0)){
+//                    listDataDaftar.clear();
+//                    adapterItemDaftar.notifyDataSetChanged();
+//                    isiDataMinumanPanas();
+//                    adapterItemDaftar = new HomeRvAdapter(listDataDaftar,adapterItemListenerInterface);
+//                    recyclerView.setAdapter(adapterItemDaftar);
+//                } else if (item == adapterView.getItemAtPosition(1)){
+//                    listDataDaftar.clear();
+//                    adapterItemDaftar.notifyDataSetChanged();
+//                    isiDataMinumanDingin();
+//                    adapterItemDaftar = new HomeRvAdapter(listDataDaftar,adapterItemListenerInterface);
+//                    recyclerView.setAdapter(adapterItemDaftar);
+//                }
+//                // Bingung menu ngombe ne opo ae
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//
+//            }
+//        });
         getMinumanClicked();
         return view;
     }
@@ -116,6 +117,7 @@ public class MinumanFragment extends Fragment {
         adapterItemListenerInterface = new HomeRvAdapter.AdapterItemListener() {
             @Override
             public void clickItemListener(int adapterPosition) {
+                dataidmenu.setText(listDataDaftar.get(adapterPosition).getIdmenu());
                 datajudul.setText(listDataDaftar.get(adapterPosition).getJudul());
                 datadesc.setText(listDataDaftar.get(adapterPosition).getDesc());
                 dataharga.setText(String.valueOf(listDataDaftar.get(adapterPosition).getHarga()));

@@ -124,6 +124,10 @@
                     android:layout_height="0dp"
                     android:orientation="horizontal">
                     <TextView
+                        android:id="@+id/dataxidmenu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <TextView
                         android:id="@+id/dataxjudul"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
@@ -222,9 +226,7 @@
                         android:id="@+id/hpxrvterakhir"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        tools:listitem="@layout/homepage_rvmenu"/>
+                        android:orientation="horizontal"/>
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>

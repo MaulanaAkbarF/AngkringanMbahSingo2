@@ -1,5 +1,6 @@
 package vincent.angkringanmbahsingo2.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import vincent.angkringanmbahsingo2.Fragments.LupaPasswordFragment;
+import vincent.angkringanmbahsingo2.MainActivity.Lokasi;
 import vincent.angkringanmbahsingo2.R;
 
 public class DetailAlamatFragment extends Fragment {
@@ -24,10 +26,8 @@ public class DetailAlamatFragment extends Fragment {
     LinearLayout linearlay;
     RadioButton btn1, btn2;
     Button btntetapkan;
-    public TextView txtalamat;
+    public TextView label1, label2, txtalamat;
     ImageView btnback;
-
-    DetailPesananFragment dpf = new DetailPesananFragment();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -75,12 +75,11 @@ public class DetailAlamatFragment extends Fragment {
         });
     }
 
-    public void btnTetapkanClickable(){
+    public void btnTetapkanClickable() {
         btntetapkan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                txtalamat.setText("Kauman, Nganjuk");
-                dpf.teksalamat.setText(txtalamat.getText());
+                startActivity(new Intent(getActivity(), Lokasi.class));
             }
         });
     }
