@@ -18,6 +18,54 @@ public interface APIInterface {
     );
 
     @FormUrlEncoded
+    @POST("datauserhome.php")
+    Call<ResponseLogin> setDataHome(
+            @Field("nama_lengkap") String nama_lengkap
+    );
+
+    @FormUrlEncoded
+    @POST("updateusernama.php")
+    Call<ResponseLogin> setUserNama(
+            @Field("nama_lengkap") String nama_lengkap,
+            @Field("username") String username
+    );
+
+    @FormUrlEncoded
+    @POST("updateuserusername.php")
+    Call<ResponseLogin> setUserUsername(
+            @Field("nama_lengkap") String nama_lengkap,
+            @Field("username") String username
+    );
+
+    @FormUrlEncoded
+    @POST("updateuseralamat.php")
+    Call<ResponseLogin> setUserAlamat(
+            @Field("nama_lengkap") String nama_lengkap,
+            @Field("alamat") String alamat
+    );
+
+    @FormUrlEncoded
+    @POST("updateusernohp.php")
+    Call<ResponseLogin> setUserNohp(
+            @Field("nama_lengkap") String nama_lengkap,
+            @Field("no_hp") String no_hp
+    );
+
+    @FormUrlEncoded
+    @POST("updateuseremail.php")
+    Call<ResponseLogin> setUserEmail(
+            @Field("nama_lengkap") String nama_lengkap,
+            @Field("email") String email
+    );
+
+    @FormUrlEncoded
+    @POST("updateuserpassword.php")
+    Call<ResponseLogin> setUserPassword(
+            @Field("nama_lengkap") String nama_lengkap,
+            @Field("password") String password
+    );
+
+    @FormUrlEncoded
     @POST("register.php")
     Call<ResponseRegister> registerResponse(
             @Field("username") String username,
@@ -36,4 +84,25 @@ public interface APIInterface {
 
     @GET ("cemilan.php")
     Call<ResponseProduk> getRetriveCemilan();
+
+    @GET ("frozenfood.php")
+    Call<ResponseProduk> getRetriveFrozenfood();
+
+    @GET ("makananlainnya.php")
+    Call<ResponseProduk> getRetriveMakananLainnya();
+
+    @GET ("minumanpanas.php")
+    Call<ResponseProduk> getRetriveMinumanPanas();
+
+    @GET ("minumandingin.php")
+    Call<ResponseProduk> getRetriveMinumanDingin();
+
+    @GET ("minumansachet.php")
+    Call<ResponseProduk> getRetriveMinumanSachet();
+
+    @GET ("minumanherbal.php")
+    Call<ResponseProduk> getRetriveMinumanHerbal();
+
+    @GET ("minumanlainnya.php")
+    Call<ResponseProduk> getRetriveMinumanLainnya();
 }

@@ -80,6 +80,8 @@ public class DetailAlamatFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getActivity(), Lokasi.class));
+//                FragmentTransaction fragtr = getFragmentManager().beginTransaction();
+//                fragtr.replace(R.id.fragmentcontainersplash, new DetailPesananFragment(txtalamat.getText().toString())).commit();
             }
         });
     }

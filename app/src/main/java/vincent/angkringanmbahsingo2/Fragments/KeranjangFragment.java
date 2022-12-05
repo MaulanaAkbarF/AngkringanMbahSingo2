@@ -75,7 +75,7 @@ public class KeranjangFragment extends Fragment {
 
 //        hargabelitotal.setText(String.valueOf(listDataDaftar.get(adapterItemDaftar).getHarga()) * listDataDaftar.size());
 
-        getKeranjangClicked();
+//        getKeranjangClicked();
         return view;
     }
 

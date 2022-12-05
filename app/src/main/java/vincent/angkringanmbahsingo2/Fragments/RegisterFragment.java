@@ -43,20 +43,20 @@ public class RegisterFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_register, container, false);
 
         // Inisiasi komponen animasi
-        image = (CardView) view.findViewById(R.id.frxcardlayouttop);
-        input = (LinearLayout) view.findViewById(R.id.frxlinearinput);
-        button = (LinearLayout) view.findViewById(R.id.frxlinearbutton);
+        image = view.findViewById(R.id.frxcardlayouttop);
+        input = view.findViewById(R.id.frxlinearinput);
+        button = view.findViewById(R.id.frxlinearbutton);
 
         // Inisiasi komponen utama
         dbhelper = new DataHelper(getActivity());
-        user = (EditText) view.findViewById(R.id.rpxusername);
-        email = (EditText) view.findViewById(R.id.rpxemail);
-        pass = (EditText) view.findViewById(R.id.rpxpassword);
-        nama = (EditText) view.findViewById(R.id.rpxnama);
-        alamat = (EditText) view.findViewById(R.id.rpxalamat);
-        nohp = (EditText) view.findViewById(R.id.rpxnohp);
-        register = (Button) view.findViewById(R.id.frxbtndaftar);
-        login = (TextView) view.findViewById(R.id.frxtxtLogin);
+        user = view.findViewById(R.id.rpxusername);
+        email = view.findViewById(R.id.rpxemail);
+        pass = view.findViewById(R.id.rpxpassword);
+        nama = view.findViewById(R.id.rpxnama);
+        alamat = view.findViewById(R.id.rpxalamat);
+        nohp = view.findViewById(R.id.rpxnohp);
+        register = view.findViewById(R.id.frxbtndaftar);
+        login = view.findViewById(R.id.frxtxtLogin);
 
         // Membuat animasi
         easeOutSineTop = AnimationUtils.loadAnimation(getActivity(), R.anim.ease_out_sine_top);
@@ -128,25 +128,37 @@ public class RegisterFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 apiInterface = API.getService().create(APIInterface.class);
-                Call<ResponseRegister> simpan = apiInterface.registerResponse(username,emailkamu,password,namalengkap,nomorhp, alamatlengkap);
-                simpan.enqueue(new Callback<ResponseRegister>() {
-                    @Override
-                    public void onResponse(Call<ResponseRegister> call, Response<ResponseRegister> response) {
-                        int kode = response.body().getKode();
-                        if (kode == 1){
-                            Toast.makeText(getActivity(), "Register successful", Toast.LENGTH_SHORT).show();
-                            FragmentTransaction fragtr = getFragmentManager().beginTransaction();
-                            fragtr.replace(R.id.fragmentcontainer, new LoginFragment()).addToBackStack("tag").commit();
-                        } else {
-                            Toast.makeText(getActivity(), "Register gagal", Toast.LENGTH_SHORT).show();
+                Call<ResponseRegister> simpan = apiInterface.registerResponse(username, emailkamu, password, namalengkap, nomorhp, alamatlengkap);
+                if (nama.getText().toString().equals("") && nama.getText().toString().isEmpty()) {
+                    nama.setError("Nama Lengkap tidak boleh kosong!");
+                } else if (alamat.getText().toString().equals("") && alamat.getText().toString().isEmpty()) {
+                    nohp.setError("Alamat tidak boleh kosong!");
+                } else if (nohp.getText().toString().equals("") && nohp.getText().toString().isEmpty()) {
+                    nohp.setError("Nomor HP tidak boleh kosong!");
+                }else if (user.getText().toString().equals("") && user.getText().toString().isEmpty()) {
+                    user.setError("Username tidak boleh kosong!");
+                } else if (pass.getText().toString().equals("") && pass.getText().toString().isEmpty()) {
+                    pass.setError("Password tidak boleh kosong!");
+                } else {
+                    simpan.enqueue(new Callback<ResponseRegister>() {
+                        @Override
+                        public void onResponse(Call<ResponseRegister> call, Response<ResponseRegister> response) {
+                            int kode = response.body().getKode();
+                            if (kode == 1) {
+                                Toast.makeText(getActivity(), "Register successful", Toast.LENGTH_SHORT).show();
+                                FragmentTransaction fragtr = getFragmentManager().beginTransaction();
+                                fragtr.replace(R.id.fragmentcontainer, new LoginFragment()).addToBackStack("tag").commit();
+                            } else {
+                                Toast.makeText(getActivity(), "Register gagal", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onFailure(Call<ResponseRegister> call, Throwable t) {
-                        Toast.makeText(getActivity(),t.getMessage(),Toast.LENGTH_SHORT).show();
-                    }
-                });
+                        @Override
+                        public void onFailure(Call<ResponseRegister> call, Throwable t) {
+                            Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
             }
         });
     }

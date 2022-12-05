@@ -58,7 +58,7 @@ public class InterfaceHomeFragment extends Fragment {
         consmain.setVisibility(View.VISIBLE);
         consmain.startAnimation(easeOutQuadRight);
 
-        if (homefrag.getMakananClicked()){
+        if (homefrag.getProdukClicked()){
             getDataMakanan();
         }
 

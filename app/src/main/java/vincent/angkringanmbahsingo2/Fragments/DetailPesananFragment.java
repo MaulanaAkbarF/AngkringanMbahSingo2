@@ -27,7 +27,10 @@ public class DetailPesananFragment extends Fragment {
     public DetailPesananFragment(String alamat) {
         this.alamatFromDetailAlamat = alamat;
     }
-    public DetailPesananFragment(){}
+
+    public DetailPesananFragment(){
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

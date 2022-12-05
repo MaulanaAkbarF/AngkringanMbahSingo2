@@ -37,14 +37,17 @@
 
         <TextView
             android:id="@+id/hssxtextNama"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="80dp"
             android:text="Nama Kamu"
             android:textColor="@color/dark_blue"
             android:textSize="30sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:ellipsize="end"
+            android:maxLines="1"/>
     </LinearLayout>
 
 

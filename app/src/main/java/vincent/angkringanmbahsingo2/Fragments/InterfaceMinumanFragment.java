@@ -27,7 +27,7 @@ public class InterfaceMinumanFragment extends Fragment {
     ImageView interdataimage, plusimage, minimage, imageback;
     Dialog dialog;
 
-    static String currency = "Rp. %,d,00";
+    static String currency = "Rp. %,d";
     static String stock = "%,d";
     int currentNumber = 1;
     int total;

@@ -44,9 +44,9 @@ public class HomeRvAdapter extends RecyclerView.Adapter<HomeRvAdapter.ViewHolder
     public void onBindViewHolder(@NonNull HomeRvAdapter.ViewHolder holder, int position) {
         DataItemProduk db = listDataAdapter.get(position);
 
-//        holder.idmenu.setText(db.getNamaProduk());
+        holder.idmenu.setText(db.getIdProduk());
         holder.judul.setText(db.getNamaProduk());
-//        holder.desc.setText(db.getDesc());
+        holder.desc.setText(db.getDeskripsiProduk());
         holder.harga.setText(String.format(currency, Integer.parseInt(db.getHarga())));
         holder.stok.setText(String.format(stock, Integer.parseInt(db.getStok())));
 //        holder.gambar.setImageResource(listDataAdapter.get(position).getGambar());

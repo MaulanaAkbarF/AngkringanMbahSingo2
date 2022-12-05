@@ -17,13 +17,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import vincent.angkringanmbahsingo2.API.API;
 import vincent.angkringanmbahsingo2.API.APIInterface;
 import vincent.angkringanmbahsingo2.Dependencies.DataHelper;
-import vincent.angkringanmbahsingo2.MainActivity.MainHome;
+import vincent.angkringanmbahsingo2.ModelAPI.DataItemLogin;
 import vincent.angkringanmbahsingo2.ModelAPI.ResponseLogin;
 import vincent.angkringanmbahsingo2.R;
 
@@ -36,7 +39,7 @@ public class LoginFragment extends Fragment {
     public static EditText username, password;
     TextView daftar, lupapass;
     APIInterface apiInterface;
-    private String KEY_NAME = "NAMA";
+    private List<DataItemLogin> dataLogin = new ArrayList<>();
 
     // Digunakan ketika Login menggunakan fungai cekLogin()
     String dataUser = "";
@@ -47,17 +50,17 @@ public class LoginFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
 
         // Inisiasi komponen animasi
-        image = (LinearLayout) view.findViewById(R.id.flxlinearimage);
-        input = (LinearLayout) view.findViewById(R.id.flxlinearinput);
-        button = (LinearLayout) view.findViewById(R.id.flxlinearbutton);
+        image = view.findViewById(R.id.flxlinearimage);
+        input = view.findViewById(R.id.flxlinearinput);
+        button = view.findViewById(R.id.flxlinearbutton);
 
         // Inisiasi komponen utama
         dbhelper = new DataHelper(getActivity());
-        username = (EditText) view.findViewById(R.id.lpxusername);
-        password = (EditText) view.findViewById(R.id.lpxpassword);
-        btnmasuk = (Button) view.findViewById(R.id.lpxbtnMasuk);
-        daftar = (TextView) view.findViewById(R.id.flxtxtDaftar);
-        lupapass = (TextView) view.findViewById(R.id.lpxtxtlupapass);
+        username = view.findViewById(R.id.lpxusername);
+        password = view.findViewById(R.id.lpxpassword);
+        btnmasuk = view.findViewById(R.id.lpxbtnMasuk);
+        daftar = view.findViewById(R.id.flxtxtDaftar);
+        lupapass = view.findViewById(R.id.lpxtxtlupapass);
         lupapass.setVisibility(View.INVISIBLE);
 
         // Membuat animasi
@@ -101,7 +104,7 @@ public class LoginFragment extends Fragment {
         String nama = username.getText().toString();
         if (dataUser.contentEquals(username.getText()) && dataPassword.contentEquals(password.getText())){
             FragmentTransaction fragtr = getFragmentManager().beginTransaction();
-            fragtr.replace(R.id.fragmentcontainer, new HomeSplashScreenFragment()).addToBackStack("tag").commit();
+            fragtr.replace(R.id.fragmentcontainer, new HomeSplashScreenFragment()).commit();
         } else {
             Toast.makeText(getActivity(), "Username atau Password salah!", Toast.LENGTH_SHORT).show();
             lupapass.setVisibility(View.VISIBLE);
@@ -122,7 +125,7 @@ public class LoginFragment extends Fragment {
             password.setError("Password belum diisi!");
         }else if (res == true){
             FragmentTransaction fragtr = getFragmentManager().beginTransaction();
-            fragtr.replace(R.id.fragmentcontainer, new HomeSplashScreenFragment()).addToBackStack("tag").commit();
+            fragtr.replace(R.id.fragmentcontainer, new HomeSplashScreenFragment()).commit();
         }else {
             Toast.makeText(getActivity(), "Login Gagal!", Toast.LENGTH_SHORT).show();
             lupapass.setVisibility(View.VISIBLE);
@@ -139,11 +142,13 @@ public class LoginFragment extends Fragment {
             @Override
             public void onResponse(Call<ResponseLogin> call, Response<ResponseLogin> response) {
                 if (response.body().getKode() == 1) {
-                    Toast.makeText(getActivity(), "Welcome Bolo...!!", Toast.LENGTH_SHORT).show();
+                    dataLogin = response.body().getData();
+                    username.setText(dataLogin.get(0).getNamaLengkap());
                     FragmentTransaction fragtr = getFragmentManager().beginTransaction();
-                    fragtr.replace(R.id.fragmentcontainer, new HomeSplashScreenFragment()).addToBackStack("tag").commit();
+                    fragtr.replace(R.id.fragmentcontainer, new HomeSplashScreenFragment()).commit();
                 }else{
                     Toast.makeText(getActivity(), "Login Gagal", Toast.LENGTH_SHORT).show();
+                    lupapass.setVisibility(View.VISIBLE);
                 }
             }
             @Override

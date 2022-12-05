@@ -153,14 +153,13 @@
                     app:boxBackgroundMode="outline"
                     app:boxStrokeColor="@color/dark_blue"
                     app:passwordToggleTint="@color/teal_200">
-
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/rpxemail"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/lp.ukuranmarginbawahinput"
                         android:drawableLeft="@drawable/usernameicon"
                         android:drawablePadding="10dp"
-                        android:hint="Username"
+                        android:hint="E-Mail"
                         android:maxLength="20"
                         android:inputType="textEmailAddress"
                         android:textColor="@color/black"

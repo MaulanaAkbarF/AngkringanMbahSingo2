@@ -73,20 +73,23 @@ public class RiwayatFragment extends Fragment {
         dataharga = view.findViewById(R.id.dataxharga);
         datajumlah = view.findViewById(R.id.dataxjumlah);
 
+        btnubah.setVisibility(View.VISIBLE);
+        btnfilter.setVisibility(View.VISIBLE);
+        btnhapussemua.setVisibility(View.GONE);
+        btnselesai.setVisibility(View.GONE);
+
         // Memanggil List Data pada Recycle View
         MainHome mh = new MainHome();
         if (String.valueOf(mh.set4.getText()).equals("0")){
             System.out.println("");
         } else if (String.valueOf(mh.set4.getText()).equals("1")){
-            btnhapussemua.setVisibility(View.GONE);
-            btnselesai.setVisibility(View.GONE);
             isiDataRiwayat();
             mh.set4.setText("0");
         }
         adapterItemDaftar = new HistRvAdapter(listDataDaftar,adapterItemListenerInterface);
         recyclerView.setAdapter(adapterItemDaftar);
 
-        getRiwayatClicked();
+//        getRiwayatClicked();
         ubahClickable();
         selesaiClickable();
         filterClickable();

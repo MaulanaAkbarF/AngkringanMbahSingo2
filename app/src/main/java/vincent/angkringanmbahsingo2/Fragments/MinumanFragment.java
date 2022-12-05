@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -22,7 +23,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import vincent.angkringanmbahsingo2.API.API;
+import vincent.angkringanmbahsingo2.API.APIInterface;
 import vincent.angkringanmbahsingo2.MainActivity.MainHome;
+import vincent.angkringanmbahsingo2.ModelAPI.DataItemProduk;
+import vincent.angkringanmbahsingo2.ModelAPI.ResponseProduk;
 import vincent.angkringanmbahsingo2.R;
 import vincent.angkringanmbahsingo2.RecycleviewAdapter.HomeRvAdapter;
 import vincent.angkringanmbahsingo2.RecycleviewModel.HomeRvModel;
@@ -30,38 +38,19 @@ import vincent.angkringanmbahsingo2.RecycleviewModel.HomeRvModel;
 public class MinumanFragment extends Fragment {
 
     Spinner spinner;
-    static String currency = "Rp. %,d,00";
-    static String stock = "%,d";
     public static TextView dataidmenu, datajudul, datadesc, dataharga, datastok;
-    List<HomeRvModel> listDataDaftar;
     RecyclerView recyclerView;
-    HomeRvAdapter adapterItemDaftar;
     HomeRvAdapter.AdapterItemListener adapterItemListenerInterface;
 
-    // List Data pada Recycle View
-    void isiDataMinumanPanas(){
-        if(listDataDaftar == null){
-            listDataDaftar = new ArrayList<>();
-        }
-        listDataDaftar.add(new HomeRvModel("MP0001", "Teh Anget", "desc1", 2500, 400, R.drawable.imagedrink));
-        listDataDaftar.add(new HomeRvModel("MP0002", "Teh Manis","desc2", 3000, 450, R.drawable.imagedrink2));
-        listDataDaftar.add(new HomeRvModel("MP0003", "Jeruk Anget", "desc3", 3000, 460, R.drawable.imagedrink3));
-        listDataDaftar.add(new HomeRvModel("MP0004", "Jahe Anget", "desc4", 4000, 660, R.drawable.imagedrink));
-    }
-
-    void isiDataMinumanDingin(){
-        if(listDataDaftar == null){
-            listDataDaftar = new ArrayList<>();
-        }
-        listDataDaftar.add(new HomeRvModel("MD0001", "Es Teh", "desc1", 2500, 400, R.drawable.imagedrink));
-        listDataDaftar.add(new HomeRvModel("MD0002", "Es Teh Manis","desc2", 3000, 450, R.drawable.imagedrink2));
-    }
+    APIInterface apiInterface;
+    RecyclerView.Adapter addData;
+    private List<DataItemProduk> produkList = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_minuman, container, false);
 
-        spinner = (Spinner) view.findViewById(R.id.fminxspinner);
+        spinner = view.findViewById(R.id.fminxspinner);
         recyclerView = view.findViewById(R.id.fminxrecycleminuman);
         dataidmenu = view.findViewById(R.id.dataxidmenu);
         datajudul = view.findViewById(R.id.dataxjudul);
@@ -69,46 +58,42 @@ public class MinumanFragment extends Fragment {
         dataharga = view.findViewById(R.id.dataxharga);
         datastok = view.findViewById(R.id.dataxstok);
 
+//        MainHome mh = new MainHome();
+//        if (String.valueOf(mh.set3.getText()).equals("0")){
+//            System.out.println("");
+//        } else if (String.valueOf(mh.set3.getText()).equals("1")){
+//            isiDataMinumanPanas();
+//            mh.set3.setText("0");
+//        }
+
         // List Data pada Spinner
         String[] jenis = {"Minuman Panas", "Minuman Dingin", "Minuman Sachet", "Herbal", "Lainnya"};
         ArrayList<String> arr = new ArrayList<>(Arrays.asList(jenis));
         ArrayAdapter<String> arrAdapt = new ArrayAdapter<>(getActivity(), R.layout.spinner_text, arr);
         spinner.setAdapter(arrAdapt);
 
-        MainHome mh = new MainHome();
-        if (String.valueOf(mh.set3.getText()).equals("0")){
-            System.out.println("");
-        } else if (String.valueOf(mh.set3.getText()).equals("1")){
-            isiDataMinumanPanas();
-            mh.set3.setText("0");
-        }
-//        adapterItemDaftar = new HomeRvAdapter(listDataDaftar,adapterItemListenerInterface);
-//        recyclerView.setAdapter(adapterItemDaftar);
-//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long id) {
-//                Object item = adapterView.getItemAtPosition(pos);
-//                if (item == adapterView.getItemAtPosition(0)){
-//                    listDataDaftar.clear();
-//                    adapterItemDaftar.notifyDataSetChanged();
-//                    isiDataMinumanPanas();
-//                    adapterItemDaftar = new HomeRvAdapter(listDataDaftar,adapterItemListenerInterface);
-//                    recyclerView.setAdapter(adapterItemDaftar);
-//                } else if (item == adapterView.getItemAtPosition(1)){
-//                    listDataDaftar.clear();
-//                    adapterItemDaftar.notifyDataSetChanged();
-//                    isiDataMinumanDingin();
-//                    adapterItemDaftar = new HomeRvAdapter(listDataDaftar,adapterItemListenerInterface);
-//                    recyclerView.setAdapter(adapterItemDaftar);
-//                }
-//                // Bingung menu ngombe ne opo ae
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> adapterView) {
-//
-//            }
-//        });
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long id) {
+                Object item = adapterView.getItemAtPosition(pos);
+                if (item == adapterView.getItemAtPosition(0)){
+                    retrieveDataMinumanPanas();
+                } else if (item == adapterView.getItemAtPosition(1)){
+                    retrieveDataMinumanDingin();
+                } else if (item == adapterView.getItemAtPosition(2)){
+                    retrieveDataMinumanSachet();
+                } else if (item == adapterView.getItemAtPosition(3)){
+                    retrieveDataMinumanHerbal();
+                } else if (item == adapterView.getItemAtPosition(4)){
+                    retrieveDataMinumanLainnya();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
         getMinumanClicked();
         return view;
     }
@@ -117,15 +102,125 @@ public class MinumanFragment extends Fragment {
         adapterItemListenerInterface = new HomeRvAdapter.AdapterItemListener() {
             @Override
             public void clickItemListener(int adapterPosition) {
-                dataidmenu.setText(listDataDaftar.get(adapterPosition).getIdmenu());
-                datajudul.setText(listDataDaftar.get(adapterPosition).getJudul());
-                datadesc.setText(listDataDaftar.get(adapterPosition).getDesc());
-                dataharga.setText(String.valueOf(listDataDaftar.get(adapterPosition).getHarga()));
-                datastok.setText(String.valueOf(listDataDaftar.get(adapterPosition).getStok()));
+                dataidmenu.setText(produkList.get(adapterPosition).getIdProduk());
+                datajudul.setText(produkList.get(adapterPosition).getNamaProduk());
+                datadesc.setText(produkList.get(adapterPosition).getDeskripsiProduk());
+                dataharga.setText(String.valueOf(produkList.get(adapterPosition).getHarga()));
+                datastok.setText(String.valueOf(produkList.get(adapterPosition).getStok()));
                 FragmentTransaction fragtr = getFragmentManager().beginTransaction();
                 fragtr.replace(R.id.fragmentcontainersplash, new InterfaceMinumanFragment()).addToBackStack("tag").commit();
             }
         };
         return true;
+    }
+
+    public void retrieveDataMinumanPanas(){
+        apiInterface = API.getService().create(APIInterface.class);
+        Call<ResponseProduk> produkCall = apiInterface.getRetriveMinumanPanas();
+        produkCall.enqueue(new Callback<ResponseProduk>() {
+            @Override
+            public void onResponse(Call<ResponseProduk> call, Response<ResponseProduk> response) {
+                produkList = response.body().getData();
+                addData = new HomeRvAdapter(getContext(), produkList, adapterItemListenerInterface);
+                recyclerView = getView().findViewById(R.id.fminxrecycleminuman);
+                recyclerView.setHasFixedSize(true);
+                recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),3));
+                recyclerView.setAdapter(addData);
+                addData.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseProduk> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void retrieveDataMinumanDingin(){
+        apiInterface = API.getService().create(APIInterface.class);
+        Call<ResponseProduk> produkCall = apiInterface.getRetriveMinumanDingin();
+        produkCall.enqueue(new Callback<ResponseProduk>() {
+            @Override
+            public void onResponse(Call<ResponseProduk> call, Response<ResponseProduk> response) {
+                produkList = response.body().getData();
+                addData = new HomeRvAdapter(getContext(), produkList, adapterItemListenerInterface);
+                recyclerView = getView().findViewById(R.id.fminxrecycleminuman);
+                recyclerView.setHasFixedSize(true);
+                recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),3));
+                recyclerView.setAdapter(addData);
+                addData.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseProduk> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void retrieveDataMinumanSachet(){
+        apiInterface = API.getService().create(APIInterface.class);
+        Call<ResponseProduk> produkCall = apiInterface.getRetriveMinumanSachet();
+        produkCall.enqueue(new Callback<ResponseProduk>() {
+            @Override
+            public void onResponse(Call<ResponseProduk> call, Response<ResponseProduk> response) {
+                produkList = response.body().getData();
+                addData = new HomeRvAdapter(getContext(), produkList, adapterItemListenerInterface);
+                recyclerView = getView().findViewById(R.id.fminxrecycleminuman);
+                recyclerView.setHasFixedSize(true);
+                recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),3));
+                recyclerView.setAdapter(addData);
+                addData.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseProduk> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void retrieveDataMinumanHerbal(){
+        apiInterface = API.getService().create(APIInterface.class);
+        Call<ResponseProduk> produkCall = apiInterface.getRetriveMinumanHerbal();
+        produkCall.enqueue(new Callback<ResponseProduk>() {
+            @Override
+            public void onResponse(Call<ResponseProduk> call, Response<ResponseProduk> response) {
+                produkList = response.body().getData();
+                addData = new HomeRvAdapter(getContext(), produkList, adapterItemListenerInterface);
+                recyclerView = getView().findViewById(R.id.fminxrecycleminuman);
+                recyclerView.setHasFixedSize(true);
+                recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),3));
+                recyclerView.setAdapter(addData);
+                addData.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseProduk> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void retrieveDataMinumanLainnya(){
+        apiInterface = API.getService().create(APIInterface.class);
+        Call<ResponseProduk> produkCall = apiInterface.getRetriveMinumanLainnya();
+        produkCall.enqueue(new Callback<ResponseProduk>() {
+            @Override
+            public void onResponse(Call<ResponseProduk> call, Response<ResponseProduk> response) {
+                produkList = response.body().getData();
+                addData = new HomeRvAdapter(getContext(), produkList, adapterItemListenerInterface);
+                recyclerView = getView().findViewById(R.id.fminxrecycleminuman);
+                recyclerView.setHasFixedSize(true);
+                recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),3));
+                recyclerView.setAdapter(addData);
+                addData.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseProduk> call, Throwable t) {
+
+            }
+        });
     }
 }

@@ -54,7 +54,7 @@ public class HistRvAdapter extends RecyclerView.Adapter<HistRvAdapter.ViewHolder
         return listDataAdapter.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class ViewHolder extends RecyclerView.ViewHolder{ // implements View.OnClickListener
         TextView set, judul, harga, jumlah;
         CheckBox check;
         ImageView gambar;
@@ -66,12 +66,12 @@ public class HistRvAdapter extends RecyclerView.Adapter<HistRvAdapter.ViewHolder
             jumlah = itemView.findViewById(R.id.hpxjumlah);
             gambar = itemView.findViewById(R.id.hpximage);
             check = itemView.findViewById(R.id.friwxcheckbox);
-            itemView.setOnClickListener(this);
+//            itemView.setOnClickListener(this);
         }
 
-        @Override
-        public void onClick(View v) {
-            adapterItemListener.clickItemListener(getAdapterPosition());
-        }
+//        @Override
+//        public void onClick(View v) {
+//            adapterItemListener.clickItemListener(getAdapterPosition());
+//        }
     }
 }

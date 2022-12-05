@@ -29,17 +29,13 @@ public class HomeSplashScreenFragment extends Fragment {
     TextView nama;
     public static String namakamu;
 
-//    // Digunakan ketika Splash Screen berada di Activity Home
-//    private String namamu;
-//    private String KEY_NAME = "NAMA";
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home_splash_screen, container, false);
 
         // Inisiasi komponen animasi
-        judul = (LinearLayout) view.findViewById(R.id.hssxlinearjudul);
-        image = (ImageView) view.findViewById(R.id.hssximageView);
+        judul = view.findViewById(R.id.hssxlinearjudul);
+        image = view.findViewById(R.id.hssximageView);
 
         // Membuat animasi
         easeOutSineTop = AnimationUtils.loadAnimation(getActivity(), R.anim.ease_out_sine_top);
@@ -63,18 +59,18 @@ public class HomeSplashScreenFragment extends Fragment {
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
-            public void run() {
-                startActivity(new Intent(getActivity(), MainHome.class));
-            }
-
-//            // Digunakan ketika Splash Screen berada di Activity Home
+            // Digunakan ketika Splash Screen berada di Activity Home
 //            public void run() {
-//                Intent i = new Intent(getActivity(), MainHome.class);
-//                i.putExtra(KEY_NAME, nama);
-//                startActivity(i);
+//                startActivity(new Intent(getActivity(), MainHome.class));
 //            }
-        }, 1500L); // Untuk mengatur waktu Splash Screen. 1000L = 1 detik
 
+            // Digunakan ketika Splash Screen berada di Activity Login
+            public void run() {
+                Intent i = new Intent(getActivity(), MainHome.class);
+                i.putExtra("datanama", nama.getText().toString());
+                startActivity(i);
+            }
+        }, 1500L); // Untuk mengatur waktu Splash Screen. 1000L = 1 detik
         return view;
     }
 

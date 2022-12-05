@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:backgroundTint="@color/semiwhite"
+    android:layout_margin="10dp">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/alertxjudul"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="Pilih Opsi yang akan Anda Edit"
+            android:gravity="center"
+            android:textSize="@dimen/hp.ukuranteksinfo"
+            android:textColor="@color/black"
+            android:textStyle="bold"/>
+        <Button
+            android:id="@+id/alertxbtneditnama"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/alertxjudul"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/alertxbtneditusername"
+            android:layout_margin="20dp"
+            android:paddingVertical="5dp"
+            android:backgroundTint="@color/blue"
+            android:text="EDIT NAMA"
+            android:textSize="@dimen/hp.ukuranteksinfo"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:cornerRadius="5dp" />
+        <TextView
+            android:id="@+id/alertxtxtnama"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            app:layout_constraintTop_toBottomOf="@id/alertxbtneditnama"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/alertxtxtuser"
+            android:text="Nama Kamu"
+            android:gravity="left"
+            android:textSize="@dimen/hp.ukuranteksinfo"
+            android:textStyle="italic"
+            android:ellipsize="end"
+            android:maxLines="1"/>
+        <Button
+            android:id="@+id/alertxbtneditusername"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/alertxjudul"
+            app:layout_constraintStart_toEndOf="@id/alertxbtneditnama"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="20dp"
+            android:paddingVertical="5dp"
+            android:backgroundTint="@color/dark_green"
+            android:text="EDIT USER"
+            android:textSize="@dimen/hp.ukuranteksinfo"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:cornerRadius="5dp" />
+        <TextView
+            android:id="@+id/alertxtxtuser"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            app:layout_constraintTop_toBottomOf="@id/alertxbtneditnama"
+            app:layout_constraintStart_toEndOf="@id/alertxtxtnama"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="Username Kamu"
+            android:gravity="left"
+            android:textSize="@dimen/hp.ukuranteksinfo"
+            android:textStyle="italic"
+            android:ellipsize="end"
+            android:maxLines="1"/>
+        <Button
+            android:id="@+id/alertxbtneditfoto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/alertxtxtnama"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_margin="20dp"
+            android:paddingVertical="5dp"
+            android:backgroundTint="@color/dark_purple"
+            android:text="EDIT FOTO"
+            android:textSize="@dimen/hp.ukuranteksinfo"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:cornerRadius="5dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

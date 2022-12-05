@@ -44,28 +44,22 @@ public class CartRvAdapter extends RecyclerView.Adapter<CartRvAdapter.ViewHolder
         holder.harga.setText(String.format(currency, listDataAdapter.get(position).getHarga()));
         holder.jumlah.setText(String.format(stock, listDataAdapter.get(position).getJumlah()));
         holder.gambar.setImageResource(listDataAdapter.get(position).getGambar());
-        holder.plusimage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        holder.plusimage.setOnClickListener(view -> {
+            currentNumber = Integer.parseInt(String.valueOf(holder.jumlah.getText()));
+            addNumber = currentNumber+1;
+            holder.jumlah.setText(String.valueOf(addNumber));
+            totalPrice = addNumber * listDataAdapter.get(holder.getAdapterPosition()).getHarga();
+            holder.totalharga.setText(String.format(currency, Integer.parseInt(String.valueOf(totalPrice))));
+        });
+        holder.minimage.setOnClickListener(view -> {
+            if (Integer.parseInt(String.valueOf(holder.jumlah.getText())) <= 1){
+                holder.jumlah.setText(String.valueOf(1));
+            } else {
                 currentNumber = Integer.parseInt(String.valueOf(holder.jumlah.getText()));
-                addNumber = currentNumber+1;
+                addNumber = currentNumber-1;
                 holder.jumlah.setText(String.valueOf(addNumber));
                 totalPrice = addNumber * listDataAdapter.get(holder.getAdapterPosition()).getHarga();
                 holder.totalharga.setText(String.format(currency, Integer.parseInt(String.valueOf(totalPrice))));
-            }
-        });
-        holder.minimage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (Integer.parseInt(String.valueOf(holder.jumlah.getText())) <= 1){
-                    holder.jumlah.setText(String.valueOf(1));
-                } else {
-                    currentNumber = Integer.parseInt(String.valueOf(holder.jumlah.getText()));
-                    addNumber = currentNumber-1;
-                    holder.jumlah.setText(String.valueOf(addNumber));
-                    totalPrice = addNumber * listDataAdapter.get(holder.getAdapterPosition()).getHarga();
-                    holder.totalharga.setText(String.format(currency, Integer.parseInt(String.valueOf(totalPrice))));
-                }
             }
         });
         currentNumber = Integer.parseInt(String.valueOf(holder.jumlah.getText()));
@@ -78,7 +72,7 @@ public class CartRvAdapter extends RecyclerView.Adapter<CartRvAdapter.ViewHolder
         return listDataAdapter.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class ViewHolder extends RecyclerView.ViewHolder { //implements View.OnClickListener
         TextView judul, harga, jumlah, totalharga;
         ImageView gambar, minimage, plusimage;
         public ViewHolder(@NonNull View itemView) {
@@ -90,12 +84,12 @@ public class CartRvAdapter extends RecyclerView.Adapter<CartRvAdapter.ViewHolder
             gambar = itemView.findViewById(R.id.hpximage);
             minimage = itemView.findViewById(R.id.fkerximagemin);
             plusimage = itemView.findViewById(R.id.fkerximageplus);
-            itemView.setOnClickListener(this);
+//            itemView.setOnClickListener(this);
         }
 
-        @Override
-        public void onClick(View v) {
-            adapterItemListener.clickItemListener(getAdapterPosition());
-        }
+//        @Override
+//        public void onClick(View v) {
+//            adapterItemListener.clickItemListener(getAdapterPosition());
+//        }
     }
 }
