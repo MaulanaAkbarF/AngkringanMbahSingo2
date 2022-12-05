@@ -44,15 +44,19 @@ V-Angkringan adalah aplikasi mobile UMKM yang dikembangkan oleh Kelompok Vincent
 </h4>
 
 </div>
-<div align="center">
+
+<br>
+<dix align="center">
 # Download Project dan File Database
-<div align="center">
+</dix>
+  
 Download Project :
 * [Direct Link Download](https://github.com/MaulanaAkbarF/AngkringanMbahSingo2/archive/refs/heads/master.zip) (Zip File)
 
 Download File PHP Database :
 * [Coming Soon](https://github.com/MaulanaAkbarF/AngkringanMbahSingo2) (Zip File)
 
+<br>
 # Minimum Spesification
 * Intel Xeon Platinum / AMD Ryzen Threadripper / AMD Epyc
 * RAM Minimal DDR4 dengan kapasitas 8TB keatas
