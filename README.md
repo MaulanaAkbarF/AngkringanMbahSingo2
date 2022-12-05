@@ -43,7 +43,6 @@ V-Angkringan adalah aplikasi mobile UMKM yang dikembangkan oleh Kelompok Vincent
 [Telegram](https://t.me/maulanaakbarf)</a></p>
 </h4>
 
-<br>
 # Download Project dan File Database
 </div>
   
