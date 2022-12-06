@@ -43,6 +43,8 @@ V-Angkringan adalah aplikasi mobile UMKM yang dikembangkan oleh Kelompok Vincent
 [Telegram](https://t.me/maulanaakbarf)</a></p>
 </h4>
 
+
+
 # Download Project dan File Database
 </div>
   
@@ -129,6 +131,7 @@ Karena aplikasi ini masih dalam tahap pengembangan, hanya beberapa fitur yang te
 | List Menu Makanan|       ✔️       |
 | List Menu Minuman|       ✔️       |
 | Profil           |       ✔️       |
+
 Catatan : Fitur diatas sudah berhasil terhubung ke SQL
 
 
