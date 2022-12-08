@@ -9,10 +9,10 @@ V-Angkringan adalah aplikasi mobile UMKM yang dikembangkan oleh Kelompok Vincent
   <a href="https://github.com/MaulanaAkbarF/AngkringanMbahSingo2"><img title="Author" src="https://img.shields.io/badge/Author-Maulana Akbar F.-purple.svg?style=for-the-badge&logo=github" /></a>
 </p>
 <p align="center">
-  <a href="https://github.com/MaulanaAkbarF/AngkringanMbahSingo2"><img title="RATING" src="https://img.shields.io/badge/BASIC RATING-45%20%2F%20100-green?colorA=%23555555&colorB=%23FC5E00&style=for-the-badge"></a>
+  <a href="https://github.com/MaulanaAkbarF/AngkringanMbahSingo2"><img title="RATING" src="https://img.shields.io/badge/RATING SAAT INI-64%20%2F%20100-green?colorA=%23555555&colorB=%23FC5E00&style=for-the-badge"></a>
 </p>
 <p align="center">
-  <a href="https://github.com/MaulanaAkbarF/AngkringanMbahSingo2"><img title="RATING" src="https://img.shields.io/badge/PREMIUM RATING-97%20%2F%20100-green?colorA=%23555555&colorB=%23017e40&style=for-the-badge"></a>
+  <a href="https://github.com/MaulanaAkbarF/AngkringanMbahSingo2"><img title="RATING" src="https://img.shields.io/badge/TARGET RATING-80%20%2F%20100-green?colorA=%23555555&colorB=%23017e40&style=for-the-badge"></a>
 </p>
 <p align="center">
   <a href="https://github.com/MaulanaAkbarF/AngkringanMbahSingo2"><img title="Stars" src="https://img.shields.io/github/stars/MaulanaAkbarF/AngkringanMbahSingo2?color=red&style=flat-square" /></a>
@@ -51,8 +51,11 @@ V-Angkringan adalah aplikasi mobile UMKM yang dikembangkan oleh Kelompok Vincent
 Download Project :
 * [Direct Link Download](https://github.com/MaulanaAkbarF/AngkringanMbahSingo2/archive/refs/heads/master.zip) (Zip File)
 
-Download File PHP Database :
+Download File PHP Android :
 * [Coming Soon](https://github.com/MaulanaAkbarF/AngkringanMbahSingo2) (Zip File)
+
+Download File SQL Database :
+* [Database SQL](https://drive.google.com/u/0/uc?id=1X5FaUpn5F_SHwKKrCBI2syEK2R5e2p5i&export=download) (SQL File)
 
 # Minimum Spesification
 * Intel Xeon Platinum / AMD Ryzen Threadripper / AMD Epyc
@@ -124,13 +127,14 @@ Melalui Device Kamu:
 # Features
 Karena aplikasi ini masih dalam tahap pengembangan, hanya beberapa fitur yang tersedia saat ini :
 
-|       Fitur      |  Ketersediaan  |
-| :--------------: | :------------: |
-| Login            |       ✔️       |
-| Register         |       ✔️       |
-| List Menu Makanan|       ✔️       |
-| List Menu Minuman|       ✔️       |
-| Profil           |       ✔️       |
+|       Fitur         |  Ketersediaan  |
+| :-----------------: | :------------: |
+| Login               |       ✔️       |
+| Register            |       ✔️       |
+| List Menu Makanan   |       ✔️       |
+| List Menu Minuman   |       ✔️       |
+| Profil              |       ✔️       |
+| Detail Pesanan Beli |       ✔️       |
 
 Catatan : Fitur diatas sudah berhasil terhubung ke SQL
 
