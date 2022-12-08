@@ -33,7 +33,7 @@ V-Angkringan adalah aplikasi mobile UMKM yang dikembangkan oleh Kelompok Vincent
 <details>
  <summary>Contact the Developers!</summary></a></p>
  
-[GitHub](https://github.com/MAULANAAKBARFIRDAUSYA-cmd)</a></p>
+[GitHub](https://github.com/MaulanaAkbarF)</a></p>
 [WhatsApp - Ahmad Ansori](https://wa.me/+6288805517338)</a></p>
 [WhatsApp - Ahmad Edzam Prasetya](https://wa.me/+6285731318313)</a></p>
 [WhatsApp - Ahmad Firdaus Tarmidzi](https://wa.me/+6282233814533)</a></p>
@@ -43,10 +43,16 @@ V-Angkringan adalah aplikasi mobile UMKM yang dikembangkan oleh Kelompok Vincent
 [Telegram](https://t.me/maulanaakbarf)</a></p>
 </h4>
 
-</div>
 
+
+# Download Project dan File Database
+</div>
+  
 Download Project :
 * [Direct Link Download](https://github.com/MaulanaAkbarF/AngkringanMbahSingo2/archive/refs/heads/master.zip) (Zip File)
+
+Download File PHP Database :
+* [Coming Soon](https://github.com/MaulanaAkbarF/AngkringanMbahSingo2) (Zip File)
 
 # Minimum Spesification
 * Intel Xeon Platinum / AMD Ryzen Threadripper / AMD Epyc
@@ -122,17 +128,26 @@ Karena aplikasi ini masih dalam tahap pengembangan, hanya beberapa fitur yang te
 | :--------------: | :------------: |
 | Login            |       ✔️       |
 | Register         |       ✔️       |
+| List Menu Makanan|       ✔️       |
+| List Menu Minuman|       ✔️       |
+| Profil           |       ✔️       |
+
+Catatan : Fitur diatas sudah berhasil terhubung ke SQL
 
 
 Fitur yang masih dikembangkan :
 
 |      Fitur       |  Ketersediaan  |
 | :--------------: | :------------: |
+| Verifikasi Pass  |  Belum Selesai |
 | Homepage         |  Belum Selesai |
-| List Menu Makanan|  Belum Selesai |
-| List Menu Minuman|  Belum Selesai |
+| Detail Pesanan   |  Belum Selesai |
+| Detail Alamat    |  Belum Selesai |
+| Detail Metode    |  Belum Selesai |
+| Interface Menu   |  Belum Selesai |
 | Riwayat          |  Belum Selesai |
 | Keranjang        |  Belum Selesai |
+| Connect ke Server|  Belum Selesai |
 
 # Thanks to
 * [`Maulana Akbar Firdausya`](https://github.com/MaulanaAkbarF/AngkringanMbahSingo2)
