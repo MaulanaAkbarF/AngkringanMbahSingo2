@@ -380,6 +380,7 @@ public class ProfilFragment extends Fragment {
                         public void onResponse(Call<ResponseLogin> call, Response<ResponseLogin> response) {
                             dataUserProfil = response.body().getData();
                             email.setText(dataUserProfil.get(0).getEmail());
+                            hfg.teksemail.setText(dataUserProfil.get(0).getEmail());
                         }
                         @Override
                         public void onFailure(Call<ResponseLogin> call, Throwable t) {

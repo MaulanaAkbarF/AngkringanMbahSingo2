@@ -20,6 +20,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -41,7 +43,7 @@ public class InterfaceMakananFragment extends Fragment {
     Animation easeOutQuadRight, easeOutQuadRightOut;
     ConstraintLayout consmain;
     public static TextView interxidtransaksi, interidmenu, interdatajudul, interdatadesc, interdataharga, interdatastok, txtjumlah, txttotal;
-    ImageView interdataimage, plusimage, minimage, imageback;
+    public static ImageView interdataimage, plusimage, minimage, imageback;
     Button btnkeranjang, btnbeli;
     Dialog dialog;
 
@@ -69,6 +71,7 @@ public class InterfaceMakananFragment extends Fragment {
         interdatadesc = view.findViewById(R.id.interxdescmenu);
         interdataharga = view.findViewById(R.id.interxhargamenu);
         interdatastok = view.findViewById(R.id.interxstokmenu);
+        interdataimage = view.findViewById(R.id.interximage);
         txtjumlah = view.findViewById(R.id.interxteksjumlah);
         txttotal = view.findViewById(R.id.interxtotalharga);
         plusimage = view.findViewById(R.id.interximageplus);
@@ -132,6 +135,7 @@ public class InterfaceMakananFragment extends Fragment {
     }
 
     public static void getDataMakanan(){
+        Picasso.get().load(API.BASE_GAMBAR+makfrag.dataimage.getText()).error(R.mipmap.ic_launcher).into(interdataimage);
         interidmenu.setText(makfrag.dataidmenu.getText());
         interdatajudul.setText(makfrag.datajudul.getText());
         interdatadesc.setText(makfrag.datadesc.getText());

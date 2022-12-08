@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,7 +39,7 @@ import vincent.angkringanmbahsingo2.RecycleviewModel.HomeRvModel;
 public class MakananFragment extends Fragment {
 
     Spinner spinner;
-    public static TextView dataidmenu, datajudul, datadesc, dataharga, datastok;
+    public static TextView dataidmenu, datajudul, datadesc, dataharga, datastok, dataimage;
 //    List<HomeRvModel> listDataDaftar;
     RecyclerView recyclerView;
 //    HomeRvAdapter adapterItemDaftar;
@@ -63,6 +64,7 @@ public class MakananFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_makanan, container, false);
 
         spinner = view.findViewById(R.id.fmakxspinner);
+        dataimage = view.findViewById(R.id.dataximage);
         dataidmenu = view.findViewById(R.id.dataxidmenu);
         datajudul = view.findViewById(R.id.dataxjudul);
         datadesc = view.findViewById(R.id.dataxdesc);
@@ -117,6 +119,7 @@ public class MakananFragment extends Fragment {
         adapterItemListenerInterface = new HomeRvAdapter.AdapterItemListener() {
             @Override
             public void clickItemListener(int adapterPosition) {
+                dataimage.setText(produkList.get(adapterPosition).getGambar());
                 dataidmenu.setText(produkList.get(adapterPosition).getIdProduk());
                 datajudul.setText(produkList.get(adapterPosition).getNamaProduk());
                 datadesc.setText(produkList.get(adapterPosition).getDeskripsiProduk());

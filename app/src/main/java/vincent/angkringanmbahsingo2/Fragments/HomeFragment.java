@@ -131,6 +131,7 @@ public class HomeFragment extends Fragment {
                 dataUserHome = response.body().getData();
                 teksnama.setText(dataUserHome.get(0).getNamaLengkap());
                 teksnomor.setText("+62"+dataUserHome.get(0).getNoHp());
+                teksemail.setText(dataUserHome.get(0).getEmail());
                 teksuser.setText(dataUserHome.get(0).getUsername());
             }
             @Override

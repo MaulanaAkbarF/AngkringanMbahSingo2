@@ -11,8 +11,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
+import vincent.angkringanmbahsingo2.API.API;
 import vincent.angkringanmbahsingo2.ModelAPI.DataItemProduk;
 import vincent.angkringanmbahsingo2.ModelAPI.DataItemTransaksi;
 import vincent.angkringanmbahsingo2.R;
@@ -49,6 +52,7 @@ public class OrderRvAdapter extends RecyclerView.Adapter<OrderRvAdapter.ViewHold
         holder.judul.setText(db.getNamaProduk());
         holder.harga.setText(String.format(currency, Integer.parseInt(String.valueOf(db.getTotalhargaitem()))));
         holder.jumlah.setText(String.format(stock, Integer.parseInt(String.valueOf(db.getJumlah()))));
+        Picasso.get().load(API.BASE_GAMBAR+db.getPengiriman()).error(R.mipmap.ic_launcher).into(holder.gambar);
     }
 
     @Override

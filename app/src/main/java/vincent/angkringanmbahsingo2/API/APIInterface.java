@@ -137,4 +137,10 @@ public interface APIInterface {
             @Field("metode") String metode,
             @Field("status") String status
     );
+
+    @FormUrlEncoded
+    @POST("riwayat.php")
+    Call<ResponseTransaksi> Riwayat(
+            @Field("username") String username
+    );
 }

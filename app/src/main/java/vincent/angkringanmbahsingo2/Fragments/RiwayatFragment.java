@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -24,9 +25,19 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import vincent.angkringanmbahsingo2.API.API;
+import vincent.angkringanmbahsingo2.API.APIInterface;
 import vincent.angkringanmbahsingo2.MainActivity.MainHome;
+import vincent.angkringanmbahsingo2.ModelAPI.DataItemProduk;
+import vincent.angkringanmbahsingo2.ModelAPI.DataItemTransaksi;
+import vincent.angkringanmbahsingo2.ModelAPI.ResponseProduk;
+import vincent.angkringanmbahsingo2.ModelAPI.ResponseTransaksi;
 import vincent.angkringanmbahsingo2.R;
 import vincent.angkringanmbahsingo2.RecycleviewAdapter.HistRvAdapter;
+import vincent.angkringanmbahsingo2.RecycleviewAdapter.HomeRvAdapter;
 import vincent.angkringanmbahsingo2.RecycleviewModel.HistRvModel;
 
 public class RiwayatFragment extends Fragment {
@@ -39,6 +50,10 @@ public class RiwayatFragment extends Fragment {
     HistRvAdapter.AdapterItemListener adapterItemListenerInterface;
     Dialog dialog;
     DatePickerDialog picker;
+
+    APIInterface apiInterface;
+    RecyclerView.Adapter addData;
+    private List<DataItemTransaksi> riwayatList = new ArrayList<>();
 
     // List Data pada Recycle View
     void isiDataRiwayat(){
@@ -86,10 +101,9 @@ public class RiwayatFragment extends Fragment {
             isiDataRiwayat();
             mh.set4.setText("0");
         }
-        adapterItemDaftar = new HistRvAdapter(listDataDaftar,adapterItemListenerInterface);
-        recyclerView.setAdapter(adapterItemDaftar);
 
 //        getRiwayatClicked();
+        getRiwayat();
         ubahClickable();
         selesaiClickable();
         filterClickable();
@@ -107,6 +121,27 @@ public class RiwayatFragment extends Fragment {
             }
         };
         return true;
+    }
+
+    public void getRiwayat(){
+        HomeFragment hfg = new HomeFragment();
+        apiInterface = API.getService().create(APIInterface.class);
+        Call<ResponseTransaksi> riwayatCall = apiInterface.Riwayat(hfg.teksuser.getText().toString());
+        riwayatCall.enqueue(new Callback<ResponseTransaksi>() {
+            @Override
+            public void onResponse(Call<ResponseTransaksi> call, Response<ResponseTransaksi> response) {
+                riwayatList = response.body().getData();
+                addData = new HistRvAdapter(getContext(), riwayatList, adapterItemListenerInterface);
+                recyclerView.setHasFixedSize(true);
+                recyclerView.setAdapter(addData);
+                addData.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseTransaksi> call, Throwable t) {
+
+            }
+        });
     }
 
     public boolean ubahClickable(){
