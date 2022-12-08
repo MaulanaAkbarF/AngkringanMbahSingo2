@@ -76,6 +76,14 @@
                             android:textSize="@dimen/hp.ukuranteksinfo"
                             android:ellipsize="end"
                             android:maxLines="1"/>
+                        <TextView
+                            android:id="@+id/fhxtxtuser"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:text="altix"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:visibility="invisible"/>
                     </LinearLayout>
                     <androidx.cardview.widget.CardView
                         android:id="@+id/fhxbtnprofil"
@@ -234,6 +242,7 @@
                         android:id="@+id/hpxrvterakhir"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:paddingBottom="10dp"
                         android:orientation="horizontal"/>
                 </LinearLayout>
             </LinearLayout>

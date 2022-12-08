@@ -237,7 +237,7 @@ public class ProfilFragment extends Fragment {
                                     dataUserProfil = response.body().getData();
                                     username.setText(dataUserProfil.get(0).getUsername());
                                     eiteksuser.setText(dataUserProfil.get(0).getUsername());
-                                    hfg.teksemail.setText(dataUserProfil.get(0).getUsername());
+                                    hfg.teksuser.setText(dataUserProfil.get(0).getUsername());
                                 }
                                 @Override
                                 public void onFailure(Call<ResponseLogin> call, Throwable t) {

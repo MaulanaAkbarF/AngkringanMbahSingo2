@@ -39,7 +39,8 @@
                 android:inputType="text"
                 android:textColor="@color/black"
                 android:textColorHint="@color/dark_blue"
-                android:textSize="@dimen/lp.ukuranteksinput" />
+                android:textSize="@dimen/lp.ukuranteksinput"
+                android:maxLength="30"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button

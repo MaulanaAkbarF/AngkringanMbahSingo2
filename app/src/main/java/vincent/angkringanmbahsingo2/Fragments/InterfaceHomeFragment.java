@@ -23,7 +23,7 @@ public class InterfaceHomeFragment extends Fragment {
 
     Animation easeOutQuadRight, easeOutQuadRightOut;
     ConstraintLayout consmain;
-    public static TextView interidmenu, interdatajudul, interdatadesc, interdataharga, interdatastok, txtjumlah, txttotal;
+    public static TextView interxidtransaksi, interidmenu, interdatajudul, interdatadesc, interdataharga, interdatastok, txtjumlah, txttotal;
     ImageView interdataimage, plusimage, minimage, imageback;
     Dialog dialog;
 
@@ -40,6 +40,7 @@ public class InterfaceHomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_interface_home, container, false);
 
         consmain = view.findViewById(R.id.fhomexconsmain);
+        interxidtransaksi = view.findViewById(R.id.interxidtransaksi);
         interidmenu = view.findViewById(R.id.interxidmenu);
         interdatajudul = view.findViewById(R.id.interxjudulmenu);
         interdatadesc = view.findViewById(R.id.interxdescmenu);

@@ -1,5 +1,6 @@
 package vincent.angkringanmbahsingo2.RecycleviewAdapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,13 +13,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import vincent.angkringanmbahsingo2.Fragments.RiwayatFragment;
+import vincent.angkringanmbahsingo2.ModelAPI.DataItemProduk;
+import vincent.angkringanmbahsingo2.ModelAPI.DataItemTransaksi;
 import vincent.angkringanmbahsingo2.R;
 import vincent.angkringanmbahsingo2.RecycleviewModel.HistRvModel;
 
-public class HistRvAdapter extends RecyclerView.Adapter<HistRvAdapter.ViewHolder> {
-    List<HistRvModel> listDataAdapter;
-    HistRvAdapter.AdapterItemListener adapterItemListener;
+public class OrderRvAdapter extends RecyclerView.Adapter<OrderRvAdapter.ViewHolder> {
+    Context context;
+    List<DataItemTransaksi> listDataAdapter;
+    OrderRvAdapter.AdapterItemListener adapterItemListener;
     static String currency = "Rp. %,d";
     static String stock = "x%,d";
 
@@ -26,24 +29,26 @@ public class HistRvAdapter extends RecyclerView.Adapter<HistRvAdapter.ViewHolder
         void clickItemListener(int adapterPosition);
     }
 
-    public HistRvAdapter(List<HistRvModel> listDataAdapter, AdapterItemListener adapterItemListener) {
+    public OrderRvAdapter(Context context, List<DataItemTransaksi> listDataAdapter, AdapterItemListener adapterItemListener) {
+        this.context = context;
         this.listDataAdapter = listDataAdapter;
         this.adapterItemListener = adapterItemListener;
     }
 
     @NonNull
     @Override
-    public HistRvAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.homepage_rvriwayat,parent,false);
+    public OrderRvAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.homepage_rvrangkuman,parent,false);
         return new ViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull HistRvAdapter.ViewHolder holder, int position) {
-        holder.judul.setText(listDataAdapter.get(position).getJudul());
-        holder.harga.setText(String.format(currency, listDataAdapter.get(position).getHarga()));
-        holder.jumlah.setText(String.format(stock, listDataAdapter.get(position).getJumlah()));
-        holder.gambar.setImageResource(listDataAdapter.get(position).getGambar());
+    public void onBindViewHolder(@NonNull OrderRvAdapter.ViewHolder holder, int position) {
+        DataItemTransaksi db = listDataAdapter.get(position);
+
+        holder.judul.setText(db.getNamaProduk());
+        holder.harga.setText(String.format(currency, Integer.parseInt(String.valueOf(db.getTotalhargaitem()))));
+        holder.jumlah.setText(String.format(stock, Integer.parseInt(String.valueOf(db.getJumlah()))));
     }
 
     @Override
@@ -51,18 +56,15 @@ public class HistRvAdapter extends RecyclerView.Adapter<HistRvAdapter.ViewHolder
         return listDataAdapter.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{ // implements View.OnClickListener
-        TextView set, judul, harga, jumlah;
-        CheckBox check;
+    public class ViewHolder extends RecyclerView.ViewHolder { // implements View.OnClickListener
+        TextView judul, harga, jumlah;
         ImageView gambar;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            set = itemView.findViewById(R.id.friwxcheckinit);
             judul = itemView.findViewById(R.id.hpxjudul);
             harga = itemView.findViewById(R.id.hpxharga);
             jumlah = itemView.findViewById(R.id.hpxjumlah);
             gambar = itemView.findViewById(R.id.hpximage);
-            check = itemView.findViewById(R.id.friwxcheckbox);
 //            itemView.setOnClickListener(this);
         }
 

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+        <ImageView
+            android:id="@+id/hpximage"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:src="@drawable/imagefood"
+            android:scaleType="centerCrop"/>
+        <TextView
+            android:id="@+id/hpxjudul"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/hpximage"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="Judul Menu"
+            android:textSize="@dimen/fh.ukurantekssubjudul"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:ellipsize="end"
+            android:maxLines="1"/>
+        <TextView
+            android:id="@+id/hpxjumlah"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            app:layout_constraintStart_toEndOf="@id/hpximage"
+            app:layout_constraintEnd_toStartOf="@id/hpxharga"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="x10"
+            android:textSize="@dimen/fh.ukurantekssubjudul"/>
+        <TextView
+            android:id="@+id/hpxharga"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            app:layout_constraintStart_toEndOf="@id/hpxjumlah"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:gravity="right"
+            android:text="x10"
+            android:textSize="@dimen/fh.ukurantekssubjudul"
+            android:textColor="@color/red"
+            android:textStyle="bold"
+            android:ellipsize="end"
+            android:maxLines="1"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            app:layout_constraintTop_toBottomOf="@id/hpximage"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:background="#bdbdbd" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -67,7 +67,7 @@
                         android:drawableLeft="@drawable/usernameicon"
                         android:drawablePadding="10dp"
                         android:hint="Username"
-                        android:maxLength="20"
+                        android:maxLength="30"
                         android:inputType="textEmailAddress"
                         android:textColor="@color/black"
                         android:textColorHint="@color/dark_blue"

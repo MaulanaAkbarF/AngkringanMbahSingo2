@@ -10,8 +10,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
+import vincent.angkringanmbahsingo2.API.API;
 import vincent.angkringanmbahsingo2.ModelAPI.DataItemProduk;
 import vincent.angkringanmbahsingo2.RecycleviewModel.HomeRvModel;
 import vincent.angkringanmbahsingo2.R;
@@ -49,7 +52,7 @@ public class HomeRvAdapter extends RecyclerView.Adapter<HomeRvAdapter.ViewHolder
         holder.desc.setText(db.getDeskripsiProduk());
         holder.harga.setText(String.format(currency, Integer.parseInt(db.getHarga())));
         holder.stok.setText(String.format(stock, Integer.parseInt(db.getStok())));
-//        holder.gambar.setImageResource(listDataAdapter.get(position).getGambar());
+        Picasso.get().load(API.BASE_GAMBAR+db.getGambar()).error(R.mipmap.ic_launcher).into(holder.gambar);
     }
 
     @Override

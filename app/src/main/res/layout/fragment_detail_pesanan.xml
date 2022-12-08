@@ -20,9 +20,38 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/dpxconsrecycle"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/dpxconsalamat"
                 app:layout_constraintStart_toStartOf="parent">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+                    <TextView
+                        android:id="@+id/dataxidmenu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:id="@+id/dataxjudul"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:id="@+id/dataxjumlah"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:id="@+id/dataxharga"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <ImageView
+                        android:id="@+id/dataximage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/imageplus"/>
+                </LinearLayout>
                 <TextView
                     android:id="@+id/dpxlabelrangkuman"
                     android:layout_width="match_parent"
@@ -33,6 +62,15 @@
                     android:textSize="@dimen/fh.ukuranteksjudul"
                     android:fontFamily="@font/inter_bold"
                     android:textColor="@color/black"/>
+                <TextView
+                    android:id="@+id/dpxidtransaksi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/dpxlabelrangkuman"
+                    android:text="TRS0000001"
+                    android:textSize="@dimen/fh.ukuranteksjudul"
+                    android:visibility="invisible"/>
                 <ImageView
                     android:id="@+id/dpxbtnback"
                     android:layout_width="wrap_content"
@@ -44,19 +82,27 @@
                 <ScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    app:layout_constraintTop_toBottomOf="@id/dpxlabelrangkuman"
-                    app:layout_constraintStart_toStartOf="parent">
+                    android:layout_marginTop="30dp"
+                    app:layout_constraintTop_toBottomOf="@id/dpxbtnback"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent">
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/dpxrecyclemenu"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:spanCount="1"
+                        android:orientation="vertical"
+                        tools:listitem="@layout/homepage_rvrangkuman"/>
                 </ScrollView>
             </androidx.constraintlayout.widget.ConstraintLayout>
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/dpxconsalamat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toTopOf="@id/dpxconssubtotal">
+                app:layout_constraintBottom_toTopOf="@id/dpxconssubtotal"
+                app:layout_constraintStart_toStartOf="parent">
                 <LinearLayout
                     android:id="@+id/dpxlinearalamat"
                     android:layout_width="match_parent"
@@ -147,7 +193,7 @@
                     android:textColor="@color/black"
                     android:fontFamily="@font/inter_semibold"/>
                 <TextView
-                    android:id="@+id/dpxsubtotal"
+                    android:id="@+id/dpxongkir"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -168,15 +214,24 @@
                     android:textColor="@color/black"
                     android:fontFamily="@font/inter_semibold"/>
                 <TextView
-                    android:id="@+id/dpxongkir"
+                    android:id="@+id/dpxsubtotal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    app:layout_constraintTop_toBottomOf="@id/dpxsubtotal"
+                    app:layout_constraintTop_toBottomOf="@id/dpxongkir"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:text="Rp. Gratis"
                     android:textSize="@dimen/fh.ukurantekssubjudul"
                     android:textColor="@color/red"/>
+                <TextView
+                    android:id="@+id/dpxsubtotal2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintTop_toBottomOf="@id/dpxongkir"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:text="Rp. Free"
+                    android:visibility="invisible"/>
                 <TextView
                     android:id="@+id/dpxlabel3"
                     android:layout_width="wrap_content"
@@ -194,7 +249,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="10dp"
-                    app:layout_constraintTop_toBottomOf="@id/dpxongkir"
+                    app:layout_constraintTop_toBottomOf="@id/dpxsubtotal"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toTopOf="@id/dpxbtnpesan"
                     android:text="Tunai"

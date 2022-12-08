@@ -8,6 +8,7 @@ import retrofit2.http.POST;
 import vincent.angkringanmbahsingo2.ModelAPI.ResponseLogin;
 import vincent.angkringanmbahsingo2.ModelAPI.ResponseProduk;
 import vincent.angkringanmbahsingo2.ModelAPI.ResponseRegister;
+import vincent.angkringanmbahsingo2.ModelAPI.ResponseTransaksi;
 
 public interface APIInterface {
     @FormUrlEncoded
@@ -105,4 +106,35 @@ public interface APIInterface {
 
     @GET ("minumanlainnya.php")
     Call<ResponseProduk> getRetriveMinumanLainnya();
+
+    @GET ("autokodetransaksi.php")
+    Call<ResponseTransaksi> autoKodeTransaksi();
+
+    @FormUrlEncoded
+    @POST("transaksibeli.php")
+    Call<ResponseTransaksi> transaksiBeli(
+            @Field("id_transaksi") String id_transaksi,
+            @Field("id_produk") String id_produk,
+            @Field("username") String username,
+            @Field("jumlah") String jumlah,
+            @Field("totalhargaitem") String totalhargaitem
+    );
+
+    @FormUrlEncoded
+    @POST("rangkumanpesanan.php")
+    Call<ResponseTransaksi> rangkumanPesanan(
+            @Field("id_transaksi") String id_transaksi,
+            @Field("username") String username
+    );
+
+    @FormUrlEncoded
+    @POST("transaksibelifinal.php")
+    Call<ResponseTransaksi> transaksiBeliFinal(
+            @Field("id_transaksi") String id_transaksi,
+            @Field("username") String username,
+            @Field("subtotal") String subtotal,
+            @Field("pengiriman") String pengiriman,
+            @Field("metode") String metode,
+            @Field("status") String status
+    );
 }
