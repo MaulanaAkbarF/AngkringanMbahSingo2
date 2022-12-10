@@ -3,9 +3,10 @@ package vincent.angkringanmbahsingo2.MainActivity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.graphics.Color;
+import android.graphics.Path;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.animation.Animation;
@@ -18,12 +19,15 @@ import com.google.android.material.navigation.NavigationBarView;
 import java.util.ArrayList;
 
 import vincent.angkringanmbahsingo2.Dependencies.AdapterViewPager;
+import vincent.angkringanmbahsingo2.Fragments.DetailPesananFragment;
 import vincent.angkringanmbahsingo2.Fragments.HomeFragment;
-import vincent.angkringanmbahsingo2.Fragments.HomeSplashScreenFragment;
+import vincent.angkringanmbahsingo2.Fragments.InterfaceHomeFragment;
+import vincent.angkringanmbahsingo2.Fragments.InterfaceMakananFragment;
+import vincent.angkringanmbahsingo2.Fragments.InterfaceMinumanFragment;
 import vincent.angkringanmbahsingo2.Fragments.KeranjangFragment;
 import vincent.angkringanmbahsingo2.Fragments.MakananFragment;
 import vincent.angkringanmbahsingo2.Fragments.MinumanFragment;
-import vincent.angkringanmbahsingo2.Fragments.RegisterFragment;
+import vincent.angkringanmbahsingo2.Fragments.ProfilFragment;
 import vincent.angkringanmbahsingo2.Fragments.RiwayatFragment;
 import vincent.angkringanmbahsingo2.R;
 
@@ -32,6 +36,7 @@ public class MainHome extends AppCompatActivity {
     Animation easeOutSineBottom;
     ViewPager2 pagerMain;
     BottomNavigationView navbar;
+//    Path path = new Path();
     public static TextView set1, set2, set3, set4, set5;
 
     ArrayList<Fragment> fragarr = new ArrayList<>();
@@ -56,6 +61,12 @@ public class MainHome extends AppCompatActivity {
         easeOutSineBottom = AnimationUtils.loadAnimation(this, R.anim.ease_out_sine_bottom);
 
         navbar.startAnimation(easeOutSineBottom);
+
+//        path.addRoundRect(50, 50, navbar.getWidth(), navbar.getHeight(), 25, 25, Path.Direction.CCW);
+//        ShapeDrawable shapeDrawable = new ShapeDrawable(new PathShape(path, navbar.getWidth(), navbar.getHeight()));
+//        shapeDrawable.getPaint().setColor(Color.parseColor("#FFB0F9FF"));
+//        navbar.setBackground(shapeDrawable);
+        navbar.setBackgroundColor(Color.parseColor("#FFDFFDFF"));
 
         set1.setText("1");
         set2.setText("1");
@@ -125,6 +136,22 @@ public class MainHome extends AppCompatActivity {
             });
         } else if (set1.getText().toString().equals("0")&&set2.getText().toString().equals("0")&&set3.getText().toString().equals("0")&&set4.getText().toString().equals("0")&&set5.getText().toString().equals("0")){
             System.out.println("Done");
+        }
+    }
+
+    // Fungsi ketika tombol Back Button di klik
+    @Override
+    public void onBackPressed() {
+        if(InterfaceHomeFragment.backpressedlistener!=null){
+            InterfaceHomeFragment.backpressedlistener.onBackPressed();
+        } else if(InterfaceMakananFragment.backpressedlistener!=null){
+            InterfaceMakananFragment.backpressedlistener.onBackPressed();
+        } else if(InterfaceMinumanFragment.backpressedlistener!=null){
+            InterfaceMinumanFragment.backpressedlistener.onBackPressed();
+        } else if(ProfilFragment.backpressedlistener!=null){
+            ProfilFragment.backpressedlistener.onBackPressed();
+        } else if(DetailPesananFragment.backpressedlistener!=null){
+            DetailPesananFragment.backpressedlistener.onBackPressed();
         }
     }
 }

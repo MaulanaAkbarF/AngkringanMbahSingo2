@@ -84,7 +84,7 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 FragmentTransaction fragtr = getFragmentManager().beginTransaction();
-                fragtr.replace(R.id.fragmentcontainer, new LupaPasswordFragment()).addToBackStack("tag").commit();
+                fragtr.replace(R.id.fragmentcontainer, new LupaPasswordFragment()).addToBackStack(null).commit();
             }
         });
 
@@ -93,7 +93,7 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 FragmentTransaction fragtr = getFragmentManager().beginTransaction();
-                fragtr.replace(R.id.fragmentcontainer, new RegisterFragment()).addToBackStack("tag").commit();
+                fragtr.replace(R.id.fragmentcontainer, new RegisterFragment()).addToBackStack(null).commit();
             }
         });
         return view;

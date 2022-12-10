@@ -1,5 +1,7 @@
 package vincent.angkringanmbahsingo2.Fragments;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,7 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -26,23 +31,28 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import vincent.angkringanmbahsingo2.API.API;
 import vincent.angkringanmbahsingo2.API.APIInterface;
+import vincent.angkringanmbahsingo2.Dependencies.Backpressedlistener;
 import vincent.angkringanmbahsingo2.ModelAPI.DataItemTransaksi;
+import vincent.angkringanmbahsingo2.ModelAPI.ResponseLogin;
 import vincent.angkringanmbahsingo2.ModelAPI.ResponseProduk;
 import vincent.angkringanmbahsingo2.ModelAPI.ResponseTransaksi;
 import vincent.angkringanmbahsingo2.R;
 import vincent.angkringanmbahsingo2.RecycleviewAdapter.HomeRvAdapter;
 import vincent.angkringanmbahsingo2.RecycleviewAdapter.OrderRvAdapter;
 
-public class DetailPesananFragment extends Fragment {
+public class DetailPesananFragment extends Fragment implements Backpressedlistener {
 
-    LinearLayout linearlay, btnalamat, btnmetode;
+    Animation easeOutQuadLeft, easeOutQuadRight, easeOutQuadLeftOut, easeOutQuadRightOut;
+    LinearLayout linearanimate, linearlay, btnalamat, btnmetode;
     public static TextView teksidtransaksi, teksalamat, teksmetode, teksongkir, tekssubtotal, tekssubtotal2, dataidmenu, datajudul, datajumlah, dataharga;
-    ImageView dataimage, btnback;
+    ImageView btnback;
     Button btnpesan;
+    Dialog dialog;
 
     static String currency = "Rp. %,d";
     static String stock = "%,d";
     static String biayaongkir = "5000";
+    public static Backpressedlistener backpressedlistener;
 
     HomeFragment hfg = new HomeFragment();
     RecyclerView recyclerView;
@@ -51,19 +61,31 @@ public class DetailPesananFragment extends Fragment {
     APIInterface apiInterface;
     private List<DataItemTransaksi> dataPesanan = new ArrayList<>();
 
-    private String alamatFromDetailAlamat;
+    private String dataAlamat;
     public DetailPesananFragment(String alamat) {
-        this.alamatFromDetailAlamat = alamat;
+        this.dataAlamat = alamat;
     }
 
     public DetailPesananFragment(){
 
     }
 
+    // Mengisi data ID Transaksi dari Interface
+    private String dataIdTransaksi;
+    public void setDataIdTransaksi(String dataIdTransaksi) {
+        this.dataIdTransaksi = dataIdTransaksi;
+    }
+
+    // Mendapatkan data
+    public String getDataIdTransaksi() {
+        return this.dataIdTransaksi;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_detail_pesanan, container, false);
 
+        linearanimate = view.findViewById(R.id.linearanimate);
         linearlay = view.findViewById(R.id.dpxlinearlay);
         btnalamat = view.findViewById(R.id.dpxlinearalamat);
         btnmetode =  view.findViewById(R.id.dpxlinearmetode);
@@ -80,9 +102,11 @@ public class DetailPesananFragment extends Fragment {
         btnback = view.findViewById(R.id.dpxbtnback);
         btnpesan = view.findViewById(R.id.dpxbtnpesan);
 
-        if(alamatFromDetailAlamat !=null) {
-            teksalamat.setText(alamatFromDetailAlamat);
-        }
+        // Membuat animasi
+        easeOutQuadLeft = AnimationUtils.loadAnimation(getActivity(), R.anim.ease_out_quad_left);
+        easeOutQuadRight = AnimationUtils.loadAnimation(getActivity(), R.anim.ease_out_quad_right);
+        easeOutQuadLeftOut = AnimationUtils.loadAnimation(getActivity(), R.anim.ease_out_quad_left_out);
+        easeOutQuadRightOut = AnimationUtils.loadAnimation(getActivity(), R.anim.ease_out_quad_right_out);
 
         btnalamat.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,25 +134,23 @@ public class DetailPesananFragment extends Fragment {
         btnback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                closeFragment();
+                showAlertBatalkan();
+                dialog.show();
             }
         });
 
+        if(dataAlamat !=null) {
+            teksalamat.setText(dataAlamat);
+        }
+
+        linearanimate.startAnimation(easeOutQuadRight);
         retrievePesanan();
         linearClickable();
         return view;
     }
 
     public void retrievePesanan(){
-        InterfaceHomeFragment homefrag = new InterfaceHomeFragment();
-        InterfaceMakananFragment makfrag = new InterfaceMakananFragment();
-        InterfaceMinumanFragment minfrag = new InterfaceMinumanFragment();
-        if (makfrag.interxidtransaksi.getText().toString() != null){
-            teksidtransaksi.setText(makfrag.interxidtransaksi.getText().toString());
-        } else {
-            System.out.println("");
-        }
-        String idtransaksi = teksidtransaksi.getText().toString(), username = hfg.teksuser.getText().toString();
+        String idtransaksi = getDataIdTransaksi(), username = hfg.teksuser.getText().toString();
         apiInterface = API.getService().create(APIInterface.class);
         Call<ResponseTransaksi> pesananCall = apiInterface.rangkumanPesanan(idtransaksi, username);
         pesananCall.enqueue(new Callback<ResponseTransaksi>() {
@@ -163,13 +185,54 @@ public class DetailPesananFragment extends Fragment {
             @Override
             public void onResponse(Call<ResponseTransaksi> call, Response<ResponseTransaksi> response) {
                 dataPesanan = response.body().getData();
+                linearanimate.startAnimation(easeOutQuadLeftOut);
                 FragmentTransaction fragtr = getFragmentManager().beginTransaction();
                 fragtr.replace(R.id.fragmentcontainersplash, new SplashSelesaiFragment()).addToBackStack("tag").commit();
+                dataIdTransaksi = null;
             }
 
             @Override
             public void onFailure(Call<ResponseTransaksi> call, Throwable t) {
                 Toast.makeText(getActivity(), t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void showAlertBatalkan(){
+        Button batal, kirim;
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        View view = getLayoutInflater().inflate(R.layout.alert_batalkanpesanan,null);
+        batal = view.findViewById(R.id.alertxbtnbatal);
+        kirim = view.findViewById(R.id.alertxbtnkirim);
+        builder.setView(view);
+        dialog = builder.create();
+        batal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String idtransaksi = getDataIdTransaksi(), username = hfg.teksuser.getText().toString();
+                apiInterface = API.getService().create(APIInterface.class);
+                Call<ResponseTransaksi> pesananCall = apiInterface.batalkanPesanan(idtransaksi, username);
+                pesananCall.enqueue(new Callback<ResponseTransaksi>() {
+                    @Override
+                    public void onResponse(Call<ResponseTransaksi> call, Response<ResponseTransaksi> response) {
+                        dataIdTransaksi = null;
+                        linearanimate.startAnimation(easeOutQuadRightOut);
+                        linearanimate.setVisibility(View.GONE);
+                        closeFragment();
+                        dialog.dismiss();
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseTransaksi> call, Throwable t) {
+                        Toast.makeText(getActivity(), t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+        kirim.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
             }
         });
     }
@@ -186,5 +249,23 @@ public class DetailPesananFragment extends Fragment {
     private void closeFragment(){
         FragmentTransaction fragtr = getFragmentManager().beginTransaction().remove(this);
         fragtr.commit();
+    }
+
+    @Override
+    public void onPause() {
+        backpressedlistener=null;
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        backpressedlistener=this;
+    }
+
+    @Override
+    public void onBackPressed() {
+        showAlertBatalkan();
+        dialog.show();
     }
 }

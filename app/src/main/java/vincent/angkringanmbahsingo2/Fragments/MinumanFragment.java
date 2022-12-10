@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,7 +39,7 @@ import vincent.angkringanmbahsingo2.RecycleviewModel.HomeRvModel;
 public class MinumanFragment extends Fragment {
 
     Spinner spinner;
-    public static TextView dataidmenu, datajudul, datadesc, dataharga, datastok;
+    public static TextView dataidmenu, datajudul, datadesc, dataharga, datastok, dataimage;
     RecyclerView recyclerView;
     HomeRvAdapter.AdapterItemListener adapterItemListenerInterface;
 
@@ -52,6 +53,7 @@ public class MinumanFragment extends Fragment {
 
         spinner = view.findViewById(R.id.fminxspinner);
         recyclerView = view.findViewById(R.id.fminxrecycleminuman);
+        dataimage = view.findViewById(R.id.dataximage);
         dataidmenu = view.findViewById(R.id.dataxidmenu);
         datajudul = view.findViewById(R.id.dataxjudul);
         datadesc = view.findViewById(R.id.dataxdesc);
@@ -102,13 +104,15 @@ public class MinumanFragment extends Fragment {
         adapterItemListenerInterface = new HomeRvAdapter.AdapterItemListener() {
             @Override
             public void clickItemListener(int adapterPosition) {
+                dataimage.setText(produkList.get(adapterPosition).getGambar());
                 dataidmenu.setText(produkList.get(adapterPosition).getIdProduk());
                 datajudul.setText(produkList.get(adapterPosition).getNamaProduk());
                 datadesc.setText(produkList.get(adapterPosition).getDeskripsiProduk());
                 dataharga.setText(String.valueOf(produkList.get(adapterPosition).getHarga()));
                 datastok.setText(String.valueOf(produkList.get(adapterPosition).getStok()));
-                FragmentTransaction fragtr = getFragmentManager().beginTransaction();
-                fragtr.replace(R.id.fragmentcontainersplash, new InterfaceMinumanFragment()).addToBackStack("tag").commit();
+
+                FragmentTransaction fragtr = getActivity().getSupportFragmentManager().beginTransaction();
+                fragtr.replace(R.id.fragmentcontainersplash, new InterfaceMinumanFragment()).addToBackStack(null).commit();
             }
         };
         return true;

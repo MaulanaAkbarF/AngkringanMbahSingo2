@@ -6,6 +6,8 @@ import android.os.Bundle;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,16 +18,35 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import vincent.angkringanmbahsingo2.API.API;
+import vincent.angkringanmbahsingo2.API.APIInterface;
+import vincent.angkringanmbahsingo2.Dependencies.Backpressedlistener;
+import vincent.angkringanmbahsingo2.ModelAPI.DataItemTransaksi;
+import vincent.angkringanmbahsingo2.ModelAPI.ResponseTransaksi;
 import vincent.angkringanmbahsingo2.R;
 
-public class InterfaceHomeFragment extends Fragment {
+public class InterfaceHomeFragment extends Fragment implements Backpressedlistener {
 
-    Animation easeOutQuadRight, easeOutQuadRightOut;
+    Animation easeOutQuadLeft, easeOutQuadRight, easeOutQuadLeftOut, easeOutQuadRightOut;
     ConstraintLayout consmain;
+    public static Backpressedlistener backpressedlistener;
     public static TextView interxidtransaksi, interidmenu, interdatajudul, interdatadesc, interdataharga, interdatastok, txtjumlah, txttotal;
-    ImageView interdataimage, plusimage, minimage, imageback;
+    public static ImageView interdataimage, plusimage, minimage, imageback;
+    Button btnkeranjang, btnbeli;
     Dialog dialog;
+
+    APIInterface apiInterface;
+    private List<DataItemTransaksi> dataTransaksiBeli = new ArrayList<>();
 
     static String currency = "Rp. %,d";
     static String stock = "%,d";
@@ -46,14 +67,19 @@ public class InterfaceHomeFragment extends Fragment {
         interdatadesc = view.findViewById(R.id.interxdescmenu);
         interdataharga = view.findViewById(R.id.interxhargamenu);
         interdatastok = view.findViewById(R.id.interxstokmenu);
+        interdataimage = view.findViewById(R.id.interximage);
         txtjumlah = view.findViewById(R.id.interxteksjumlah);
         txttotal = view.findViewById(R.id.interxtotalharga);
         plusimage = view.findViewById(R.id.interximageplus);
         minimage = view.findViewById(R.id.interximagemin);
         imageback = view.findViewById(R.id.fhomexback);
+        btnkeranjang = view.findViewById(R.id.interxbtnkeranjang);
+        btnbeli = view.findViewById(R.id.interxbtnbeli);
 
         // Membuat animasi
+        easeOutQuadLeft = AnimationUtils.loadAnimation(getActivity(), R.anim.ease_out_quad_left);
         easeOutQuadRight = AnimationUtils.loadAnimation(getActivity(), R.anim.ease_out_quad_right);
+        easeOutQuadLeftOut = AnimationUtils.loadAnimation(getActivity(), R.anim.ease_out_quad_left_out);
         easeOutQuadRightOut = AnimationUtils.loadAnimation(getActivity(), R.anim.ease_out_quad_right_out);
 
         consmain.setVisibility(View.VISIBLE);
@@ -63,26 +89,81 @@ public class InterfaceHomeFragment extends Fragment {
             getDataMakanan();
         }
 
+        btnkeranjang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        btnbeli.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                HomeFragment hfg = new HomeFragment();
+                int totalharga = Integer.parseInt(String.valueOf(txtjumlah.getText())) * Integer.parseInt(String.valueOf(homefrag.dataharga.getText()));
+                String totalhargaitem = Integer.toString(totalharga);
+                apiInterface = API.getService().create(APIInterface.class);
+                Call<ResponseTransaksi> transaksiCall = apiInterface.transaksiBeli(interxidtransaksi.getText().toString(), interidmenu.getText().toString(), hfg.teksuser.getText().toString(), String.valueOf(txtjumlah.getText()), totalhargaitem);
+                transaksiCall.enqueue(new Callback<ResponseTransaksi>() {
+                    @Override
+                    public void onResponse(Call<ResponseTransaksi> call, Response<ResponseTransaksi> response) {
+                        consmain.startAnimation(easeOutQuadLeftOut);
+                        sendDataToPesanan();
+                    }
+                    @Override
+                    public void onFailure(Call<ResponseTransaksi> call, Throwable t) {
+                        Toast.makeText(getActivity(), t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+
         imageback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 consmain.startAnimation(easeOutQuadRightOut);
                 consmain.setVisibility(View.GONE);
+                interxidtransaksi.setText(null);
             }
         });
 
+        autokodeTransaksi();
         countJumlah();
         jumlahClickable();
-
         return view;
     }
 
     public static void getDataMakanan(){
+        Picasso.get().load(API.BASE_GAMBAR+homefrag.dataimage.getText()).error(R.mipmap.ic_launcher).into(interdataimage);
         interidmenu.setText(homefrag.dataidmenu.getText());
         interdatajudul.setText(homefrag.datajudul.getText());
         interdatadesc.setText(homefrag.datadesc.getText());
         interdataharga.setText(String.format(currency, Integer.parseInt(String.valueOf(homefrag.dataharga.getText()))));
         interdatastok.setText(String.format(stock, Integer.parseInt(String.valueOf(homefrag.datastok.getText()))));
+    }
+
+    public void sendDataToPesanan() {
+        DetailPesananFragment dpf = new DetailPesananFragment();
+        dpf.setDataIdTransaksi(interxidtransaksi.getText().toString());
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragtr = fragmentManager.beginTransaction();
+        fragtr.replace(R.id.fragmentcontainersplash, dpf).commit();
+    }
+
+    private void autokodeTransaksi(){
+        apiInterface = API.getService().create(APIInterface.class);
+        Call<ResponseTransaksi> transaksiCall = apiInterface.autoKodeTransaksi();
+        transaksiCall.enqueue(new Callback<ResponseTransaksi>() {
+            @Override
+            public void onResponse(Call<ResponseTransaksi> call, Response<ResponseTransaksi> response) {
+                dataTransaksiBeli = response.body().getData();
+                interxidtransaksi.setText(dataTransaksiBeli.get(0).getIdTransaksi());
+            }
+            @Override
+            public void onFailure(Call<ResponseTransaksi> call, Throwable t) {
+                Toast.makeText(getActivity(),t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void countJumlah(){
@@ -150,5 +231,29 @@ public class InterfaceHomeFragment extends Fragment {
                 dialog.dismiss();
             }
         });
+    }
+
+    private void closeFragment(){
+        FragmentTransaction fragtr = getFragmentManager().beginTransaction().remove(this);
+        fragtr.commit();
+    }
+
+    @Override
+    public void onPause() {
+        backpressedlistener=null;
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        backpressedlistener=this;
+    }
+
+    @Override
+    public void onBackPressed() {
+        consmain.startAnimation(easeOutQuadRightOut);
+        consmain.setVisibility(View.GONE);
+        interxidtransaksi.setText(null);
     }
 }

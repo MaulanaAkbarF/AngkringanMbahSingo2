@@ -94,13 +94,13 @@ public class RiwayatFragment extends Fragment {
         btnselesai.setVisibility(View.GONE);
 
         // Memanggil List Data pada Recycle View
-        MainHome mh = new MainHome();
-        if (String.valueOf(mh.set4.getText()).equals("0")){
-            System.out.println("");
-        } else if (String.valueOf(mh.set4.getText()).equals("1")){
-            isiDataRiwayat();
-            mh.set4.setText("0");
-        }
+//        MainHome mh = new MainHome();
+//        if (String.valueOf(mh.set4.getText()).equals("0")){
+//            System.out.println("");
+//        } else if (String.valueOf(mh.set4.getText()).equals("1")){
+//            isiDataRiwayat();
+//            mh.set4.setText("0");
+//        }
 
 //        getRiwayatClicked();
         getRiwayat();

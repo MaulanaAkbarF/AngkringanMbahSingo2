@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -40,7 +41,7 @@ public class HomeFragment extends Fragment {
     LinearLayout judul;
     ScrollView rvdatalayout;
 
-    public static TextView teksnama, teksnomor, teksemail, teksuser, dataidmenu, datajudul, datadesc, dataharga, datastok;
+    public static TextView teksnama, teksnomor, teksemail, teksuser, dataidmenu, datajudul, datadesc, dataharga, datastok, dataimage;
     CardView btnprofil;
     RecyclerView recyclerView1, recyclerView2;
     HomeRvAdapter.AdapterItemListener adapterItemListenerInterface;
@@ -72,6 +73,7 @@ public class HomeFragment extends Fragment {
         teksnomor = view.findViewById(R.id.fhxtxtnomor);
         teksemail = view.findViewById(R.id.fhxtxtemail);
         teksuser = view.findViewById(R.id.fhxtxtuser);
+        dataimage = view.findViewById(R.id.dataximage);
         dataidmenu = view.findViewById(R.id.dataxidmenu);
         datajudul = view.findViewById(R.id.dataxjudul);
         datadesc = view.findViewById(R.id.dataxdesc);
@@ -109,6 +111,7 @@ public class HomeFragment extends Fragment {
         adapterItemListenerInterface = new HomeRvAdapter.AdapterItemListener() {
             @Override
             public void clickItemListener(int adapterPosition) {
+                dataimage.setText(produkList.get(adapterPosition).getGambar());
                 dataidmenu.setText(produkList.get(adapterPosition).getIdProduk());
                 datajudul.setText(produkList.get(adapterPosition).getNamaProduk());
                 datadesc.setText(produkList.get(adapterPosition).getDeskripsiProduk());

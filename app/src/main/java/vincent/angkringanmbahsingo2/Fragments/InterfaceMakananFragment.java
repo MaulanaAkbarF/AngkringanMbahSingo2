@@ -6,10 +6,12 @@ import android.os.Bundle;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.util.JsonReader;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -32,23 +34,23 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import vincent.angkringanmbahsingo2.API.API;
 import vincent.angkringanmbahsingo2.API.APIInterface;
+import vincent.angkringanmbahsingo2.Dependencies.Backpressedlistener;
 import vincent.angkringanmbahsingo2.ModelAPI.DataItemLogin;
 import vincent.angkringanmbahsingo2.ModelAPI.DataItemTransaksi;
 import vincent.angkringanmbahsingo2.ModelAPI.ResponseLogin;
 import vincent.angkringanmbahsingo2.ModelAPI.ResponseTransaksi;
 import vincent.angkringanmbahsingo2.R;
 
-public class InterfaceMakananFragment extends Fragment {
+public class InterfaceMakananFragment extends Fragment implements Backpressedlistener {
 
-    Animation easeOutQuadRight, easeOutQuadRightOut;
+    Animation easeOutQuadLeft, easeOutQuadRight, easeOutQuadLeftOut, easeOutQuadRightOut;
     ConstraintLayout consmain;
+    public static Backpressedlistener backpressedlistener;
     public static TextView interxidtransaksi, interidmenu, interdatajudul, interdatadesc, interdataharga, interdatastok, txtjumlah, txttotal;
     public static ImageView interdataimage, plusimage, minimage, imageback;
     Button btnkeranjang, btnbeli;
     Dialog dialog;
 
-    ProfilFragment pfg = new ProfilFragment();
-    DetailPesananFragment dpf = new DetailPesananFragment();
     APIInterface apiInterface;
     private List<DataItemTransaksi> dataTransaksiBeli = new ArrayList<>();
 
@@ -81,7 +83,9 @@ public class InterfaceMakananFragment extends Fragment {
         btnbeli = view.findViewById(R.id.interxbtnbeli);
 
         // Membuat animasi
+        easeOutQuadLeft = AnimationUtils.loadAnimation(getActivity(), R.anim.ease_out_quad_left);
         easeOutQuadRight = AnimationUtils.loadAnimation(getActivity(), R.anim.ease_out_quad_right);
+        easeOutQuadLeftOut = AnimationUtils.loadAnimation(getActivity(), R.anim.ease_out_quad_left_out);
         easeOutQuadRightOut = AnimationUtils.loadAnimation(getActivity(), R.anim.ease_out_quad_right_out);
 
         consmain.setVisibility(View.VISIBLE);
@@ -90,14 +94,6 @@ public class InterfaceMakananFragment extends Fragment {
         if (makfrag.getMakananClicked()){
             getDataMakanan();
         }
-
-        imageback.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                consmain.startAnimation(easeOutQuadRightOut);
-                consmain.setVisibility(View.GONE);
-            }
-        });
 
         btnkeranjang.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,14 +113,23 @@ public class InterfaceMakananFragment extends Fragment {
                 transaksiCall.enqueue(new Callback<ResponseTransaksi>() {
                     @Override
                     public void onResponse(Call<ResponseTransaksi> call, Response<ResponseTransaksi> response) {
-                        FragmentTransaction fragtr = getFragmentManager().beginTransaction();
-                        fragtr.replace(R.id.fragmentcontainersplash, new DetailPesananFragment()).commit();
+                        consmain.startAnimation(easeOutQuadLeftOut);
+                        sendDataToPesanan();
                     }
                     @Override
                     public void onFailure(Call<ResponseTransaksi> call, Throwable t) {
                         Toast.makeText(getActivity(), t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
+            }
+        });
+
+        imageback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                consmain.startAnimation(easeOutQuadRightOut);
+                consmain.setVisibility(View.GONE);
+                interxidtransaksi.setText(null);
             }
         });
 
@@ -141,6 +146,14 @@ public class InterfaceMakananFragment extends Fragment {
         interdatadesc.setText(makfrag.datadesc.getText());
         interdataharga.setText(String.format(currency, Integer.parseInt(String.valueOf(makfrag.dataharga.getText()))));
         interdatastok.setText(String.format(stock, Integer.parseInt(String.valueOf(makfrag.datastok.getText()))));
+    }
+
+    public void sendDataToPesanan() {
+        DetailPesananFragment dpf = new DetailPesananFragment();
+        dpf.setDataIdTransaksi(interxidtransaksi.getText().toString());
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragtr = fragmentManager.beginTransaction();
+        fragtr.replace(R.id.fragmentcontainersplash, dpf).commit();
     }
 
     private void autokodeTransaksi(){
@@ -224,5 +237,29 @@ public class InterfaceMakananFragment extends Fragment {
                 dialog.dismiss();
             }
         });
+    }
+
+    private void closeFragment(){
+        FragmentTransaction fragtr = getFragmentManager().beginTransaction().remove(this);
+        fragtr.commit();
+    }
+
+    @Override
+    public void onPause() {
+        backpressedlistener=null;
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        backpressedlistener=this;
+    }
+
+    @Override
+    public void onBackPressed() {
+        consmain.startAnimation(easeOutQuadRightOut);
+        consmain.setVisibility(View.GONE);
+        interxidtransaksi.setText(null);
     }
 }

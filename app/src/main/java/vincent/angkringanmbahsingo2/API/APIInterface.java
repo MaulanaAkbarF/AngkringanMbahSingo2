@@ -128,6 +128,13 @@ public interface APIInterface {
     );
 
     @FormUrlEncoded
+    @POST("batalkantransaksi.php")
+    Call<ResponseTransaksi> batalkanPesanan(
+            @Field("id_transaksi") String id_transaksi,
+            @Field("username") String username
+    );
+
+    @FormUrlEncoded
     @POST("transaksibelifinal.php")
     Call<ResponseTransaksi> transaksiBeliFinal(
             @Field("id_transaksi") String id_transaksi,

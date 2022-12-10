@@ -126,13 +126,24 @@ public class MakananFragment extends Fragment {
                 dataharga.setText(String.valueOf(produkList.get(adapterPosition).getHarga()));
                 datastok.setText(String.valueOf(produkList.get(adapterPosition).getStok()));
 
-                MakananFragment makfrag = new MakananFragment();
                 FragmentTransaction fragtr = getActivity().getSupportFragmentManager().beginTransaction();
                 fragtr.replace(R.id.fragmentcontainersplash, new InterfaceMakananFragment()).addToBackStack(null).commit();
             }
         };
         return true;
     }
+
+//    private void replaceFragment (){
+//        String backStateName = getActivity().getClass().getName();
+//
+//        FragmentManager manager = getActivity().getSupportFragmentManager();
+//        boolean fragmentPopped = manager.popBackStackImmediate (backStateName, 0);
+//
+//        if (!fragmentPopped){
+//            FragmentTransaction ft = manager.beginTransaction();
+//            ft.replace(R.id.fragmentcontainersplash, new InterfaceMakananFragment()).addToBackStack(backStateName).commit();
+//        }
+//    }
 
     public void retrieveDataMakanan(){
         apiInterface = API.getService().create(APIInterface.class);

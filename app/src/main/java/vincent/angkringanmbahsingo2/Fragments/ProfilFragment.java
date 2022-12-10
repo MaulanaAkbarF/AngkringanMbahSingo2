@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -29,14 +30,16 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import vincent.angkringanmbahsingo2.API.API;
 import vincent.angkringanmbahsingo2.API.APIInterface;
+import vincent.angkringanmbahsingo2.Dependencies.Backpressedlistener;
 import vincent.angkringanmbahsingo2.ModelAPI.DataItemLogin;
 import vincent.angkringanmbahsingo2.ModelAPI.ResponseLogin;
 import vincent.angkringanmbahsingo2.R;
 
-public class ProfilFragment extends Fragment {
+public class ProfilFragment extends Fragment implements Backpressedlistener {
 
     Animation easeOutQuadRight, easeOutQuadRightOut;
     ScrollView scrollmain;
+    public static Backpressedlistener backpressedlistener;
     ImageView image, btnquit, btneditnomor, btneditalamat, btneditemail, btneditpass;
     TextView fpeditinfo, nama, nomortlp, alamat, username, email, logout;
     Dialog dialog;
@@ -126,8 +129,21 @@ public class ProfilFragment extends Fragment {
         });
 
         nama.setText(hfg.teksnama.getText());
+        setHasOptionsMenu(true);
         getDataLoginRetrofit();
         return view;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Mengatur agar tombol back menjalankan kode yang ditentukan
+            case android.R.id.home:
+                // Kode yang akan dieksekusi ketika tombol back ditekan
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private void getDataLoginRetrofit() {
@@ -442,5 +458,24 @@ public class ProfilFragment extends Fragment {
     private void closeFragment(){
         FragmentTransaction fragtr = getFragmentManager().beginTransaction().remove(this);
         fragtr.commit();
+    }
+
+    @Override
+    public void onPause() {
+        backpressedlistener=null;
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        backpressedlistener=this;
+    }
+
+    @Override
+    public void onBackPressed() {
+        scrollmain.startAnimation(easeOutQuadRightOut);
+        scrollmain.setVisibility(View.GONE);
+        closeFragment();
     }
 }
