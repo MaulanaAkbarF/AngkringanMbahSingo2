@@ -1,5 +1,7 @@
 package vincent.angkringanmbahsingo2.MainActivity;
 
+import androidx.activity.OnBackPressedCallback;
+import androidx.activity.OnBackPressedDispatcher;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -12,6 +14,7 @@ import android.view.MenuItem;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -40,6 +43,11 @@ public class MainHome extends AppCompatActivity {
     public static TextView set1, set2, set3, set4, set5;
 
     ArrayList<Fragment> fragarr = new ArrayList<>();
+    private OnBackPressedDispatcher onBackPressedDispatcher;
+    private OnBackPressedCallback onBackPressedCallback;
+
+    private static final int TIME_INTERVAL = 2000;
+    private long mBackPressed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +81,7 @@ public class MainHome extends AppCompatActivity {
         set3.setText("1");
         set4.setText("1");
         set5.setText("1");
-        if (set1.getText().toString().equals("1")&&set2.getText().toString().equals("1")&&set3.getText().toString().equals("1")&&set4.getText().toString().equals("1")&&set5.getText().toString().equals("1")){
+        if (set1.getText().toString().equals("1") && set2.getText().toString().equals("1") && set3.getText().toString().equals("1") && set4.getText().toString().equals("1") && set5.getText().toString().equals("1")) {
             // Menambahkan Array Fragment ke dalam Bottom Navigation
             fragarr.add(new HomeFragment());
             fragarr.add(new MakananFragment());
@@ -88,7 +96,7 @@ public class MainHome extends AppCompatActivity {
             pagerMain.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
                 @Override
                 public void onPageSelected(int position) {
-                    switch (position){
+                    switch (position) {
                         case 0:
                             navbar.setSelectedItemId(R.id.hfxmenu1);
                             break;
@@ -114,7 +122,7 @@ public class MainHome extends AppCompatActivity {
             navbar.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    switch (item.getItemId()){
+                    switch (item.getItemId()) {
                         case R.id.hfxmenu1:
                             pagerMain.setCurrentItem(0);
                             break;
@@ -134,14 +142,21 @@ public class MainHome extends AppCompatActivity {
                     return true;
                 }
             });
-        } else if (set1.getText().toString().equals("0")&&set2.getText().toString().equals("0")&&set3.getText().toString().equals("0")&&set4.getText().toString().equals("0")&&set5.getText().toString().equals("0")){
+        } else if (set1.getText().toString().equals("0") && set2.getText().toString().equals("0") && set3.getText().toString().equals("0") && set4.getText().toString().equals("0") && set5.getText().toString().equals("0")) {
             System.out.println("Done");
         }
+
     }
 
     // Fungsi ketika tombol Back Button di klik
     @Override
     public void onBackPressed() {
+        if (mBackPressed + TIME_INTERVAL > System.currentTimeMillis()) {
+            Runtime.getRuntime().exit(0);
+        } else {
+            Toast.makeText(getBaseContext(), "Tekan Sekali lagi untuk Keluar", Toast.LENGTH_SHORT).show();
+        }
+        mBackPressed = System.currentTimeMillis();
         if(InterfaceHomeFragment.backpressedlistener!=null){
             InterfaceHomeFragment.backpressedlistener.onBackPressed();
         } else if(InterfaceMakananFragment.backpressedlistener!=null){

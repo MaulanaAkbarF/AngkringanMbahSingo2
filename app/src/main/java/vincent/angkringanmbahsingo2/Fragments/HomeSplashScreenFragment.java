@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import vincent.angkringanmbahsingo2.Dependencies.Backpressedlistener;
 import vincent.angkringanmbahsingo2.MainActivity.MainHome;
 import vincent.angkringanmbahsingo2.R;
 
@@ -70,7 +71,7 @@ public class HomeSplashScreenFragment extends Fragment {
                 i.putExtra("datanama", nama.getText().toString());
                 startActivity(i);
             }
-        }, 1500L); // Untuk mengatur waktu Splash Screen. 1000L = 1 detik
+        }, 1400L); // Untuk mengatur waktu Splash Screen. 1000L = 1 detik
         return view;
     }
 

@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -23,26 +24,30 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import vincent.angkringanmbahsingo2.API.API;
 import vincent.angkringanmbahsingo2.API.APIInterface;
+import vincent.angkringanmbahsingo2.Dependencies.Backpressedlistener;
 import vincent.angkringanmbahsingo2.Dependencies.DataHelper;
 import vincent.angkringanmbahsingo2.ModelAPI.ResponseRegister;
 import vincent.angkringanmbahsingo2.R;
 
-public class RegisterFragment extends Fragment {
+public class RegisterFragment extends Fragment implements Backpressedlistener {
 
-    Animation easeOutSineTop, easeOutSineBottom;
+    Animation easeOutSineTop, easeOutSineTopOut, easeOutSineBottom, easeOutSineBottomOut;
     CardView image;
+    ConstraintLayout consanimate;
     LinearLayout input, button;
     DataHelper dbhelper;
     EditText user, email,  pass, nama, alamat, nohp;
     Button register;
     TextView login;
     APIInterface apiInterface;
+    public static Backpressedlistener backpressedlistener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_register, container, false);
 
         // Inisiasi komponen animasi
+        consanimate = view.findViewById(R.id.consanimate);
         image = view.findViewById(R.id.frxcardlayouttop);
         input = view.findViewById(R.id.frxlinearinput);
         button = view.findViewById(R.id.frxlinearbutton);
@@ -60,7 +65,9 @@ public class RegisterFragment extends Fragment {
 
         // Membuat animasi
         easeOutSineTop = AnimationUtils.loadAnimation(getActivity(), R.anim.ease_out_sine_top);
+        easeOutSineTopOut = AnimationUtils.loadAnimation(getActivity(), R.anim.ease_out_sine_top_out);
         easeOutSineBottom = AnimationUtils.loadAnimation(getActivity(), R.anim.ease_out_sine_bottom);
+        easeOutSineBottomOut = AnimationUtils.loadAnimation(getActivity(), R.anim.ease_out_sine_bottom_out);
 
         image.startAnimation(easeOutSineTop);
         input.startAnimation(easeOutSineBottom);
@@ -78,8 +85,12 @@ public class RegisterFragment extends Fragment {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                consanimate.startAnimation(easeOutSineTopOut);
+                image.startAnimation(easeOutSineTopOut);
+                input.startAnimation(easeOutSineBottomOut);
+                button.startAnimation(easeOutSineBottomOut);
                 FragmentTransaction fragtr = getFragmentManager().beginTransaction();
-                fragtr.replace(R.id.fragmentcontainer, new LoginFragment()).addToBackStack("tag").commit();
+                fragtr.replace(R.id.fragmentcontainer, new LoginFragment()).commit();
             }
         });
         return view;
@@ -146,6 +157,10 @@ public class RegisterFragment extends Fragment {
                             int kode = response.body().getKode();
                             if (kode == 1) {
                                 Toast.makeText(getActivity(), "Register successful", Toast.LENGTH_SHORT).show();
+                                consanimate.startAnimation(easeOutSineTopOut);
+                                image.startAnimation(easeOutSineTopOut);
+                                input.startAnimation(easeOutSineBottomOut);
+                                button.startAnimation(easeOutSineBottomOut);
                                 FragmentTransaction fragtr = getFragmentManager().beginTransaction();
                                 fragtr.replace(R.id.fragmentcontainer, new LoginFragment()).addToBackStack("tag").commit();
                             } else {
@@ -161,5 +176,27 @@ public class RegisterFragment extends Fragment {
                 }
             }
         });
+    }
+
+    @Override
+    public void onPause() {
+        backpressedlistener=null;
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        backpressedlistener=this;
+    }
+
+    @Override
+    public void onBackPressed() {
+        consanimate.startAnimation(easeOutSineTopOut);
+        image.startAnimation(easeOutSineTopOut);
+        input.startAnimation(easeOutSineBottomOut);
+        button.startAnimation(easeOutSineBottomOut);
+        FragmentTransaction fragtr = getFragmentManager().beginTransaction();
+        fragtr.replace(R.id.fragmentcontainer, new LoginFragment()).commit();
     }
 }

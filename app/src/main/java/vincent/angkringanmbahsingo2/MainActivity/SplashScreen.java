@@ -25,6 +25,6 @@ public class SplashScreen extends AppCompatActivity {
                 startActivity(new Intent(SplashScreen.this, MainLogin.class));
                 finish();
             }
-        }, 1700L); // Untuk mengatur waktu Splash Screen. 1000L = 1 detik
+        }, 1500L); // Untuk mengatur waktu Splash Screen. 1000L = 1 detik
     }
 }

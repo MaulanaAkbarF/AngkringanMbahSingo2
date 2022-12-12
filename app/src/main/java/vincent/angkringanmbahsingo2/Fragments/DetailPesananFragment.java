@@ -42,7 +42,7 @@ import vincent.angkringanmbahsingo2.RecycleviewAdapter.OrderRvAdapter;
 
 public class DetailPesananFragment extends Fragment implements Backpressedlistener {
 
-    Animation easeOutQuadLeft, easeOutQuadRight, easeOutQuadLeftOut, easeOutQuadRightOut;
+    Animation easeOutQuadLeft, easeOutQuadRight, easeOutSineTopOut, easeOutQuadRightOut;
     LinearLayout linearanimate, linearlay, btnalamat, btnmetode;
     public static TextView teksidtransaksi, teksalamat, teksmetode, teksongkir, tekssubtotal, tekssubtotal2, dataidmenu, datajudul, datajumlah, dataharga;
     ImageView btnback;
@@ -105,7 +105,7 @@ public class DetailPesananFragment extends Fragment implements Backpressedlisten
         // Membuat animasi
         easeOutQuadLeft = AnimationUtils.loadAnimation(getActivity(), R.anim.ease_out_quad_left);
         easeOutQuadRight = AnimationUtils.loadAnimation(getActivity(), R.anim.ease_out_quad_right);
-        easeOutQuadLeftOut = AnimationUtils.loadAnimation(getActivity(), R.anim.ease_out_quad_left_out);
+        easeOutSineTopOut = AnimationUtils.loadAnimation(getActivity(), R.anim.ease_out_sine_top_out);
         easeOutQuadRightOut = AnimationUtils.loadAnimation(getActivity(), R.anim.ease_out_quad_right_out);
 
         btnalamat.setOnClickListener(new View.OnClickListener() {
@@ -185,7 +185,7 @@ public class DetailPesananFragment extends Fragment implements Backpressedlisten
             @Override
             public void onResponse(Call<ResponseTransaksi> call, Response<ResponseTransaksi> response) {
                 dataPesanan = response.body().getData();
-                linearanimate.startAnimation(easeOutQuadLeftOut);
+                linearanimate.startAnimation(easeOutSineTopOut);
                 FragmentTransaction fragtr = getFragmentManager().beginTransaction();
                 fragtr.replace(R.id.fragmentcontainersplash, new SplashSelesaiFragment()).addToBackStack("tag").commit();
                 dataIdTransaksi = null;

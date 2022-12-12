@@ -150,4 +150,17 @@ public interface APIInterface {
     Call<ResponseTransaksi> Riwayat(
             @Field("username") String username
     );
+
+    @FormUrlEncoded
+    @POST("filterriwayattanggal.php")
+    Call<ResponseTransaksi> filterRiwayatTanggal(
+            @Field("username") String username,
+            @Field("tanggal_transaksi") String subtotal
+    );
+
+    @GET ("filterriwayatmakanan.php")
+    Call<ResponseTransaksi> filterRiwayatMakanan();
+
+    @GET ("filterriwayatminuman.php")
+    Call<ResponseTransaksi> filterRiwayatMinuman();
 }

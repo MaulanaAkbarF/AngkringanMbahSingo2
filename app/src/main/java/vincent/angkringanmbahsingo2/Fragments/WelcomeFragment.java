@@ -14,14 +14,16 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import vincent.angkringanmbahsingo2.Dependencies.Backpressedlistener;
 import vincent.angkringanmbahsingo2.R;
 
-public class WelcomeFragment extends Fragment {
+public class WelcomeFragment extends Fragment implements Backpressedlistener {
 
     Animation easeOutSineTop, easeOutSineBottom;
     LinearLayout judul, image, button;
     Button btnmasuk;
     TextView daftar;
+    public static Backpressedlistener backpressedlistener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -62,5 +64,22 @@ public class WelcomeFragment extends Fragment {
             }
         });
         return view;
+    }
+
+    @Override
+    public void onPause() {
+        backpressedlistener=null;
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        backpressedlistener=this;
+    }
+
+    @Override
+    public void onBackPressed() {
+        Runtime.getRuntime().exit(0);
     }
 }

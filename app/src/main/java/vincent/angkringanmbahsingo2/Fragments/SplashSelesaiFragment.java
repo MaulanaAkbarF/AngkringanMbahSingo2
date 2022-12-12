@@ -22,7 +22,7 @@ import vincent.angkringanmbahsingo2.R;
 
 public class SplashSelesaiFragment extends Fragment {
 
-    Animation easeOutQuadRight, easeOutQuadLeftOut;
+    Animation easeOutSineBottom, easeOutSineTopOut;
     ConstraintLayout consanimate;
 
     @Override
@@ -33,16 +33,16 @@ public class SplashSelesaiFragment extends Fragment {
         consanimate = view.findViewById(R.id.consanimate);
 
         // Membuat animasi
-        easeOutQuadRight = AnimationUtils.loadAnimation(getActivity(), R.anim.ease_out_quad_right);
-        easeOutQuadLeftOut = AnimationUtils.loadAnimation(getActivity(), R.anim.ease_out_quad_left_out);
+        easeOutSineBottom = AnimationUtils.loadAnimation(getActivity(), R.anim.ease_out_sine_bottom);
+        easeOutSineTopOut = AnimationUtils.loadAnimation(getActivity(), R.anim.ease_out_sine_top_out);
 
-        consanimate.startAnimation(easeOutQuadRight);
+        consanimate.startAnimation(easeOutSineBottom);
 
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                consanimate.startAnimation(easeOutQuadLeftOut);
+                consanimate.startAnimation(easeOutSineTopOut);
                 consanimate.setVisibility(View.GONE);
                 closeFragment();
             }

@@ -1,18 +1,22 @@
 package vincent.angkringanmbahsingo2.RecycleviewAdapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import vincent.angkringanmbahsingo2.API.API;
@@ -25,10 +29,10 @@ import vincent.angkringanmbahsingo2.RecycleviewModel.HistRvModel;
 public class HistRvAdapter extends RecyclerView.Adapter<HistRvAdapter.ViewHolder> {
     Context context;
     List<DataItemTransaksi> listDataAdapter;
+    private List<RiwayatFragment> items;
     HistRvAdapter.AdapterItemListener adapterItemListener;
     static String currency = "Rp. %,d";
     static String stock = "x%,d";
-
     public interface AdapterItemListener{
         void clickItemListener(int adapterPosition);
     }
@@ -47,7 +51,7 @@ public class HistRvAdapter extends RecyclerView.Adapter<HistRvAdapter.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull HistRvAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull HistRvAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         DataItemTransaksi db = listDataAdapter.get(position);
 
         holder.judul.setText(db.getNamaProduk());
@@ -74,6 +78,18 @@ public class HistRvAdapter extends RecyclerView.Adapter<HistRvAdapter.ViewHolder
             jumlah = itemView.findViewById(R.id.hpxjumlah);
             gambar = itemView.findViewById(R.id.hpximage);
             check = itemView.findViewById(R.id.friwxcheckbox);
+
+            check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked){
+
+                    } else {
+
+                    }
+                }
+            });
+
 //            itemView.setOnClickListener(this);
         }
 
@@ -82,4 +98,14 @@ public class HistRvAdapter extends RecyclerView.Adapter<HistRvAdapter.ViewHolder
 //            adapterItemListener.clickItemListener(getAdapterPosition());
 //        }
     }
+
+//    public List<RiwayatFragment> getSelectedItems() {
+//        List<RiwayatFragment> selectedItems = new ArrayList<>();
+//        for (RiwayatFragment item : items) {
+//            if (item.isSelected()) {
+//                selectedItems.add(item);
+//            }
+//        }
+//        return selectedItems;
+//    }
 }

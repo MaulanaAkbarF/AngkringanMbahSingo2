@@ -39,7 +39,7 @@ import vincent.angkringanmbahsingo2.RecycleviewModel.HomeRvModel;
 public class MakananFragment extends Fragment {
 
     Spinner spinner;
-    public static TextView dataidmenu, datajudul, datadesc, dataharga, datastok, dataimage;
+    public static TextView teksttmak, dataidmenu, datajudul, datadesc, dataharga, datastok, dataimage;
 //    List<HomeRvModel> listDataDaftar;
     RecyclerView recyclerView;
 //    HomeRvAdapter adapterItemDaftar;
@@ -63,6 +63,7 @@ public class MakananFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_makanan, container, false);
 
+        teksttmak = view.findViewById(R.id.fmakxteksttmakanan);
         spinner = view.findViewById(R.id.fmakxspinner);
         dataimage = view.findViewById(R.id.dataximage);
         dataidmenu = view.findViewById(R.id.dataxidmenu);
@@ -111,6 +112,8 @@ public class MakananFragment extends Fragment {
 
             }
         });
+
+        teksttmak.setVisibility(View.GONE);
         getMakananClicked();
         return view;
     }
@@ -133,18 +136,6 @@ public class MakananFragment extends Fragment {
         return true;
     }
 
-//    private void replaceFragment (){
-//        String backStateName = getActivity().getClass().getName();
-//
-//        FragmentManager manager = getActivity().getSupportFragmentManager();
-//        boolean fragmentPopped = manager.popBackStackImmediate (backStateName, 0);
-//
-//        if (!fragmentPopped){
-//            FragmentTransaction ft = manager.beginTransaction();
-//            ft.replace(R.id.fragmentcontainersplash, new InterfaceMakananFragment()).addToBackStack(backStateName).commit();
-//        }
-//    }
-
     public void retrieveDataMakanan(){
         apiInterface = API.getService().create(APIInterface.class);
         Call<ResponseProduk> produkCall = apiInterface.getRetriveMakanan();
@@ -152,12 +143,18 @@ public class MakananFragment extends Fragment {
             @Override
             public void onResponse(Call<ResponseProduk> call, Response<ResponseProduk> response) {
                 produkList = response.body().getData();
-                addData = new HomeRvAdapter(getContext(), produkList, adapterItemListenerInterface);
-                recyclerView = getView().findViewById(R.id.fmakxrecyclemakanan);
-                recyclerView.setHasFixedSize(true);
-                recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),3));
-                recyclerView.setAdapter(addData);
-                addData.notifyDataSetChanged();
+                if (produkList != null) {
+                    addData = new HomeRvAdapter(getContext(), produkList, adapterItemListenerInterface);
+                    recyclerView = getView().findViewById(R.id.fmakxrecyclemakanan);
+                    recyclerView.setHasFixedSize(true);
+                    recyclerView.setAdapter(addData);
+                    addData.notifyDataSetChanged();
+                    teksttmak.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
+                } else {
+                    teksttmak.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.GONE);
+                }
             }
 
             @Override
@@ -174,12 +171,18 @@ public class MakananFragment extends Fragment {
             @Override
             public void onResponse(Call<ResponseProduk> call, Response<ResponseProduk> response) {
                 produkList = response.body().getData();
-                addData = new HomeRvAdapter(getContext(), produkList, adapterItemListenerInterface);
-                recyclerView = getView().findViewById(R.id.fmakxrecyclemakanan);
-                recyclerView.setHasFixedSize(true);
-                recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),3));
-                recyclerView.setAdapter(addData);
-                addData.notifyDataSetChanged();
+                if (produkList != null) {
+                    addData = new HomeRvAdapter(getContext(), produkList, adapterItemListenerInterface);
+                    recyclerView = getView().findViewById(R.id.fmakxrecyclemakanan);
+                    recyclerView.setHasFixedSize(true);
+                    recyclerView.setAdapter(addData);
+                    addData.notifyDataSetChanged();
+                    teksttmak.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
+                } else {
+                    teksttmak.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.GONE);
+                }
             }
 
             @Override
@@ -196,12 +199,18 @@ public class MakananFragment extends Fragment {
             @Override
             public void onResponse(Call<ResponseProduk> call, Response<ResponseProduk> response) {
                 produkList = response.body().getData();
-                addData = new HomeRvAdapter(getContext(), produkList, adapterItemListenerInterface);
-                recyclerView = getView().findViewById(R.id.fmakxrecyclemakanan);
-                recyclerView.setHasFixedSize(true);
-                recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),3));
-                recyclerView.setAdapter(addData);
-                addData.notifyDataSetChanged();
+                if (produkList != null) {
+                    addData = new HomeRvAdapter(getContext(), produkList, adapterItemListenerInterface);
+                    recyclerView = getView().findViewById(R.id.fmakxrecyclemakanan);
+                    recyclerView.setHasFixedSize(true);
+                    recyclerView.setAdapter(addData);
+                    addData.notifyDataSetChanged();
+                    teksttmak.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
+                } else {
+                    teksttmak.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.GONE);
+                }
             }
 
             @Override
@@ -218,12 +227,18 @@ public class MakananFragment extends Fragment {
             @Override
             public void onResponse(Call<ResponseProduk> call, Response<ResponseProduk> response) {
                 produkList = response.body().getData();
-                addData = new HomeRvAdapter(getContext(), produkList, adapterItemListenerInterface);
-                recyclerView = getView().findViewById(R.id.fmakxrecyclemakanan);
-                recyclerView.setHasFixedSize(true);
-                recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),3));
-                recyclerView.setAdapter(addData);
-                addData.notifyDataSetChanged();
+                if (produkList != null) {
+                    addData = new HomeRvAdapter(getContext(), produkList, adapterItemListenerInterface);
+                    recyclerView = getView().findViewById(R.id.fmakxrecyclemakanan);
+                    recyclerView.setHasFixedSize(true);
+                    recyclerView.setAdapter(addData);
+                    addData.notifyDataSetChanged();
+                    teksttmak.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
+                } else {
+                    teksttmak.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.GONE);
+                }
             }
 
             @Override

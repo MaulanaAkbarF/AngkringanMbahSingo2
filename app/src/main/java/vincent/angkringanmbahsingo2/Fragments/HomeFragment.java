@@ -41,7 +41,7 @@ public class HomeFragment extends Fragment {
     LinearLayout judul;
     ScrollView rvdatalayout;
 
-    public static TextView teksnama, teksnomor, teksemail, teksuser, dataidmenu, datajudul, datadesc, dataharga, datastok, dataimage;
+    public static TextView teksttpr, tekstttr, teksnama, teksnomor, teksemail, teksuser, dataidmenu, datajudul, datadesc, dataharga, datastok, dataimage;
     CardView btnprofil;
     RecyclerView recyclerView1, recyclerView2;
     HomeRvAdapter.AdapterItemListener adapterItemListenerInterface;
@@ -69,6 +69,8 @@ public class HomeFragment extends Fragment {
         judul.startAnimation(easeOutSineTop);
         rvdatalayout.startAnimation(easeOutQuadLeft);
 
+        teksttpr = view.findViewById(R.id.fhxteksttpromo);
+        tekstttr = view.findViewById(R.id.fhxteksttterakhir);
         teksnama = view.findViewById(R.id.fhxtxtnama);
         teksnomor = view.findViewById(R.id.fhxtxtnomor);
         teksemail = view.findViewById(R.id.fhxtxtemail);
@@ -103,6 +105,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        tekstttr.setVisibility(View.GONE);
         getProdukClicked();
         return view;
     }
@@ -151,12 +154,19 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(Call<ResponseProduk> call, Response<ResponseProduk> response) {
                 produkList = response.body().getData();
-                addData = new HomeRvAdapter(getContext(), produkList, adapterItemListenerInterface);
-                recyclerView2 = getView().findViewById(R.id.hpxrvterakhir);
-                recyclerView2.setHasFixedSize(true);
-                recyclerView2.setLayoutManager(new GridLayoutManager(getActivity(),3));
-                recyclerView2.setAdapter(addData);
-                addData.notifyDataSetChanged();
+                if (produkList != null) {
+                    addData = new HomeRvAdapter(getContext(), produkList, adapterItemListenerInterface);
+                    recyclerView2 = getView().findViewById(R.id.hpxrvterakhir);
+                    recyclerView2.setHasFixedSize(true);
+                    recyclerView2.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+                    recyclerView2.setAdapter(addData);
+                    addData.notifyDataSetChanged();
+                    tekstttr.setVisibility(View.GONE);
+                    recyclerView2.setVisibility(View.VISIBLE);
+                } else {
+                    tekstttr.setVisibility(View.VISIBLE);
+                    recyclerView2.setVisibility(View.GONE);
+                }
             }
 
             @Override
