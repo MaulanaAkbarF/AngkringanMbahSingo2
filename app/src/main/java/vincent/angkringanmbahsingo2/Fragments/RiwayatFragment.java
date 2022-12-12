@@ -265,7 +265,7 @@ public class RiwayatFragment extends Fragment {
                 } else if (rBtn2.isChecked()){
                     HomeFragment hfg = new HomeFragment();
                     apiInterface = API.getService().create(APIInterface.class);
-                    Call<ResponseTransaksi> riwayatCall = apiInterface.filterRiwayatMakanan();
+                    Call<ResponseTransaksi> riwayatCall = apiInterface.filterRiwayatMakanan(hfg.teksuser.getText().toString());
                     riwayatCall.enqueue(new Callback<ResponseTransaksi>() {
                         @Override
                         public void onResponse(Call<ResponseTransaksi> call, Response<ResponseTransaksi> response) {
@@ -289,7 +289,7 @@ public class RiwayatFragment extends Fragment {
                 } else if (rBtn3.isChecked()){
                     HomeFragment hfg = new HomeFragment();
                     apiInterface = API.getService().create(APIInterface.class);
-                    Call<ResponseTransaksi> riwayatCall = apiInterface.filterRiwayatMinuman();
+                    Call<ResponseTransaksi> riwayatCall = apiInterface.filterRiwayatMinuman(hfg.teksuser.getText().toString());
                     riwayatCall.enqueue(new Callback<ResponseTransaksi>() {
                         @Override
                         public void onResponse(Call<ResponseTransaksi> call, Response<ResponseTransaksi> response) {

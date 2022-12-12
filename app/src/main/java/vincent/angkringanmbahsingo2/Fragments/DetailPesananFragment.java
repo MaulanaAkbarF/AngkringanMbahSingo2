@@ -2,6 +2,7 @@ package vincent.angkringanmbahsingo2.Fragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -39,7 +40,7 @@ public class DetailPesananFragment extends Fragment implements Backpressedlisten
 
     Animation easeOutQuadLeft, easeOutQuadRight, easeOutSineTopOut, easeOutQuadRightOut;
     LinearLayout linearanimate, linearlay, btnalamat, btnmetode;
-    public static TextView teksidtransaksi, teksalamat, teksmetode, teksongkir, tekssubtotal, tekssubtotal2, dataidmenu, datajudul, datajumlah, dataharga;
+    public static TextView teksidtransaksi, teksalamat, teksmetode, teksongkir, tekssubtotal, tekssubtotal2, labelpengiriman, dataidmenu, datajudul, datajumlah, dataharga;
     ImageView btnback;
     Button btnpesan;
     Dialog dialog;
@@ -47,6 +48,7 @@ public class DetailPesananFragment extends Fragment implements Backpressedlisten
     static String currency = "Rp. %,d";
     static String stock = "%,d";
     static String biayaongkir = "5000";
+    String alamatButtonAmbil = "Anda belum menentukan Alamat";
     public static Backpressedlistener backpressedlistener;
 
     HomeFragment hfg = new HomeFragment();
@@ -57,11 +59,8 @@ public class DetailPesananFragment extends Fragment implements Backpressedlisten
     private List<DataItemTransaksi> dataPesanan = new ArrayList<>();
 
     // Mengisi data ID Transaksi dari Interface
-    private String dataIdTransaksi, dataAlamat, dataAlamatDefault = hfg.teksalamat.getText().toString();
-    public void setDataIdTransaksi(String dataIdTransaksi) {
-        this.dataIdTransaksi = dataIdTransaksi;
-    }
-
+    private String dataIdTransaksi, dataPengiriman, dataAlamat, dataAlamatDefault = hfg.teksalamat.getText().toString();
+    public void setDataIdTransaksi(String dataIdTransaksi) {this.dataIdTransaksi = dataIdTransaksi;}
     // Mendapatkan data
     public String getDataIdTransaksi() {
         return this.dataIdTransaksi;
@@ -71,11 +70,15 @@ public class DetailPesananFragment extends Fragment implements Backpressedlisten
     public void setDataAlamat(String dataAlamat) {
         this.dataAlamat = dataAlamat;
     }
-
     // Mendapatkan data
-    public String getDataAlamat() {
-        return this.dataAlamat;
+    public String getDataAlamat() {return this.dataAlamat;}
+
+    // Mengisi data Pengiriman dari DetailAlamatFragment
+    public void setDataPengiriman(String dataPengiriman) {
+        this.dataPengiriman = dataPengiriman;
     }
+    // Mendapatkan data
+    public String getDataPengiriman() {return this.dataPengiriman;}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -86,6 +89,7 @@ public class DetailPesananFragment extends Fragment implements Backpressedlisten
         btnalamat = view.findViewById(R.id.dpxlinearalamat);
         btnmetode =  view.findViewById(R.id.dpxlinearmetode);
         teksidtransaksi = view.findViewById(R.id.dpxidtransaksi);
+        labelpengiriman = view.findViewById(R.id.dpxlabelpengiriman);
         teksalamat = view.findViewById(R.id.dpxtxtalamat);
         teksmetode = view.findViewById(R.id.dpxtxtmetode);
         teksongkir = view.findViewById(R.id.dpxongkir);
@@ -109,6 +113,7 @@ public class DetailPesananFragment extends Fragment implements Backpressedlisten
             public void onClick(View view) {
                 DetailAlamatFragment daf = new DetailAlamatFragment();
                 daf.setDataIdTransaksi(getDataIdTransaksi());
+                daf.setDataAlamat(dataAlamat);
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragtr = fragmentManager.beginTransaction();
                 fragtr.replace(R.id.fragmentcontainersplash, daf).commit();
@@ -138,16 +143,26 @@ public class DetailPesananFragment extends Fragment implements Backpressedlisten
             }
         });
 
+        linearanimate.startAnimation(easeOutQuadRight);
+        checkDataCondition();
+        retrievePesanan();
+        linearClickable();
+        return view;
+    }
+
+    private void checkDataCondition(){
         if (dataAlamat == null){
             dataAlamat = dataAlamatDefault;
         } else {
             dataAlamat = getDataAlamat();
+            if (dataAlamat.equals(alamatButtonAmbil)){
+                teksalamat.setTextColor(Color.parseColor("#FFFF0000"));
+            }
         }
-
-        linearanimate.startAnimation(easeOutQuadRight);
-        retrievePesanan();
-        linearClickable();
-        return view;
+        if (dataPengiriman != null){
+            dataPengiriman = getDataPengiriman();
+            labelpengiriman.setText(dataPengiriman);
+        }
     }
 
     public void retrievePesanan(){
@@ -178,26 +193,30 @@ public class DetailPesananFragment extends Fragment implements Backpressedlisten
     }
 
     public void retrivePesananFinal(){
-        String idtransaksi = getDataIdTransaksi(), username = hfg.teksuser.getText().toString(), metode = teksmetode.getText().toString();
-        String subtotal = String.valueOf(tekssubtotal2.getText());
         String pengiriman = "Antar ke "+teksalamat.getText().toString();
-        apiInterface = API.getService().create(APIInterface.class);
-        Call<ResponseTransaksi> pesananCall = apiInterface.transaksiBeliFinal(idtransaksi, username, subtotal, pengiriman, metode, "0");
-        pesananCall.enqueue(new Callback<ResponseTransaksi>() {
-            @Override
-            public void onResponse(Call<ResponseTransaksi> call, Response<ResponseTransaksi> response) {
-                dataPesanan = response.body().getData();
-                linearanimate.startAnimation(easeOutSineTopOut);
-                FragmentTransaction fragtr = getFragmentManager().beginTransaction();
-                fragtr.replace(R.id.fragmentcontainersplash, new SplashSelesaiFragment()).commit();
-                dataIdTransaksi = null;
-            }
+        if (pengiriman.equals("Antar ke "+alamatButtonAmbil)){
+            Toast.makeText(getActivity(), "Alamat belum ditentukan", Toast.LENGTH_SHORT).show();
+        } else {
+            String idtransaksi = getDataIdTransaksi(), username = hfg.teksuser.getText().toString(), metode = teksmetode.getText().toString();
+            String subtotal = String.valueOf(tekssubtotal2.getText());
+            apiInterface = API.getService().create(APIInterface.class);
+            Call<ResponseTransaksi> pesananCall = apiInterface.transaksiBeliFinal(idtransaksi, username, subtotal, pengiriman, metode, "0");
+            pesananCall.enqueue(new Callback<ResponseTransaksi>() {
+                @Override
+                public void onResponse(Call<ResponseTransaksi> call, Response<ResponseTransaksi> response) {
+                    dataPesanan = response.body().getData();
+                    linearanimate.startAnimation(easeOutSineTopOut);
+                    FragmentTransaction fragtr = getFragmentManager().beginTransaction();
+                    fragtr.replace(R.id.fragmentcontainersplash, new SplashSelesaiFragment()).commit();
+                    dataIdTransaksi = null;
+                }
 
-            @Override
-            public void onFailure(Call<ResponseTransaksi> call, Throwable t) {
-                Toast.makeText(getActivity(), t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+                @Override
+                public void onFailure(Call<ResponseTransaksi> call, Throwable t) {
+                    Toast.makeText(getActivity(), t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
     private void showAlertBatalkan(){

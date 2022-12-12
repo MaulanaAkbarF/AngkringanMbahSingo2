@@ -158,9 +158,15 @@ public interface APIInterface {
             @Field("tanggal_transaksi") String subtotal
     );
 
-    @GET ("filterriwayatmakanan.php")
-    Call<ResponseTransaksi> filterRiwayatMakanan();
+    @FormUrlEncoded
+    @POST("filterriwayatmakanan.php")
+    Call<ResponseTransaksi> filterRiwayatMakanan(
+            @Field("username") String username
+    );
 
-    @GET ("filterriwayatminuman.php")
-    Call<ResponseTransaksi> filterRiwayatMinuman();
+    @FormUrlEncoded
+    @POST("filterriwayatminuman.php")
+    Call<ResponseTransaksi> filterRiwayatMinuman(
+            @Field("username") String username
+    );
 }
