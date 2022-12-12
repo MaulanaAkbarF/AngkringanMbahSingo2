@@ -8,6 +8,9 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.transition.Slide;
+import android.transition.TransitionManager;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +45,9 @@ public class RegisterFragment extends Fragment implements Backpressedlistener {
     APIInterface apiInterface;
     public static Backpressedlistener backpressedlistener;
 
+    String check;
+    public void setTransition(String check) {this.check = check;}
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_register, container, false);
@@ -69,10 +75,6 @@ public class RegisterFragment extends Fragment implements Backpressedlistener {
         easeOutSineBottom = AnimationUtils.loadAnimation(getActivity(), R.anim.ease_out_sine_bottom);
         easeOutSineBottomOut = AnimationUtils.loadAnimation(getActivity(), R.anim.ease_out_sine_bottom_out);
 
-        image.startAnimation(easeOutSineTop);
-        input.startAnimation(easeOutSineBottom);
-        button.startAnimation(easeOutSineBottom);
-
         // Membuat Fungsi Register
         register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,6 +95,17 @@ public class RegisterFragment extends Fragment implements Backpressedlistener {
                 fragtr.replace(R.id.fragmentcontainer, new LoginFragment()).commit();
             }
         });
+
+        if (check != null){
+            Slide slide = new Slide();
+            slide.setDuration(450);
+            slide.setSlideEdge(Gravity.RIGHT);
+            TransitionManager.beginDelayedTransition(container, slide);
+        } else {
+            image.startAnimation(easeOutSineTop);
+            input.startAnimation(easeOutSineBottom);
+            button.startAnimation(easeOutSineBottom);
+        }
         return view;
     }
 

@@ -3,8 +3,12 @@ package vincent.angkringanmbahsingo2.Fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.transition.Slide;
+import android.transition.TransitionManager;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,10 +25,16 @@ public class DetailMetodeFragment extends Fragment {
     View includeTransfer;
     LinearLayout linearlay;
     RadioButton btn1, btn2, btn3, rb1, rb2;
-    TextView txtalamat;
+    TextView label1, label2, label3, txtalamat;
     ImageView btnback;
+    Slide slide = new Slide();
+    String dataIdTransaksi, dataAlamat, dataMetode;
 
-    DetailAlamatFragment daf = new DetailAlamatFragment();
+    public void setDataMetode(String dataMetode, String dataIdTransaksi, String dataAlamat) {
+        this.dataMetode = dataMetode;
+        this.dataIdTransaksi = dataIdTransaksi;
+        this.dataAlamat = dataAlamat;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -32,6 +42,9 @@ public class DetailMetodeFragment extends Fragment {
         includeTransfer = view.findViewById(R.id.dmxincludetransfer);
 
         linearlay = view.findViewById(R.id.dmxlinearlay);
+        label1 = view.findViewById(R.id.dmxlabel1);
+        label2 = view.findViewById(R.id.dmxlabel2);
+        label3 = view.findViewById(R.id.dmxlabel3);
         btn1 = view.findViewById(R.id.dmxradiotunai);
         btn2 = view.findViewById(R.id.dmxradiocod);
         btn3 = view.findViewById(R.id.dmxradiotransfer);
@@ -39,13 +52,27 @@ public class DetailMetodeFragment extends Fragment {
         rb2 = view.findViewById(R.id.dtxradio2);
         btnback = view.findViewById(R.id.dmxbtnback);
 
-        btnback.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentTransaction fragtr = getFragmentManager().beginTransaction();
-                fragtr.replace(R.id.fragmentcontainersplash, new DetailPesananFragment()).commit();
+        btnback.setOnClickListener(view1 -> {
+            DetailPesananFragment dpf = new DetailPesananFragment();
+            dpf.setDataIdTransaksi(dataIdTransaksi);
+            dpf.setDataAlamat(dataAlamat);
+            if (btn1.isChecked()){
+                dpf.setDataMetode("Tunai");
+            } else if (btn2.isChecked()){
+                dpf.setDataMetode("COD");
+            } else if (btn3.isChecked()){
+                dpf.setDataMetode("Transfer");
+            } else {
+                dpf.setDataMetode(dataMetode);
             }
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            FragmentTransaction fragtr = fragmentManager.beginTransaction();
+            fragtr.replace(R.id.fragmentcontainersplash, dpf).commit();
         });
+
+        slide.setDuration(450);
+        slide.setSlideEdge(Gravity.LEFT);
+        TransitionManager.beginDelayedTransition(container, slide);
 
         cekRadioButton();
         linearClickable();
@@ -53,50 +80,26 @@ public class DetailMetodeFragment extends Fragment {
     }
 
     private void cekRadioButton(){
-        btn1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                includeTransfer.setVisibility(View.GONE);
-                btn2.setChecked(false);
-                btn3.setChecked(false);
-            }
+        btn1.setOnClickListener(view -> {
+            includeTransfer.setVisibility(View.GONE);
+            btn2.setChecked(false);
+            btn3.setChecked(false);
         });
-        btn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                includeTransfer.setVisibility(View.GONE);
-                btn1.setChecked(false);
-                btn3.setChecked(false);
-            }
+        btn2.setOnClickListener(view -> {
+            includeTransfer.setVisibility(View.GONE);
+            btn1.setChecked(false);
+            btn3.setChecked(false);
         });
-        btn3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                includeTransfer.setVisibility(View.VISIBLE);
-                btn2.setChecked(false);
-                btn1.setChecked(false);
-            }
+        btn3.setOnClickListener(view -> {
+            includeTransfer.setVisibility(View.VISIBLE);
+            btn2.setChecked(false);
+            btn1.setChecked(false);
         });
-        rb1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                rb2.setChecked(false);
-            }
-        });
-        rb2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                rb1.setChecked(false);
-            }
-        });
+        rb1.setOnClickListener(view -> rb2.setChecked(false));
+        rb2.setOnClickListener(view -> rb1.setChecked(false));
     }
 
     private void linearClickable(){
-        linearlay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                System.out.println("OK");
-            }
-        });
+        linearlay.setOnClickListener(view -> System.out.println("OK"));
     }
 }

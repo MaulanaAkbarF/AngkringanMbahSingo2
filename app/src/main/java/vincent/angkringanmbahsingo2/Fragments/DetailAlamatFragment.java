@@ -10,11 +10,17 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.transition.Slide;
+import android.transition.TransitionManager;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -35,6 +41,7 @@ public class DetailAlamatFragment extends Fragment {
     EditText inputalamat;
     public TextView label1, label2, txtalamat;
     ImageView btnback;
+    Slide slide = new Slide();
     String alamatButtonAmbil = "Ambil di Angkringan Mbah Singo";
 
     // Mengisi data ID Transaksi dari Interface
@@ -109,6 +116,10 @@ public class DetailAlamatFragment extends Fragment {
             };
             inputalamat.addTextChangedListener(watcher);
         }
+
+        slide.setDuration(450);
+        slide.setSlideEdge(Gravity.LEFT);
+        TransitionManager.beginDelayedTransition(container, slide);
 
         cekDataAlamat();
         cekRadioButton();

@@ -6,6 +6,9 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.transition.Slide;
+import android.transition.TransitionManager;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +48,9 @@ public class LoginFragment extends Fragment implements Backpressedlistener {
     private List<DataItemLogin> dataLogin = new ArrayList<>();
     public static Backpressedlistener backpressedlistener;
 
+    String check;
+    public void setTransition(String check) {this.check = check;}
+
     // Digunakan ketika Login menggunakan fungai cekLogin()
     String dataUser = "";
     String dataPassword = "";
@@ -74,9 +80,16 @@ public class LoginFragment extends Fragment implements Backpressedlistener {
         easeOutSineBottom = AnimationUtils.loadAnimation(getActivity(), R.anim.ease_out_sine_bottom);
         easeOutSineBottomOut = AnimationUtils.loadAnimation(getActivity(), R.anim.ease_out_sine_bottom_out);
 
-        image.startAnimation(easeOutSineTop);
-        input.startAnimation(easeOutSineBottom);
-        button.startAnimation(easeOutSineBottom);
+        if (check != null){
+            Slide slide = new Slide();
+            slide.setDuration(450);
+            slide.setSlideEdge(Gravity.LEFT);
+            TransitionManager.beginDelayedTransition(container, slide);
+        } else {
+            image.startAnimation(easeOutSineTop);
+            input.startAnimation(easeOutSineBottom);
+            button.startAnimation(easeOutSineBottom);
+        }
 
         // Fungsi Tombol Login
         btnmasuk.setOnClickListener(new View.OnClickListener() {

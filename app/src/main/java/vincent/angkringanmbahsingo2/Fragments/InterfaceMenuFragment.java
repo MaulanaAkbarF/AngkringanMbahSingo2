@@ -9,9 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.util.JsonReader;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -24,8 +22,6 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,13 +31,11 @@ import retrofit2.Response;
 import vincent.angkringanmbahsingo2.API.API;
 import vincent.angkringanmbahsingo2.API.APIInterface;
 import vincent.angkringanmbahsingo2.Dependencies.Backpressedlistener;
-import vincent.angkringanmbahsingo2.ModelAPI.DataItemLogin;
 import vincent.angkringanmbahsingo2.ModelAPI.DataItemTransaksi;
-import vincent.angkringanmbahsingo2.ModelAPI.ResponseLogin;
 import vincent.angkringanmbahsingo2.ModelAPI.ResponseTransaksi;
 import vincent.angkringanmbahsingo2.R;
 
-public class InterfaceMakananFragment extends Fragment implements Backpressedlistener {
+public class InterfaceMenuFragment extends Fragment implements Backpressedlistener {
 
     Animation easeOutQuadLeft, easeOutQuadRight, easeOutQuadLeftOut, easeOutQuadRightOut;
     ConstraintLayout consmain;
@@ -60,13 +54,24 @@ public class InterfaceMakananFragment extends Fragment implements Backpressedlis
     int total;
     int totalPrice = 0;
 
-    static MakananFragment makfrag = new MakananFragment();
+    // Mengisi data dari ViewPager Menu
+    private static String idmenu, namamenu, deskripsimenu, hargamenu, stokmenu, gambarmenu;
+
+    // Mengisi data Alamat dari DetailPesananFragment
+    public void setDataMenu(String idmenu, String namamenu, String deskripsimenu, String hargamenu, String stokmenu, String gambarmenu) {
+        this.idmenu = idmenu;
+        this.namamenu = namamenu;
+        this.deskripsimenu = deskripsimenu;
+        this.hargamenu = hargamenu;
+        this.stokmenu = stokmenu;
+        this.gambarmenu = gambarmenu;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_interface_makanan, container, false);
+        View view = inflater.inflate(R.layout.fragment_interface_home, container, false);
 
-        consmain = view.findViewById(R.id.fmakxconsmain);
+        consmain = view.findViewById(R.id.fhomexconsmain);
         interxidtransaksi = view.findViewById(R.id.interxidtransaksi);
         interidmenu = view.findViewById(R.id.interxidmenu);
         interdatajudul = view.findViewById(R.id.interxjudulmenu);
@@ -78,7 +83,7 @@ public class InterfaceMakananFragment extends Fragment implements Backpressedlis
         txttotal = view.findViewById(R.id.interxtotalharga);
         plusimage = view.findViewById(R.id.interximageplus);
         minimage = view.findViewById(R.id.interximagemin);
-        imageback = view.findViewById(R.id.fmakxback);
+        imageback = view.findViewById(R.id.fhomexback);
         btnkeranjang = view.findViewById(R.id.interxbtnkeranjang);
         btnbeli = view.findViewById(R.id.interxbtnbeli);
 
@@ -91,10 +96,6 @@ public class InterfaceMakananFragment extends Fragment implements Backpressedlis
         consmain.setVisibility(View.VISIBLE);
         consmain.startAnimation(easeOutQuadRight);
 
-        if (makfrag.getMakananClicked()){
-            getDataMakanan();
-        }
-
         btnkeranjang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -106,7 +107,7 @@ public class InterfaceMakananFragment extends Fragment implements Backpressedlis
             @Override
             public void onClick(View view) {
                 HomeFragment hfg = new HomeFragment();
-                int totalharga = Integer.parseInt(String.valueOf(txtjumlah.getText())) * Integer.parseInt(String.valueOf(makfrag.dataharga.getText()));
+                int totalharga = Integer.parseInt(String.valueOf(txtjumlah.getText())) * Integer.parseInt(String.valueOf(hargamenu));
                 String totalhargaitem = Integer.toString(totalharga);
                 apiInterface = API.getService().create(APIInterface.class);
                 Call<ResponseTransaksi> transaksiCall = apiInterface.transaksiBeli(interxidtransaksi.getText().toString(), interidmenu.getText().toString(), hfg.teksuser.getText().toString(), String.valueOf(txtjumlah.getText()), totalhargaitem);
@@ -133,19 +134,20 @@ public class InterfaceMakananFragment extends Fragment implements Backpressedlis
             }
         });
 
+        getDataMenu();
         autokodeTransaksi();
         countJumlah();
         jumlahClickable();
         return view;
     }
 
-    public static void getDataMakanan(){
-        Picasso.get().load(API.BASE_GAMBAR+makfrag.dataimage.getText()).error(R.mipmap.ic_launcher).into(interdataimage);
-        interidmenu.setText(makfrag.dataidmenu.getText());
-        interdatajudul.setText(makfrag.datajudul.getText());
-        interdatadesc.setText(makfrag.datadesc.getText());
-        interdataharga.setText(String.format(currency, Integer.parseInt(String.valueOf(makfrag.dataharga.getText()))));
-        interdatastok.setText(String.format(stock, Integer.parseInt(String.valueOf(makfrag.datastok.getText()))));
+    public static void getDataMenu(){
+        Picasso.get().load(API.BASE_GAMBAR+gambarmenu).error(R.mipmap.ic_launcher).into(interdataimage);
+        interidmenu.setText(idmenu);
+        interdatajudul.setText(namamenu);
+        interdatadesc.setText(deskripsimenu);
+        interdataharga.setText(String.format(currency, Integer.parseInt(String.valueOf(hargamenu))));
+        interdatastok.setText(String.format(stock, Integer.parseInt(String.valueOf(stokmenu))));
     }
 
     public void sendDataToPesanan() {
@@ -173,8 +175,8 @@ public class InterfaceMakananFragment extends Fragment implements Backpressedlis
     }
 
     private void countJumlah(){
-        txttotal.setText(String.format(currency, Integer.parseInt(String.valueOf(makfrag.dataharga.getText()))));
-        total = Integer.parseInt(String.valueOf(makfrag.dataharga.getText()));
+        txttotal.setText(String.format(currency, Integer.parseInt(String.valueOf(hargamenu))));
+        total = Integer.parseInt(String.valueOf(hargamenu));
         plusimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -3,8 +3,12 @@ package vincent.angkringanmbahsingo2.Fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.transition.Slide;
+import android.transition.TransitionManager;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +29,9 @@ public class WelcomeFragment extends Fragment implements Backpressedlistener {
     TextView daftar;
     public static Backpressedlistener backpressedlistener;
 
+    String check;
+    public void setTransition(String check) {this.check = check;}
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_welcome, container, false);
@@ -42,16 +49,15 @@ public class WelcomeFragment extends Fragment implements Backpressedlistener {
         easeOutSineTop = AnimationUtils.loadAnimation(getActivity(), R.anim.ease_out_sine_top);
         easeOutSineBottom = AnimationUtils.loadAnimation(getActivity(), R.anim.ease_out_sine_bottom);
 
-        judul.startAnimation(easeOutSineTop);
-        image.startAnimation(easeOutSineBottom);
-        button.startAnimation(easeOutSineBottom);
-
         // Fungsi Tombol Masuk
         btnmasuk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentTransaction fragtr = getFragmentManager().beginTransaction();
-                fragtr.replace(R.id.fragmentcontainer, new LoginFragment()).addToBackStack(null).commit();
+                LoginFragment lf = new LoginFragment();
+                lf.setTransition("go");
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragtr = fragmentManager.beginTransaction();
+                fragtr.replace(R.id.fragmentcontainer, lf).commit();
             }
         });
 
@@ -59,10 +65,25 @@ public class WelcomeFragment extends Fragment implements Backpressedlistener {
         daftar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentTransaction fragtr = getFragmentManager().beginTransaction();
-                fragtr.replace(R.id.fragmentcontainer, new RegisterFragment()).addToBackStack(null).commit();
+                RegisterFragment rf = new RegisterFragment();
+                rf.setTransition("go");
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragtr = fragmentManager.beginTransaction();
+                fragtr.replace(R.id.fragmentcontainer, rf).commit();
             }
         });
+
+        if (check != null){
+            Slide slide = new Slide();
+            slide.setDuration(450);
+            slide.setSlideEdge(Gravity.RIGHT);
+            TransitionManager.beginDelayedTransition(container, slide);
+        } else {
+            judul.startAnimation(easeOutSineTop);
+            image.startAnimation(easeOutSineBottom);
+            button.startAnimation(easeOutSineBottom);
+        }
+
         return view;
     }
 

@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.graphics.Color;
-import android.graphics.Path;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.animation.Animation;
@@ -24,9 +23,7 @@ import java.util.ArrayList;
 import vincent.angkringanmbahsingo2.Dependencies.AdapterViewPager;
 import vincent.angkringanmbahsingo2.Fragments.DetailPesananFragment;
 import vincent.angkringanmbahsingo2.Fragments.HomeFragment;
-import vincent.angkringanmbahsingo2.Fragments.InterfaceHomeFragment;
-import vincent.angkringanmbahsingo2.Fragments.InterfaceMakananFragment;
-import vincent.angkringanmbahsingo2.Fragments.InterfaceMinumanFragment;
+import vincent.angkringanmbahsingo2.Fragments.InterfaceMenuFragment;
 import vincent.angkringanmbahsingo2.Fragments.KeranjangFragment;
 import vincent.angkringanmbahsingo2.Fragments.MakananFragment;
 import vincent.angkringanmbahsingo2.Fragments.MinumanFragment;
@@ -151,7 +148,7 @@ public class MainHome extends AppCompatActivity {
     // Fungsi ketika tombol Back Button di klik
     @Override
     public void onBackPressed() {
-        if (InterfaceHomeFragment.backpressedlistener!=null || InterfaceMakananFragment.backpressedlistener!=null || InterfaceMinumanFragment.backpressedlistener!=null || ProfilFragment.backpressedlistener!=null || DetailPesananFragment.backpressedlistener!=null){
+        if (InterfaceMenuFragment.backpressedlistener!=null || ProfilFragment.backpressedlistener!=null || DetailPesananFragment.backpressedlistener!=null){
             System.out.println("back");
         } else {
             if (mBackPressed + TIME_INTERVAL > System.currentTimeMillis()) {
@@ -161,12 +158,8 @@ public class MainHome extends AppCompatActivity {
             }
             mBackPressed = System.currentTimeMillis();
         }
-        if(InterfaceHomeFragment.backpressedlistener!=null){
-            InterfaceHomeFragment.backpressedlistener.onBackPressed();
-        } else if(InterfaceMakananFragment.backpressedlistener!=null){
-            InterfaceMakananFragment.backpressedlistener.onBackPressed();
-        } else if(InterfaceMinumanFragment.backpressedlistener!=null){
-            InterfaceMinumanFragment.backpressedlistener.onBackPressed();
+        if(InterfaceMenuFragment.backpressedlistener!=null){
+            InterfaceMenuFragment.backpressedlistener.onBackPressed();
         } else if(ProfilFragment.backpressedlistener!=null){
             ProfilFragment.backpressedlistener.onBackPressed();
         } else if(DetailPesananFragment.backpressedlistener!=null){

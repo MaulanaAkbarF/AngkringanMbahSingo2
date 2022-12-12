@@ -4,15 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
-import android.widget.Toast;
 
-import vincent.angkringanmbahsingo2.Fragments.DetailPesananFragment;
-import vincent.angkringanmbahsingo2.Fragments.InterfaceHomeFragment;
-import vincent.angkringanmbahsingo2.Fragments.InterfaceMakananFragment;
-import vincent.angkringanmbahsingo2.Fragments.InterfaceMinumanFragment;
 import vincent.angkringanmbahsingo2.Fragments.LoginFragment;
-import vincent.angkringanmbahsingo2.Fragments.ProfilFragment;
 import vincent.angkringanmbahsingo2.Fragments.RegisterFragment;
+import vincent.angkringanmbahsingo2.Fragments.WelcomeSplashFragment;
 import vincent.angkringanmbahsingo2.R;
 import vincent.angkringanmbahsingo2.Fragments.WelcomeFragment;
 
@@ -24,7 +19,7 @@ public class MainLogin extends AppCompatActivity {
         setContentView(R.layout.activity_main_login);
 
         FragmentTransaction fragtr = getSupportFragmentManager().beginTransaction();
-        fragtr.add(R.id.fragmentcontainer, new WelcomeFragment());
+        fragtr.add(R.id.fragmentcontainer, new WelcomeSplashFragment());
         fragtr.commit();
     }
 

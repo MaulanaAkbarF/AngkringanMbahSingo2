@@ -107,15 +107,11 @@ public class MinumanFragment extends Fragment {
         adapterItemListenerInterface = new HomeRvAdapter.AdapterItemListener() {
             @Override
             public void clickItemListener(int adapterPosition) {
-                dataimage.setText(produkList.get(adapterPosition).getGambar());
-                dataidmenu.setText(produkList.get(adapterPosition).getIdProduk());
-                datajudul.setText(produkList.get(adapterPosition).getNamaProduk());
-                datadesc.setText(produkList.get(adapterPosition).getDeskripsiProduk());
-                dataharga.setText(String.valueOf(produkList.get(adapterPosition).getHarga()));
-                datastok.setText(String.valueOf(produkList.get(adapterPosition).getStok()));
-
-                FragmentTransaction fragtr = getActivity().getSupportFragmentManager().beginTransaction();
-                fragtr.replace(R.id.fragmentcontainersplash, new InterfaceMinumanFragment()).addToBackStack(null).commit();
+                InterfaceMenuFragment imf = new InterfaceMenuFragment();
+                imf.setDataMenu(produkList.get(adapterPosition).getIdProduk(), produkList.get(adapterPosition).getNamaProduk(), produkList.get(adapterPosition).getDeskripsiProduk(), produkList.get(adapterPosition).getHarga(), produkList.get(adapterPosition).getStok(), produkList.get(adapterPosition).getGambar());
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragtr = fragmentManager.beginTransaction();
+                fragtr.replace(R.id.fragmentcontainersplash, imf).commit();
             }
         };
         return true;

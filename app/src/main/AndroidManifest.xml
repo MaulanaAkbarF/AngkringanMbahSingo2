@@ -40,21 +40,7 @@
             android:exported="false"
             android:label="@string/title_activity_lokasi" />
         <activity
-            android:name=".Fragments.InterfaceHomeFragment"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".Fragments.InterfaceMinumanFragment"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".Fragments.InterfaceMakananFragment"
+            android:name=".Fragments.InterfaceMenuFragment"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -69,13 +55,6 @@
         </activity>
         <activity
             android:name=".MainActivity.MainLogin"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".MainActivity.SplashScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

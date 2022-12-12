@@ -11,6 +11,9 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.transition.Slide;
+import android.transition.TransitionManager;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,7 +62,7 @@ public class DetailPesananFragment extends Fragment implements Backpressedlisten
     private List<DataItemTransaksi> dataPesanan = new ArrayList<>();
 
     // Mengisi data ID Transaksi dari Interface
-    private String dataIdTransaksi, dataPengiriman, dataAlamat, dataAlamatDefault = hfg.teksalamat.getText().toString();
+    private String dataIdTransaksi, dataPengiriman, dataAlamat, dataMetode, dataAlamatDefault = hfg.teksalamat.getText().toString();
     public void setDataIdTransaksi(String dataIdTransaksi) {this.dataIdTransaksi = dataIdTransaksi;}
     // Mendapatkan data
     public String getDataIdTransaksi() {
@@ -79,6 +82,10 @@ public class DetailPesananFragment extends Fragment implements Backpressedlisten
     }
     // Mendapatkan data
     public String getDataPengiriman() {return this.dataPengiriman;}
+
+    public void setDataMetode(String dataMetode) {this.dataMetode = dataMetode;}
+
+    public String getDataMetode() {return this.dataMetode;}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -120,12 +127,12 @@ public class DetailPesananFragment extends Fragment implements Backpressedlisten
             }
         });
 
-        btnmetode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentTransaction fragtr = getFragmentManager().beginTransaction();
-                fragtr.replace(R.id.fragmentcontainersplash, new DetailMetodeFragment()).addToBackStack("tag").commit();
-            }
+        btnmetode.setOnClickListener(view1 -> {
+            DetailMetodeFragment dmf = new DetailMetodeFragment();
+            dmf.setDataMetode(teksmetode.getText().toString(), getDataIdTransaksi(), dataAlamat);
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            FragmentTransaction fragtr = fragmentManager.beginTransaction();
+            fragtr.replace(R.id.fragmentcontainersplash, dmf).commit();
         });
 
         btnpesan.setOnClickListener(new View.OnClickListener() {
@@ -163,10 +170,13 @@ public class DetailPesananFragment extends Fragment implements Backpressedlisten
             dataPengiriman = getDataPengiriman();
             labelpengiriman.setText(dataPengiriman);
         }
+        if (dataMetode != null){
+            teksmetode.setText(getDataMetode());
+        }
     }
 
     public void retrievePesanan(){
-        String idtransaksi = getDataIdTransaksi(), username = hfg.teksuser.getText().toString(), alamat = dataAlamat;
+        String idtransaksi = getDataIdTransaksi(), username = hfg.teksuser.getText().toString();
         apiInterface = API.getService().create(APIInterface.class);
         Call<ResponseTransaksi> pesananCall = apiInterface.rangkumanPesanan(idtransaksi, username);
         pesananCall.enqueue(new Callback<ResponseTransaksi>() {
@@ -179,7 +189,7 @@ public class DetailPesananFragment extends Fragment implements Backpressedlisten
                 recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),1));
                 recyclerView.setAdapter(addData);
                 addData.notifyDataSetChanged();
-                teksalamat.setText(alamat);
+                teksalamat.setText(dataAlamat);
                 teksongkir.setText(String.format(currency, Integer.parseInt(String.valueOf(biayaongkir))));
                 tekssubtotal.setText(String.format(currency, Integer.parseInt(String.valueOf(dataPesanan.get(0).getSubtotal()))));
                 tekssubtotal2.setText(String.valueOf(dataPesanan.get(0).getSubtotal()));
