@@ -2,6 +2,7 @@ package vincent.angkringanmbahsingo2.Fragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -31,8 +32,11 @@ import retrofit2.Response;
 import vincent.angkringanmbahsingo2.API.API;
 import vincent.angkringanmbahsingo2.API.APIInterface;
 import vincent.angkringanmbahsingo2.Dependencies.Backpressedlistener;
+import vincent.angkringanmbahsingo2.MainActivity.MainHome;
+import vincent.angkringanmbahsingo2.MainActivity.MainLogin;
 import vincent.angkringanmbahsingo2.ModelAPI.DataItemLogin;
 import vincent.angkringanmbahsingo2.ModelAPI.ResponseLogin;
+import vincent.angkringanmbahsingo2.ModelAPI.ResponseTransaksi;
 import vincent.angkringanmbahsingo2.R;
 
 public class ProfilFragment extends Fragment implements Backpressedlistener {
@@ -40,8 +44,9 @@ public class ProfilFragment extends Fragment implements Backpressedlistener {
     Animation easeOutQuadRight, easeOutQuadRightOut;
     ScrollView scrollmain;
     public static Backpressedlistener backpressedlistener;
+    LinearLayout logout;
     ImageView image, btnquit, btneditnomor, btneditalamat, btneditemail, btneditpass;
-    TextView fpeditinfo, nama, nomortlp, alamat, username, email, logout;
+    TextView fpeditinfo, nama, nomortlp, alamat, username, email;
     Dialog dialog;
 
     HomeFragment hfg = new HomeFragment();
@@ -79,53 +84,40 @@ public class ProfilFragment extends Fragment implements Backpressedlistener {
         scrollmain.setVisibility(View.VISIBLE);
         scrollmain.startAnimation(easeOutQuadRight);
 
-        fpeditinfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showAlertEditinfo();
-                dialog.show();
-            }
+        fpeditinfo.setOnClickListener(view1 -> {
+            showAlertEditinfo();
+            dialog.show();
         });
 
-        btneditnomor.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showAlertNomor();
-                dialog.show();
-            }
+        btneditnomor.setOnClickListener(view12 -> {
+            showAlertNomor();
+            dialog.show();
         });
 
-        btneditalamat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showAlertAlamat();
-                dialog.show();
-            }
+        btneditalamat.setOnClickListener(view13 -> {
+            showAlertAlamat();
+            dialog.show();
         });
 
-        btneditemail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showAlertEmail();
-                dialog.show();
-            }
+        btneditemail.setOnClickListener(view14 -> {
+            showAlertEmail();
+            dialog.show();
         });
 
-        btneditpass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showAlertPassword();
-                dialog.show();
-            }
+        btneditpass.setOnClickListener(view15 -> {
+            showAlertPassword();
+            dialog.show();
         });
 
-        btnquit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                scrollmain.startAnimation(easeOutQuadRightOut);
-                scrollmain.setVisibility(View.GONE);
-                closeFragment();
-            }
+        btnquit.setOnClickListener(view16 -> {
+            scrollmain.startAnimation(easeOutQuadRightOut);
+            scrollmain.setVisibility(View.GONE);
+            closeFragment();
+        });
+
+        logout.setOnClickListener(view17 -> {
+            showAlertLogout();
+            dialog.show();
         });
 
         nama.setText(hfg.teksnama.getText());
@@ -179,105 +171,80 @@ public class ProfilFragment extends Fragment implements Backpressedlistener {
         eiteksuser.setText(username.getText().toString());
         builder.setView(view);
         dialog = builder.create();
-        editnama.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                EditText input;
-                Button batal, kirim;
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                View view2 = getLayoutInflater().inflate(R.layout.alert_nama,null);
-                input = view2.findViewById(R.id.alertxinputjumlah);
-                batal = view2.findViewById(R.id.alertxbtnbatal);
-                kirim = view2.findViewById(R.id.alertxbtnkirim);
-                builder.setView(view2);
-                dialog = builder.create();
-                input.setText(nama.getText());
-                kirim.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (input.getText().toString().isEmpty()){
-                            input.setError("Anda belum mengetik Nama Anda");
-                        } else {
-                            apiInterface = API.getService().create(APIInterface.class);
-                            Call<ResponseLogin> loginCall = apiInterface.setUserNama(input.getText().toString(), username.getText().toString());
-                            loginCall.enqueue(new Callback<ResponseLogin>() {
-                                @Override
-                                public void onResponse(Call<ResponseLogin> call, Response<ResponseLogin> response) {
-                                    dataUserProfil = response.body().getData();
-                                    nama.setText(dataUserProfil.get(0).getNamaLengkap());
-                                    eiteksnama.setText(dataUserProfil.get(0).getNamaLengkap());
-                                    hfg.teksnama.setText(dataUserProfil.get(0).getNamaLengkap());
-                                }
-                                @Override
-                                public void onFailure(Call<ResponseLogin> call, Throwable t) {
-                                    Toast.makeText(getActivity(),t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                            dialog.dismiss();
+        editnama.setOnClickListener(view1 -> {
+            EditText input;
+            Button batal, kirim;
+            AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
+            View view2 = getLayoutInflater().inflate(R.layout.alert_nama,null);
+            input = view2.findViewById(R.id.alertxinputjumlah);
+            batal = view2.findViewById(R.id.alertxbtnbatal);
+            kirim = view2.findViewById(R.id.alertxbtnkirim);
+            builder1.setView(view2);
+            dialog = builder1.create();
+            input.setText(nama.getText());
+            kirim.setOnClickListener(view11 -> {
+                if (input.getText().toString().isEmpty()){
+                    input.setError("Anda belum mengetik Nama Anda");
+                } else {
+                    apiInterface = API.getService().create(APIInterface.class);
+                    Call<ResponseLogin> loginCall = apiInterface.setUserNama(input.getText().toString(), username.getText().toString());
+                    loginCall.enqueue(new Callback<ResponseLogin>() {
+                        @Override
+                        public void onResponse(Call<ResponseLogin> call, Response<ResponseLogin> response) {
+                            dataUserProfil = response.body().getData();
+                            nama.setText(dataUserProfil.get(0).getNamaLengkap());
+                            eiteksnama.setText(dataUserProfil.get(0).getNamaLengkap());
+                            hfg.teksnama.setText(dataUserProfil.get(0).getNamaLengkap());
                         }
-                    }
-                });
-                batal.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dialog.dismiss();
-                    }
-                });
-                dialog.show();
-            }
-        });
-        edituser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                EditText input;
-                Button batal, kirim;
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                View view2 = getLayoutInflater().inflate(R.layout.alert_username,null);
-                input = view2.findViewById(R.id.alertxinputjumlah);
-                batal = view2.findViewById(R.id.alertxbtnbatal);
-                kirim = view2.findViewById(R.id.alertxbtnkirim);
-                builder.setView(view2);
-                dialog = builder.create();
-                input.setText(username.getText());
-                kirim.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (input.getText().toString().isEmpty()){
-                            input.setError("Anda belum mengetik Username Anda");
-                        } else {
-                            apiInterface = API.getService().create(APIInterface.class);
-                            Call<ResponseLogin> loginCall = apiInterface.setUserUsername(nama.getText().toString(), input.getText().toString());
-                            loginCall.enqueue(new Callback<ResponseLogin>() {
-                                @Override
-                                public void onResponse(Call<ResponseLogin> call, Response<ResponseLogin> response) {
-                                    dataUserProfil = response.body().getData();
-                                    username.setText(dataUserProfil.get(0).getUsername());
-                                    eiteksuser.setText(dataUserProfil.get(0).getUsername());
-                                    hfg.teksuser.setText(dataUserProfil.get(0).getUsername());
-                                }
-                                @Override
-                                public void onFailure(Call<ResponseLogin> call, Throwable t) {
-                                    Toast.makeText(getActivity(),t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                            dialog.dismiss();
+                        @Override
+                        public void onFailure(Call<ResponseLogin> call, Throwable t) {
+                            Toast.makeText(getActivity(),t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                         }
-                    }
-                });
-                batal.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dialog.dismiss();
-                    }
-                });
-                dialog.show();
-            }
+                    });
+                    dialog.dismiss();
+                }
+            });
+            batal.setOnClickListener(view112 -> dialog.dismiss());
+            dialog.show();
         });
-        editfoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        edituser.setOnClickListener(view12 -> {
+            EditText input;
+            Button batal, kirim;
+            AlertDialog.Builder builder12 = new AlertDialog.Builder(getActivity());
+            View view2 = getLayoutInflater().inflate(R.layout.alert_username,null);
+            input = view2.findViewById(R.id.alertxinputjumlah);
+            batal = view2.findViewById(R.id.alertxbtnbatal);
+            kirim = view2.findViewById(R.id.alertxbtnkirim);
+            builder12.setView(view2);
+            dialog = builder12.create();
+            input.setText(username.getText());
+            kirim.setOnClickListener(view1212 -> {
+                if (input.getText().toString().isEmpty()){
+                    input.setError("Anda belum mengetik Username Anda");
+                } else {
+                    apiInterface = API.getService().create(APIInterface.class);
+                    Call<ResponseLogin> loginCall = apiInterface.setUserUsername(nama.getText().toString(), input.getText().toString());
+                    loginCall.enqueue(new Callback<ResponseLogin>() {
+                        @Override
+                        public void onResponse(Call<ResponseLogin> call, Response<ResponseLogin> response) {
+                            dataUserProfil = response.body().getData();
+                            username.setText(dataUserProfil.get(0).getUsername());
+                            eiteksuser.setText(dataUserProfil.get(0).getUsername());
+                            hfg.teksuser.setText(dataUserProfil.get(0).getUsername());
+                        }
+                        @Override
+                        public void onFailure(Call<ResponseLogin> call, Throwable t) {
+                            Toast.makeText(getActivity(),t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    dialog.dismiss();
+                }
+            });
+            batal.setOnClickListener(view121 -> dialog.dismiss());
+            dialog.show();
+        });
+        editfoto.setOnClickListener(view13 -> {
 
-            }
         });
     }
 
@@ -292,42 +259,34 @@ public class ProfilFragment extends Fragment implements Backpressedlistener {
         builder.setView(view);
         dialog = builder.create();
         input.setText(nomortlp.getText());
-        kirim.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String replace1;
-                if (input.getText().toString().isEmpty()){
-                    input.setError("Anda belum mengetik nomor telepon Anda");
-                } else {
-                    replace1 = input.getText().toString();
-                    if (input.getText().toString().contains(phonecode)){
-                        replace1 = replace1.replace(phonecode,"");
-                        input.setText(replace1);
-                    }
-                    apiInterface = API.getService().create(APIInterface.class);
-                    Call<ResponseLogin> loginCall = apiInterface.setUserNohp(nama.getText().toString(), input.getText().toString());
-                    loginCall.enqueue(new Callback<ResponseLogin>() {
-                        @Override
-                        public void onResponse(Call<ResponseLogin> call, Response<ResponseLogin> response) {
-                            dataUserProfil = response.body().getData();
-                            nomortlp.setText(phonecode+dataUserProfil.get(0).getNoHp());
-                            hfg.teksnomor.setText(phonecode+dataUserProfil.get(0).getNoHp());
-                        }
-                        @Override
-                        public void onFailure(Call<ResponseLogin> call, Throwable t) {
-                            Toast.makeText(getActivity(),t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    dialog.dismiss();
+        kirim.setOnClickListener(view1 -> {
+            String replace1;
+            if (input.getText().toString().isEmpty()){
+                input.setError("Anda belum mengetik nomor telepon Anda");
+            } else {
+                replace1 = input.getText().toString();
+                if (input.getText().toString().contains(phonecode)){
+                    replace1 = replace1.replace(phonecode,"");
+                    input.setText(replace1);
                 }
-            }
-        });
-        batal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+                apiInterface = API.getService().create(APIInterface.class);
+                Call<ResponseLogin> loginCall = apiInterface.setUserNohp(nama.getText().toString(), input.getText().toString());
+                loginCall.enqueue(new Callback<ResponseLogin>() {
+                    @Override
+                    public void onResponse(Call<ResponseLogin> call, Response<ResponseLogin> response) {
+                        dataUserProfil = response.body().getData();
+                        nomortlp.setText(phonecode+dataUserProfil.get(0).getNoHp());
+                        hfg.teksnomor.setText(phonecode+dataUserProfil.get(0).getNoHp());
+                    }
+                    @Override
+                    public void onFailure(Call<ResponseLogin> call, Throwable t) {
+                        Toast.makeText(getActivity(),t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
                 dialog.dismiss();
             }
         });
+        batal.setOnClickListener(view12 -> dialog.dismiss());
     }
 
     private void showAlertAlamat(){
@@ -341,35 +300,28 @@ public class ProfilFragment extends Fragment implements Backpressedlistener {
         builder.setView(view);
         dialog = builder.create();
         input.setText(alamat.getText());
-        kirim.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (input.getText().toString().isEmpty()){
-                    input.setError("Anda belum mengisi Alamat Anda");
-                } else {
-                    apiInterface = API.getService().create(APIInterface.class);
-                    Call<ResponseLogin> loginCall = apiInterface.setUserAlamat(nama.getText().toString(), input.getText().toString());
-                    loginCall.enqueue(new Callback<ResponseLogin>() {
-                        @Override
-                        public void onResponse(Call<ResponseLogin> call, Response<ResponseLogin> response) {
-                            dataUserProfil = response.body().getData();
-                            alamat.setText(dataUserProfil.get(0).getAlamat());
-                        }
-                        @Override
-                        public void onFailure(Call<ResponseLogin> call, Throwable t) {
-                            Toast.makeText(getActivity(),t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    dialog.dismiss();
-                }
-            }
-        });
-        batal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        kirim.setOnClickListener(view1 -> {
+            if (input.getText().toString().isEmpty()){
+                input.setError("Anda belum mengisi Alamat Anda");
+            } else {
+                apiInterface = API.getService().create(APIInterface.class);
+                Call<ResponseLogin> loginCall = apiInterface.setUserAlamat(nama.getText().toString(), input.getText().toString());
+                loginCall.enqueue(new Callback<ResponseLogin>() {
+                    @Override
+                    public void onResponse(Call<ResponseLogin> call, Response<ResponseLogin> response) {
+                        dataUserProfil = response.body().getData();
+                        alamat.setText(dataUserProfil.get(0).getAlamat());
+                        hfg.teksalamat.setText(dataUserProfil.get(0).getAlamat());
+                    }
+                    @Override
+                    public void onFailure(Call<ResponseLogin> call, Throwable t) {
+                        Toast.makeText(getActivity(),t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
                 dialog.dismiss();
             }
         });
+        batal.setOnClickListener(view12 -> dialog.dismiss());
     }
 
     private void showAlertEmail(){
@@ -383,36 +335,28 @@ public class ProfilFragment extends Fragment implements Backpressedlistener {
         builder.setView(view);
         dialog = builder.create();
         input.setText(email.getText());
-        kirim.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (input.getText().toString().isEmpty()){
-                    input.setError("Anda belum mengisi E-Mail Anda");
-                } else {
-                    apiInterface = API.getService().create(APIInterface.class);
-                    Call<ResponseLogin> loginCall = apiInterface.setUserEmail(nama.getText().toString(), input.getText().toString());
-                    loginCall.enqueue(new Callback<ResponseLogin>() {
-                        @Override
-                        public void onResponse(Call<ResponseLogin> call, Response<ResponseLogin> response) {
-                            dataUserProfil = response.body().getData();
-                            email.setText(dataUserProfil.get(0).getEmail());
-                            hfg.teksemail.setText(dataUserProfil.get(0).getEmail());
-                        }
-                        @Override
-                        public void onFailure(Call<ResponseLogin> call, Throwable t) {
-                            Toast.makeText(getActivity(),t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    dialog.dismiss();
-                }
-            }
-        });
-        batal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        kirim.setOnClickListener(view1 -> {
+            if (input.getText().toString().isEmpty()){
+                input.setError("Anda belum mengisi E-Mail Anda");
+            } else {
+                apiInterface = API.getService().create(APIInterface.class);
+                Call<ResponseLogin> loginCall = apiInterface.setUserEmail(nama.getText().toString(), input.getText().toString());
+                loginCall.enqueue(new Callback<ResponseLogin>() {
+                    @Override
+                    public void onResponse(Call<ResponseLogin> call, Response<ResponseLogin> response) {
+                        dataUserProfil = response.body().getData();
+                        email.setText(dataUserProfil.get(0).getEmail());
+                        hfg.teksemail.setText(dataUserProfil.get(0).getEmail());
+                    }
+                    @Override
+                    public void onFailure(Call<ResponseLogin> call, Throwable t) {
+                        Toast.makeText(getActivity(),t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
                 dialog.dismiss();
             }
         });
+        batal.setOnClickListener(view12 -> dialog.dismiss());
     }
 
     private void showAlertPassword(){
@@ -425,34 +369,41 @@ public class ProfilFragment extends Fragment implements Backpressedlistener {
         kirim = view.findViewById(R.id.alertxbtnkirim);
         builder.setView(view);
         dialog = builder.create();
-        kirim.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (input.getText().toString().isEmpty()){
-                    input.setError("Anda belum mengetik password Anda");
-                } else {
-                    apiInterface = API.getService().create(APIInterface.class);
-                    Call<ResponseLogin> loginCall = apiInterface.setUserPassword(nama.getText().toString(), input.getText().toString());
-                    loginCall.enqueue(new Callback<ResponseLogin>() {
-                        @Override
-                        public void onResponse(Call<ResponseLogin> call, Response<ResponseLogin> response) {
-                            Toast.makeText(getActivity(), "Passowrd berhasil diubah!", Toast.LENGTH_SHORT).show();
-                        }
-                        @Override
-                        public void onFailure(Call<ResponseLogin> call, Throwable t) {
-                            Toast.makeText(getActivity(),t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    dialog.dismiss();
-                }
-            }
-        });
-        batal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        kirim.setOnClickListener(view1 -> {
+            if (input.getText().toString().isEmpty()){
+                input.setError("Anda belum mengetik password Anda");
+            } else {
+                apiInterface = API.getService().create(APIInterface.class);
+                Call<ResponseLogin> loginCall = apiInterface.setUserPassword(nama.getText().toString(), input.getText().toString());
+                loginCall.enqueue(new Callback<ResponseLogin>() {
+                    @Override
+                    public void onResponse(Call<ResponseLogin> call, Response<ResponseLogin> response) {
+                        Toast.makeText(getActivity(), "Passowrd berhasil diubah!", Toast.LENGTH_SHORT).show();
+                    }
+                    @Override
+                    public void onFailure(Call<ResponseLogin> call, Throwable t) {
+                        Toast.makeText(getActivity(),t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
                 dialog.dismiss();
             }
         });
+        batal.setOnClickListener(view12 -> dialog.dismiss());
+    }
+
+    private void showAlertLogout(){
+        Button batal, kirim;
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        View view = getLayoutInflater().inflate(R.layout.alert_logout,null);
+        batal = view.findViewById(R.id.alertxbtnbatal);
+        kirim = view.findViewById(R.id.alertxbtnkirim);
+        builder.setView(view);
+        dialog = builder.create();
+        batal.setOnClickListener(view1 -> {
+            startActivity(new Intent(getActivity(), MainLogin.class));
+            dialog.dismiss();
+        });
+        kirim.setOnClickListener(view12 -> dialog.dismiss());
     }
 
     private void closeFragment(){

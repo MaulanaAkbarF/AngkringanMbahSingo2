@@ -14,25 +14,58 @@
         android:textSize="@dimen/fh.ukurantekssubjudul"
         android:textColor="@color/dark_green"
         android:fontFamily="@font/inter_semibold"/>
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:id="@+id/damxinputoutline"
+        app:layout_constraintTop_toBottomOf="@id/damxlabel1"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="20dp"
+        app:boxBackgroundMode="outline"
+        app:boxStrokeColor="@color/dark_blue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/damxinput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/searchgreyicon"
+            android:drawablePadding="10dp"
+            android:hint="Ketik alamat..."
+            android:inputType="text"
+            android:textColor="@color/black"
+            android:textColorHint="@color/dark_blue"
+            android:textSize="@dimen/lp.ukuranteksinput" />
+    </com.google.android.material.textfield.TextInputLayout>
     <TextView
         android:id="@+id/daxdataalamat3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="5dp"
-        app:layout_constraintTop_toBottomOf="@id/damxlabel1"
+        android:layout_marginVertical="20dp"
+        app:layout_constraintTop_toBottomOf="@id/damxinputoutline"
         app:layout_constraintStart_toStartOf="parent"
         android:text="Jl Jalan ke Kota Nganjuk, Nganjuk, Nganjuk, Nganjuk, Nganjuk, Kota Nganjuk."
         android:textSize="@dimen/hp.ukuranteksinfo"
         android:textColor="@color/black"
         android:fontFamily="@font/inter_regular"/>
     <Button
+        android:id="@+id/daxbtngps"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        app:layout_constraintTop_toBottomOf="@id/daxdataalamat3"
+        app:layout_constraintStart_toStartOf="parent"
+        android:backgroundTint="@color/dark_red"
+        android:paddingVertical="7dp"
+        android:text="Gunakan GPS"
+        android:textSize="@dimen/fh.ukuranteksjudul"
+        app:cornerRadius="8dp" />
+    <Button
         android:id="@+id/daxbtntetapkan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        app:layout_constraintTop_toBottomOf="@id/daxdataalamat3"
+        app:layout_constraintTop_toBottomOf="@id/daxbtngps"
         android:backgroundTint="@color/dark_blue"
-        android:paddingVertical="10dp"
+        android:paddingVertical="7dp"
         android:text="Tetapkan Alamat"
         android:textSize="@dimen/fh.ukuranteksjudul"
         app:cornerRadius="8dp"

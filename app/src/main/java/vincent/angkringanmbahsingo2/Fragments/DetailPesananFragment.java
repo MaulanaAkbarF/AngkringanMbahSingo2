@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,13 +16,10 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,11 +31,8 @@ import vincent.angkringanmbahsingo2.API.API;
 import vincent.angkringanmbahsingo2.API.APIInterface;
 import vincent.angkringanmbahsingo2.Dependencies.Backpressedlistener;
 import vincent.angkringanmbahsingo2.ModelAPI.DataItemTransaksi;
-import vincent.angkringanmbahsingo2.ModelAPI.ResponseLogin;
-import vincent.angkringanmbahsingo2.ModelAPI.ResponseProduk;
 import vincent.angkringanmbahsingo2.ModelAPI.ResponseTransaksi;
 import vincent.angkringanmbahsingo2.R;
-import vincent.angkringanmbahsingo2.RecycleviewAdapter.HomeRvAdapter;
 import vincent.angkringanmbahsingo2.RecycleviewAdapter.OrderRvAdapter;
 
 public class DetailPesananFragment extends Fragment implements Backpressedlistener {
@@ -61,17 +56,8 @@ public class DetailPesananFragment extends Fragment implements Backpressedlisten
     APIInterface apiInterface;
     private List<DataItemTransaksi> dataPesanan = new ArrayList<>();
 
-    private String dataAlamat;
-    public DetailPesananFragment(String alamat) {
-        this.dataAlamat = alamat;
-    }
-
-    public DetailPesananFragment(){
-
-    }
-
     // Mengisi data ID Transaksi dari Interface
-    private String dataIdTransaksi;
+    private String dataIdTransaksi, dataAlamat, dataAlamatDefault = hfg.teksalamat.getText().toString();
     public void setDataIdTransaksi(String dataIdTransaksi) {
         this.dataIdTransaksi = dataIdTransaksi;
     }
@@ -79,6 +65,16 @@ public class DetailPesananFragment extends Fragment implements Backpressedlisten
     // Mendapatkan data
     public String getDataIdTransaksi() {
         return this.dataIdTransaksi;
+    }
+
+    // Mengisi data Alamat dari DetailAlamatFragment
+    public void setDataAlamat(String dataAlamat) {
+        this.dataAlamat = dataAlamat;
+    }
+
+    // Mendapatkan data
+    public String getDataAlamat() {
+        return this.dataAlamat;
     }
 
     @Override
@@ -111,8 +107,11 @@ public class DetailPesananFragment extends Fragment implements Backpressedlisten
         btnalamat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentTransaction fragtr = getFragmentManager().beginTransaction();
-                fragtr.replace(R.id.fragmentcontainersplash, new DetailAlamatFragment()).addToBackStack("tag").commit();
+                DetailAlamatFragment daf = new DetailAlamatFragment();
+                daf.setDataIdTransaksi(getDataIdTransaksi());
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragtr = fragmentManager.beginTransaction();
+                fragtr.replace(R.id.fragmentcontainersplash, daf).commit();
             }
         });
 
@@ -139,8 +138,10 @@ public class DetailPesananFragment extends Fragment implements Backpressedlisten
             }
         });
 
-        if(dataAlamat !=null) {
-            teksalamat.setText(dataAlamat);
+        if (dataAlamat == null){
+            dataAlamat = dataAlamatDefault;
+        } else {
+            dataAlamat = getDataAlamat();
         }
 
         linearanimate.startAnimation(easeOutQuadRight);
@@ -150,7 +151,7 @@ public class DetailPesananFragment extends Fragment implements Backpressedlisten
     }
 
     public void retrievePesanan(){
-        String idtransaksi = getDataIdTransaksi(), username = hfg.teksuser.getText().toString();
+        String idtransaksi = getDataIdTransaksi(), username = hfg.teksuser.getText().toString(), alamat = dataAlamat;
         apiInterface = API.getService().create(APIInterface.class);
         Call<ResponseTransaksi> pesananCall = apiInterface.rangkumanPesanan(idtransaksi, username);
         pesananCall.enqueue(new Callback<ResponseTransaksi>() {
@@ -163,6 +164,7 @@ public class DetailPesananFragment extends Fragment implements Backpressedlisten
                 recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),1));
                 recyclerView.setAdapter(addData);
                 addData.notifyDataSetChanged();
+                teksalamat.setText(alamat);
                 teksongkir.setText(String.format(currency, Integer.parseInt(String.valueOf(biayaongkir))));
                 tekssubtotal.setText(String.format(currency, Integer.parseInt(String.valueOf(dataPesanan.get(0).getSubtotal()))));
                 tekssubtotal2.setText(String.valueOf(dataPesanan.get(0).getSubtotal()));
@@ -176,7 +178,7 @@ public class DetailPesananFragment extends Fragment implements Backpressedlisten
     }
 
     public void retrivePesananFinal(){
-        String idtransaksi = teksidtransaksi.getText().toString(), username = hfg.teksuser.getText().toString(), metode = teksmetode.getText().toString();
+        String idtransaksi = getDataIdTransaksi(), username = hfg.teksuser.getText().toString(), metode = teksmetode.getText().toString();
         String subtotal = String.valueOf(tekssubtotal2.getText());
         String pengiriman = "Antar ke "+teksalamat.getText().toString();
         apiInterface = API.getService().create(APIInterface.class);
@@ -187,7 +189,7 @@ public class DetailPesananFragment extends Fragment implements Backpressedlisten
                 dataPesanan = response.body().getData();
                 linearanimate.startAnimation(easeOutSineTopOut);
                 FragmentTransaction fragtr = getFragmentManager().beginTransaction();
-                fragtr.replace(R.id.fragmentcontainersplash, new SplashSelesaiFragment()).addToBackStack("tag").commit();
+                fragtr.replace(R.id.fragmentcontainersplash, new SplashSelesaiFragment()).commit();
                 dataIdTransaksi = null;
             }
 

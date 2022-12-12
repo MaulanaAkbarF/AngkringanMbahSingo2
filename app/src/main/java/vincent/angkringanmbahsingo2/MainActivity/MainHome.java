@@ -151,12 +151,16 @@ public class MainHome extends AppCompatActivity {
     // Fungsi ketika tombol Back Button di klik
     @Override
     public void onBackPressed() {
-        if (mBackPressed + TIME_INTERVAL > System.currentTimeMillis()) {
-            Runtime.getRuntime().exit(0);
+        if (InterfaceHomeFragment.backpressedlistener!=null || InterfaceMakananFragment.backpressedlistener!=null || InterfaceMinumanFragment.backpressedlistener!=null || ProfilFragment.backpressedlistener!=null || DetailPesananFragment.backpressedlistener!=null){
+            System.out.println("back");
         } else {
-            Toast.makeText(getBaseContext(), "Tekan Sekali lagi untuk Keluar", Toast.LENGTH_SHORT).show();
+            if (mBackPressed + TIME_INTERVAL > System.currentTimeMillis()) {
+                Runtime.getRuntime().exit(0);
+            } else {
+                Toast.makeText(getBaseContext(), "Tekan Sekali lagi untuk Keluar", Toast.LENGTH_SHORT).show();
+            }
+            mBackPressed = System.currentTimeMillis();
         }
-        mBackPressed = System.currentTimeMillis();
         if(InterfaceHomeFragment.backpressedlistener!=null){
             InterfaceHomeFragment.backpressedlistener.onBackPressed();
         } else if(InterfaceMakananFragment.backpressedlistener!=null){

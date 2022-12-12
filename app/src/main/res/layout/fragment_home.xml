@@ -84,6 +84,14 @@
                             android:ellipsize="end"
                             android:maxLines="1"
                             android:visibility="invisible"/>
+                        <TextView
+                            android:id="@+id/fhxtxtalamat"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:text="Magetan"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:visibility="invisible"/>
                     </LinearLayout>
                     <androidx.cardview.widget.CardView
                         android:id="@+id/fhxbtnprofil"

@@ -41,7 +41,7 @@ public class HomeFragment extends Fragment {
     LinearLayout judul;
     ScrollView rvdatalayout;
 
-    public static TextView teksttpr, tekstttr, teksnama, teksnomor, teksemail, teksuser, dataidmenu, datajudul, datadesc, dataharga, datastok, dataimage;
+    public static TextView teksttpr, tekstttr, teksnama, teksnomor, teksemail, teksuser, teksalamat, dataidmenu, datajudul, datadesc, dataharga, datastok, dataimage;
     CardView btnprofil;
     RecyclerView recyclerView1, recyclerView2;
     HomeRvAdapter.AdapterItemListener adapterItemListenerInterface;
@@ -75,6 +75,7 @@ public class HomeFragment extends Fragment {
         teksnomor = view.findViewById(R.id.fhxtxtnomor);
         teksemail = view.findViewById(R.id.fhxtxtemail);
         teksuser = view.findViewById(R.id.fhxtxtuser);
+        teksalamat = view.findViewById(R.id.fhxtxtalamat);
         dataimage = view.findViewById(R.id.dataximage);
         dataidmenu = view.findViewById(R.id.dataxidmenu);
         datajudul = view.findViewById(R.id.dataxjudul);
@@ -139,6 +140,7 @@ public class HomeFragment extends Fragment {
                 teksnomor.setText("+62"+dataUserHome.get(0).getNoHp());
                 teksemail.setText(dataUserHome.get(0).getEmail());
                 teksuser.setText(dataUserHome.get(0).getUsername());
+                teksalamat.setText(dataUserHome.get(0).getAlamat());
             }
             @Override
             public void onFailure(Call<ResponseLogin> call, Throwable t) {
