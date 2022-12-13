@@ -2,6 +2,7 @@ package vincent.angkringanmbahsingo2.Fragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -47,6 +48,7 @@ public class InterfaceMenuFragment extends Fragment implements Backpressedlisten
 
     APIInterface apiInterface;
     private List<DataItemTransaksi> dataTransaksiBeli = new ArrayList<>();
+    private List<DataItemTransaksi> dataTransaksiKeranjang = new ArrayList<>();
 
     static String currency = "Rp. %,d";
     static String stock = "%,d";
@@ -54,10 +56,9 @@ public class InterfaceMenuFragment extends Fragment implements Backpressedlisten
     int total;
     int totalPrice = 0;
 
-    // Mengisi data dari ViewPager Menu
     private static String idmenu, namamenu, deskripsimenu, hargamenu, stokmenu, gambarmenu;
 
-    // Mengisi data Alamat dari DetailPesananFragment
+    // Mengisi data dari ViewPager Menu
     public void setDataMenu(String idmenu, String namamenu, String deskripsimenu, String hargamenu, String stokmenu, String gambarmenu) {
         this.idmenu = idmenu;
         this.namamenu = namamenu;
@@ -96,27 +97,23 @@ public class InterfaceMenuFragment extends Fragment implements Backpressedlisten
         consmain.setVisibility(View.VISIBLE);
         consmain.startAnimation(easeOutQuadRight);
 
-        btnkeranjang.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
-        btnbeli.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        btnkeranjang.setOnClickListener(view13 -> {
+            if (btnkeranjang.getText().toString().equals("Ditambahkan")){
+                Toast.makeText(getActivity(), "Menu sudah ada di Keranjang", Toast.LENGTH_SHORT).show();
+            } else {
                 HomeFragment hfg = new HomeFragment();
                 int totalharga = Integer.parseInt(String.valueOf(txtjumlah.getText())) * Integer.parseInt(String.valueOf(hargamenu));
                 String totalhargaitem = Integer.toString(totalharga);
                 apiInterface = API.getService().create(APIInterface.class);
-                Call<ResponseTransaksi> transaksiCall = apiInterface.transaksiBeli(interxidtransaksi.getText().toString(), interidmenu.getText().toString(), hfg.teksuser.getText().toString(), String.valueOf(txtjumlah.getText()), totalhargaitem);
+                Call<ResponseTransaksi> transaksiCall = apiInterface.transaksiKeranjang(interidmenu.getText().toString(), hfg.teksuser.getText().toString(), String.valueOf(txtjumlah.getText()), totalhargaitem);
                 transaksiCall.enqueue(new Callback<ResponseTransaksi>() {
                     @Override
                     public void onResponse(Call<ResponseTransaksi> call, Response<ResponseTransaksi> response) {
-                        consmain.startAnimation(easeOutQuadLeftOut);
-                        sendDataToPesanan();
+                        btnkeranjang.setBackgroundColor(Color.parseColor("#FF009C05"));
+                        btnkeranjang.setText("Ditambahkan");
+                        btnkeranjang.setTextSize(14);
                     }
+
                     @Override
                     public void onFailure(Call<ResponseTransaksi> call, Throwable t) {
                         Toast.makeText(getActivity(), t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
@@ -125,16 +122,33 @@ public class InterfaceMenuFragment extends Fragment implements Backpressedlisten
             }
         });
 
-        imageback.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                consmain.startAnimation(easeOutQuadRightOut);
-                consmain.setVisibility(View.GONE);
-                interxidtransaksi.setText(null);
-            }
+        btnbeli.setOnClickListener(view1 -> {
+            HomeFragment hfg = new HomeFragment();
+            int totalharga = Integer.parseInt(String.valueOf(txtjumlah.getText())) * Integer.parseInt(String.valueOf(hargamenu));
+            String totalhargaitem = Integer.toString(totalharga);
+            apiInterface = API.getService().create(APIInterface.class);
+            Call<ResponseTransaksi> transaksiCall = apiInterface.transaksiBeli(interxidtransaksi.getText().toString(), interidmenu.getText().toString(), hfg.teksuser.getText().toString(), String.valueOf(txtjumlah.getText()), totalhargaitem);
+            transaksiCall.enqueue(new Callback<ResponseTransaksi>() {
+                @Override
+                public void onResponse(Call<ResponseTransaksi> call, Response<ResponseTransaksi> response) {
+                    consmain.startAnimation(easeOutQuadLeftOut);
+                    sendDataToPesanan();
+                }
+                @Override
+                public void onFailure(Call<ResponseTransaksi> call, Throwable t) {
+                    Toast.makeText(getActivity(), t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        });
+
+        imageback.setOnClickListener(view12 -> {
+            consmain.startAnimation(easeOutQuadRightOut);
+            consmain.setVisibility(View.GONE);
+            closeFragment();
         });
 
         getDataMenu();
+        cekKeranjang();
         autokodeTransaksi();
         countJumlah();
         jumlahClickable();
@@ -156,6 +170,29 @@ public class InterfaceMenuFragment extends Fragment implements Backpressedlisten
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction fragtr = fragmentManager.beginTransaction();
         fragtr.replace(R.id.fragmentcontainersplash, dpf).commit();
+    }
+
+    private void cekKeranjang(){
+        HomeFragment hfg = new HomeFragment();
+        apiInterface = API.getService().create(APIInterface.class);
+        Call<ResponseTransaksi> transaksiCall = apiInterface.cekKeranjang(hfg.teksuser.getText().toString(), interidmenu.getText().toString());
+        transaksiCall.enqueue(new Callback<ResponseTransaksi>() {
+            @Override
+            public void onResponse(Call<ResponseTransaksi> call, Response<ResponseTransaksi> response) {
+                dataTransaksiKeranjang = response.body().getData();
+                if (dataTransaksiKeranjang == null){
+                    System.out.println("ok");
+                } else if (dataTransaksiKeranjang.get(0).getIdProduk().equals(interidmenu.getText().toString())){
+                    btnkeranjang.setBackgroundColor(Color.parseColor("#FF009C05"));
+                    btnkeranjang.setText("Ditambahkan");
+                    btnkeranjang.setTextSize(14);
+                }
+            }
+            @Override
+            public void onFailure(Call<ResponseTransaksi> call, Throwable t) {
+                Toast.makeText(getActivity(), t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void autokodeTransaksi(){
@@ -186,26 +223,20 @@ public class InterfaceMenuFragment extends Fragment implements Backpressedlisten
                 txttotal.setText(String.format(currency, Integer.parseInt(String.valueOf(totalPrice))));
             }
         });
-        minimage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (currentNumber>1){
-                    currentNumber = currentNumber - 1;
-                    txtjumlah.setText(String.valueOf(currentNumber));
-                    totalPrice = total * currentNumber;
-                    txttotal.setText(String.format(currency, Integer.parseInt(String.valueOf(totalPrice))));
-                }
+        minimage.setOnClickListener(view -> {
+            if (currentNumber>1){
+                currentNumber = currentNumber - 1;
+                txtjumlah.setText(String.valueOf(currentNumber));
+                totalPrice = total * currentNumber;
+                txttotal.setText(String.format(currency, Integer.parseInt(String.valueOf(totalPrice))));
             }
         });
     }
 
     private void jumlahClickable(){
-        txtjumlah.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showAlertJumlah();
-                dialog.show();
-            }
+        txtjumlah.setOnClickListener(view -> {
+            showAlertJumlah();
+            dialog.show();
         });
     }
 
@@ -219,26 +250,18 @@ public class InterfaceMenuFragment extends Fragment implements Backpressedlisten
         kirim = view.findViewById(R.id.alertxbtnkirim);
         builder.setView(view);
         dialog = builder.create();
-        kirim.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (input.getText().toString().isEmpty()){
-                    input.setError("Anda belum mengetik jumlah pesanan");
-                } else {
-                    txtjumlah.setText(String.valueOf(input.getText()));
-                    int jumlah = Integer.parseInt(String.valueOf(txtjumlah.getText()));
-                    totalPrice = total * jumlah;
-                    txttotal.setText(String.format(currency, Integer.parseInt(String.valueOf(totalPrice))));
-                    dialog.dismiss();
-                }
-            }
-        });
-        batal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        kirim.setOnClickListener(view1 -> {
+            if (input.getText().toString().isEmpty()){
+                input.setError("Anda belum mengetik jumlah pesanan");
+            } else {
+                txtjumlah.setText(String.valueOf(input.getText()));
+                int jumlah = Integer.parseInt(String.valueOf(txtjumlah.getText()));
+                totalPrice = total * jumlah;
+                txttotal.setText(String.format(currency, Integer.parseInt(String.valueOf(totalPrice))));
                 dialog.dismiss();
             }
         });
+        batal.setOnClickListener(view12 -> dialog.dismiss());
     }
 
     private void closeFragment(){
@@ -262,6 +285,6 @@ public class InterfaceMenuFragment extends Fragment implements Backpressedlisten
     public void onBackPressed() {
         consmain.startAnimation(easeOutQuadRightOut);
         consmain.setVisibility(View.GONE);
-        interxidtransaksi.setText(null);
+        closeFragment();
     }
 }

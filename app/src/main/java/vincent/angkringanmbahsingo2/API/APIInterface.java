@@ -121,6 +121,28 @@ public interface APIInterface {
     );
 
     @FormUrlEncoded
+    @POST("transaksikeranjang.php")
+    Call<ResponseTransaksi> transaksiKeranjang(
+            @Field("id_produk") String id_produk,
+            @Field("username") String username,
+            @Field("jumlah") String jumlah,
+            @Field("totalhargaitem") String totalhargaitem
+    );
+
+    @FormUrlEncoded
+    @POST("cekkeranjang.php")
+    Call<ResponseTransaksi> cekKeranjang(
+            @Field("username") String username,
+            @Field("id_produk") String id_produk
+    );
+
+    @FormUrlEncoded
+    @POST("keranjanglist.php")
+    Call<ResponseTransaksi> keranjangList(
+            @Field("username") String username
+    );
+
+    @FormUrlEncoded
     @POST("rangkumanpesanan.php")
     Call<ResponseTransaksi> rangkumanPesanan(
             @Field("id_transaksi") String id_transaksi,
@@ -167,6 +189,12 @@ public interface APIInterface {
     @FormUrlEncoded
     @POST("filterriwayatminuman.php")
     Call<ResponseTransaksi> filterRiwayatMinuman(
+            @Field("username") String username
+    );
+
+    @FormUrlEncoded
+    @POST("hapussemuariwayat.php")
+    Call<ResponseTransaksi> hapusSemuaRiwayat(
             @Field("username") String username
     );
 }

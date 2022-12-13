@@ -40,7 +40,7 @@ public class HomeFragment extends Fragment {
     LinearLayout judul;
     ScrollView rvdatalayout;
 
-    public static TextView teksttpr, tekstttr, teksnama, teksnomor, teksemail, teksuser, teksalamat, dataidmenu, datajudul, datadesc, dataharga, datastok, dataimage;
+    public static TextView teksttpr, tekstttr, teksnama, teksnomor, teksemail, teksuser, teksalamat;
     CardView btnprofil;
     RecyclerView recyclerView1, recyclerView2;
     HomeRvAdapter.AdapterItemListener adapterItemListenerInterface;
@@ -75,12 +75,6 @@ public class HomeFragment extends Fragment {
         teksemail = view.findViewById(R.id.fhxtxtemail);
         teksuser = view.findViewById(R.id.fhxtxtuser);
         teksalamat = view.findViewById(R.id.fhxtxtalamat);
-        dataimage = view.findViewById(R.id.dataximage);
-        dataidmenu = view.findViewById(R.id.dataxidmenu);
-        datajudul = view.findViewById(R.id.dataxjudul);
-        datadesc = view.findViewById(R.id.dataxdesc);
-        dataharga = view.findViewById(R.id.dataxharga);
-        datastok = view.findViewById(R.id.dataxstok);
         btnprofil = view.findViewById(R.id.fhxbtnprofil);
 
         // Memanggil List Data pada Recycle View
@@ -97,12 +91,9 @@ public class HomeFragment extends Fragment {
 
         getDataLoginRetrofit();
         retriveDataProduk();
-        btnprofil.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentTransaction fragtr = getFragmentManager().beginTransaction();
-                fragtr.replace(R.id.fragmentcontainersplash, new ProfilFragment()).addToBackStack("tag").commit();
-            }
+        btnprofil.setOnClickListener(view1 -> {
+            FragmentTransaction fragtr = getFragmentManager().beginTransaction();
+            fragtr.replace(R.id.fragmentcontainersplash, new ProfilFragment()).addToBackStack("tag").commit();
         });
 
         tekstttr.setVisibility(View.GONE);
@@ -111,15 +102,12 @@ public class HomeFragment extends Fragment {
     }
 
     public boolean getProdukClicked(){
-        adapterItemListenerInterface = new HomeRvAdapter.AdapterItemListener() {
-            @Override
-            public void clickItemListener(int adapterPosition) {
-                InterfaceMenuFragment imf = new InterfaceMenuFragment();
-                imf.setDataMenu(produkList.get(adapterPosition).getIdProduk(), produkList.get(adapterPosition).getNamaProduk(), produkList.get(adapterPosition).getDeskripsiProduk(), produkList.get(adapterPosition).getHarga(), produkList.get(adapterPosition).getStok(), produkList.get(adapterPosition).getGambar());
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragtr = fragmentManager.beginTransaction();
-                fragtr.replace(R.id.fragmentcontainersplash, imf).commit();
-            }
+        adapterItemListenerInterface = adapterPosition -> {
+            InterfaceMenuFragment imf = new InterfaceMenuFragment();
+            imf.setDataMenu(produkList.get(adapterPosition).getIdProduk(), produkList.get(adapterPosition).getNamaProduk(), produkList.get(adapterPosition).getDeskripsiProduk(), produkList.get(adapterPosition).getHarga(), produkList.get(adapterPosition).getStok(), produkList.get(adapterPosition).getGambar());
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            FragmentTransaction fragtr = fragmentManager.beginTransaction();
+            fragtr.replace(R.id.fragmentcontainersplash, imf).commit();
         };
         return true;
     }

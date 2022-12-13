@@ -39,7 +39,7 @@ import vincent.angkringanmbahsingo2.RecycleviewModel.HomeRvModel;
 public class MakananFragment extends Fragment {
 
     Spinner spinner;
-    public static TextView teksttmak, dataidmenu, datajudul, datadesc, dataharga, datastok, dataimage;
+    public static TextView teksttmak;
 //    List<HomeRvModel> listDataDaftar;
     RecyclerView recyclerView;
 //    HomeRvAdapter adapterItemDaftar;
@@ -65,12 +65,6 @@ public class MakananFragment extends Fragment {
 
         teksttmak = view.findViewById(R.id.fmakxteksttmakanan);
         spinner = view.findViewById(R.id.fmakxspinner);
-        dataimage = view.findViewById(R.id.dataximage);
-        dataidmenu = view.findViewById(R.id.dataxidmenu);
-        datajudul = view.findViewById(R.id.dataxjudul);
-        datadesc = view.findViewById(R.id.dataxdesc);
-        dataharga = view.findViewById(R.id.dataxharga);
-        datastok = view.findViewById(R.id.dataxstok);
 
         // Memanggil List Data pada Recycle View
 //        MainHome mh = new MainHome();

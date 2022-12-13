@@ -86,37 +86,29 @@
                 android:text="Selesai"
                 android:textSize="@dimen/hp.ukuranteksinfo"
                 android:textColor="@color/dark_green"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:orientation="horizontal">
             <TextView
-                android:id="@+id/dataxjudul"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:id="@+id/dataxtanggal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:id="@+id/dataxharga"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:id="@+id/dataxjumlah"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:id="@+id/dataxset"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <ImageView
-                android:id="@+id/dataximage"
+                android:id="@+id/friwxbtnhapusfilter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/imageplus"/>
-        </LinearLayout>
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:padding="8dp"
+                android:text="Hapus Filter"
+                android:textSize="@dimen/hp.ukuranteksinfo"
+                android:textColor="@color/red"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/friwxteksttriwayat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/fmakxconsspinner"
+            android:gravity="center"
+            android:layout_marginVertical="20dp"
+            android:text="Riwayat Tidak Tersedia"
+            android:textSize="@dimen/fh.ukuranteksjudul"
+            android:textStyle="bold"
+            android:visibility="visible"/>
     </LinearLayout>
     <ScrollView
         android:layout_width="match_parent"

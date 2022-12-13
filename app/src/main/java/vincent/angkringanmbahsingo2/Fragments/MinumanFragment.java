@@ -39,7 +39,7 @@ import vincent.angkringanmbahsingo2.RecycleviewModel.HomeRvModel;
 public class MinumanFragment extends Fragment {
 
     Spinner spinner;
-    public static TextView teksttmin, dataidmenu, datajudul, datadesc, dataharga, datastok, dataimage;
+    public static TextView teksttmin;
     RecyclerView recyclerView;
     HomeRvAdapter.AdapterItemListener adapterItemListenerInterface;
 
@@ -54,12 +54,6 @@ public class MinumanFragment extends Fragment {
         teksttmin = view.findViewById(R.id.fminxteksttminuman);
         spinner = view.findViewById(R.id.fminxspinner);
         recyclerView = view.findViewById(R.id.fminxrecycleminuman);
-        dataimage = view.findViewById(R.id.dataximage);
-        dataidmenu = view.findViewById(R.id.dataxidmenu);
-        datajudul = view.findViewById(R.id.dataxjudul);
-        datadesc = view.findViewById(R.id.dataxdesc);
-        dataharga = view.findViewById(R.id.dataxharga);
-        datastok = view.findViewById(R.id.dataxstok);
 
 //        MainHome mh = new MainHome();
 //        if (String.valueOf(mh.set3.getText()).equals("0")){

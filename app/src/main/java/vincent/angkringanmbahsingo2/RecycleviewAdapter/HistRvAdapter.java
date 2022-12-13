@@ -33,6 +33,7 @@ public class HistRvAdapter extends RecyclerView.Adapter<HistRvAdapter.ViewHolder
     HistRvAdapter.AdapterItemListener adapterItemListener;
     static String currency = "Rp. %,d";
     static String stock = "x%,d";
+
     public interface AdapterItemListener{
         void clickItemListener(int adapterPosition);
     }

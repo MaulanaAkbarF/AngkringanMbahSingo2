@@ -1,5 +1,6 @@
 package vincent.angkringanmbahsingo2.RecycleviewAdapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,13 +11,18 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
+import vincent.angkringanmbahsingo2.API.API;
+import vincent.angkringanmbahsingo2.ModelAPI.DataItemTransaksi;
 import vincent.angkringanmbahsingo2.R;
 import vincent.angkringanmbahsingo2.RecycleviewModel.HistRvModel;
 
 public class CartRvAdapter extends RecyclerView.Adapter<CartRvAdapter.ViewHolder> {
-    List<HistRvModel> listDataAdapter;
+    Context context;
+    List<DataItemTransaksi> listDataAdapter;
     CartRvAdapter.AdapterItemListener adapterItemListener;
     int currentNumber, addNumber, totalPrice;
     static String currency = "Rp. %,d";
@@ -26,7 +32,8 @@ public class CartRvAdapter extends RecyclerView.Adapter<CartRvAdapter.ViewHolder
         void clickItemListener(int adapterPosition);
     }
 
-    public CartRvAdapter(List<HistRvModel> listDataAdapter, AdapterItemListener adapterItemListener) {
+    public CartRvAdapter(Context context, List<DataItemTransaksi> listDataAdapter, AdapterItemListener adapterItemListener) {
+        this.context = context;
         this.listDataAdapter = listDataAdapter;
         this.adapterItemListener = adapterItemListener;
     }
@@ -40,30 +47,32 @@ public class CartRvAdapter extends RecyclerView.Adapter<CartRvAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull CartRvAdapter.ViewHolder holder, int position) {
-        holder.judul.setText(listDataAdapter.get(position).getJudul());
-        holder.harga.setText(String.format(currency, listDataAdapter.get(position).getHarga()));
-        holder.jumlah.setText(String.format(stock, listDataAdapter.get(position).getJumlah()));
-        holder.gambar.setImageResource(listDataAdapter.get(position).getGambar());
+        DataItemTransaksi db = listDataAdapter.get(position);
+
+        holder.judul.setText(db.getNamaProduk());
+        holder.harga.setText(String.format(currency, Integer.parseInt(db.getHarga())));
+        holder.jumlah.setText(String.format(stock, Integer.parseInt(db.getJumlah())));
+        Picasso.get().load(API.BASE_GAMBAR+db.getPengiriman()).error(R.mipmap.ic_launcher).into(holder.gambar);
         holder.plusimage.setOnClickListener(view -> {
-            currentNumber = Integer.parseInt(String.valueOf(holder.jumlah.getText()));
+            currentNumber = Integer.parseInt(String.valueOf(db.getJumlah()));
             addNumber = currentNumber+1;
             holder.jumlah.setText(String.valueOf(addNumber));
-            totalPrice = addNumber * listDataAdapter.get(holder.getAdapterPosition()).getHarga();
+            totalPrice = addNumber * Integer.parseInt(listDataAdapter.get(holder.getAdapterPosition()).getHarga());
             holder.totalharga.setText(String.format(currency, Integer.parseInt(String.valueOf(totalPrice))));
         });
         holder.minimage.setOnClickListener(view -> {
-            if (Integer.parseInt(String.valueOf(holder.jumlah.getText())) <= 1){
+            if (Integer.parseInt(String.valueOf(db.getJumlah())) <= 1){
                 holder.jumlah.setText(String.valueOf(1));
             } else {
                 currentNumber = Integer.parseInt(String.valueOf(holder.jumlah.getText()));
                 addNumber = currentNumber-1;
                 holder.jumlah.setText(String.valueOf(addNumber));
-                totalPrice = addNumber * listDataAdapter.get(holder.getAdapterPosition()).getHarga();
+                totalPrice = addNumber * Integer.parseInt(listDataAdapter.get(holder.getAdapterPosition()).getHarga());
                 holder.totalharga.setText(String.format(currency, Integer.parseInt(String.valueOf(totalPrice))));
             }
         });
         currentNumber = Integer.parseInt(String.valueOf(holder.jumlah.getText()));
-        totalPrice = currentNumber * listDataAdapter.get(holder.getAdapterPosition()).getHarga();
+        totalPrice = currentNumber * Integer.parseInt(listDataAdapter.get(holder.getAdapterPosition()).getHarga());
         holder.totalharga.setText(String.format(currency, Integer.parseInt(String.valueOf(totalPrice))));
     }
 

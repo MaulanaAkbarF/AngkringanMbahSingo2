@@ -3,6 +3,7 @@ package vincent.angkringanmbahsingo2.Fragments;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -33,6 +34,7 @@ import retrofit2.Response;
 import vincent.angkringanmbahsingo2.API.API;
 import vincent.angkringanmbahsingo2.API.APIInterface;
 import vincent.angkringanmbahsingo2.MainActivity.MainHome;
+import vincent.angkringanmbahsingo2.MainActivity.MainLogin;
 import vincent.angkringanmbahsingo2.ModelAPI.DataItemProduk;
 import vincent.angkringanmbahsingo2.ModelAPI.DataItemTransaksi;
 import vincent.angkringanmbahsingo2.ModelAPI.ResponseProduk;
@@ -44,8 +46,8 @@ import vincent.angkringanmbahsingo2.RecycleviewModel.HistRvModel;
 
 public class RiwayatFragment extends Fragment {
 
-    Animation easeOutQuadLeft, easeOutQuadRight, easeOutQuadLeftOut, easeOutQuadRightOut;
-    public static TextView datajudul, datatanggal, dataharga, datajumlah, btnfilter, btnubah, btnhapussemua, btnselesai;
+    Animation easeOutQuadLeft, easeOutQuadRight, easeOutQuadLeftOut, easeOutQuadRightOut, fadein, fadeout;
+    public static TextView btnfilter, btnubah, btnhapussemua, btnselesai, btnhapusfilter, teksttr;
     RecyclerView recyclerView;
     HistRvAdapter.AdapterItemListener adapterItemListenerInterface;
     Dialog dialog;
@@ -64,18 +66,19 @@ public class RiwayatFragment extends Fragment {
         btnubah = view.findViewById(R.id.friwxbtnubah);
         btnhapussemua = view.findViewById(R.id.friwxbtnhapussemua);
         btnselesai = view.findViewById(R.id.friwxbtnselesai);
+        btnhapusfilter = view.findViewById(R.id.friwxbtnhapusfilter);
 
         // Membuat animasi
         easeOutQuadLeft = AnimationUtils.loadAnimation(getActivity(), R.anim.ease_out_quad_left);
         easeOutQuadRight = AnimationUtils.loadAnimation(getActivity(), R.anim.ease_out_quad_right);
         easeOutQuadLeftOut = AnimationUtils.loadAnimation(getActivity(), R.anim.ease_out_quad_left_out);
         easeOutQuadRightOut = AnimationUtils.loadAnimation(getActivity(), R.anim.ease_out_quad_right_out);
+        fadein = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_in);
+        fadeout = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_out);
 
         recyclerView = view.findViewById(R.id.friwxrecycleriwayat);
-        datajudul = view.findViewById(R.id.dataxjudul);
-        dataharga = view.findViewById(R.id.dataxharga);
-        datajumlah = view.findViewById(R.id.dataxjumlah);
 
+        teksttr = view.findViewById(R.id.friwxteksttriwayat);
         btnubah.setVisibility(View.VISIBLE);
         btnfilter.setVisibility(View.VISIBLE);
         btnhapussemua.setVisibility(View.GONE);
@@ -93,6 +96,8 @@ public class RiwayatFragment extends Fragment {
 //        getRiwayatClicked();
         getRiwayat();
         ubahClickable();
+        hapusFilterClickable();
+        hapusSemuaClickable();
         selesaiClickable();
         filterClickable();
         return view;
@@ -111,7 +116,10 @@ public class RiwayatFragment extends Fragment {
                     recyclerView.setHasFixedSize(true);
                     recyclerView.setAdapter(addData);
                     addData.notifyDataSetChanged();
+                    teksttr.setVisibility(View.GONE);
+                    btnhapusfilter.setVisibility(View.GONE);
                 } else {
+                    teksttr.setVisibility(View.VISIBLE);
                     Toast.makeText(getActivity(), "Anda tidak memiliki Riwayat apapun", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -124,51 +132,88 @@ public class RiwayatFragment extends Fragment {
     }
 
     public boolean ubahClickable(){
-        btnubah.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        btnubah.setOnClickListener(view -> {
+            if (riwayatList != null){
                 btnhapussemua.setVisibility(View.VISIBLE);
-                btnselesai.setVisibility(View.VISIBLE);
-                btnubah.setVisibility(View.GONE);
-                btnfilter.setVisibility(View.GONE);
-                btnfilter.startAnimation(easeOutQuadLeftOut);
-                btnubah.startAnimation(easeOutQuadLeftOut);
                 btnhapussemua.startAnimation(easeOutQuadRight);
-                btnselesai.startAnimation(easeOutQuadRight);
             }
+            btnselesai.setVisibility(View.VISIBLE);
+            btnubah.setVisibility(View.GONE);
+            btnfilter.setVisibility(View.GONE);
+            btnfilter.startAnimation(easeOutQuadLeftOut);
+            btnubah.startAnimation(easeOutQuadLeftOut);
+            btnselesai.startAnimation(easeOutQuadRight);
         });
         return false;
     }
 
+    public void hapusSemuaClickable(){
+        btnhapussemua.setOnClickListener(view -> {
+            showAlertHapusSemua();
+            dialog.show();
+        });
+    }
+
     public boolean selesaiClickable(){
-        btnselesai.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        btnselesai.setOnClickListener(view -> {
+            if (riwayatList != null){
                 btnhapussemua.setVisibility(View.GONE);
-                btnselesai.setVisibility(View.GONE);
-                btnubah.setVisibility(View.VISIBLE);
-                btnfilter.setVisibility(View.VISIBLE);
-                btnfilter.startAnimation(easeOutQuadLeft);
-                btnubah.startAnimation(easeOutQuadLeft);
                 btnhapussemua.startAnimation(easeOutQuadRightOut);
-                btnselesai.startAnimation(easeOutQuadRightOut);
             }
+            btnselesai.setVisibility(View.GONE);
+            btnubah.setVisibility(View.VISIBLE);
+            btnfilter.setVisibility(View.VISIBLE);
+            btnfilter.startAnimation(easeOutQuadLeft);
+            btnubah.startAnimation(easeOutQuadLeft);
+            btnselesai.startAnimation(easeOutQuadRightOut);
         });
         return false;
     }
 
     private void filterClickable(){
-        btnfilter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showAlertFilter1();
-                dialog.show();
-            }
+        btnfilter.setOnClickListener(view -> {
+            showAlertFilter1();
+            dialog.show();
         });
     }
 
+    private void showAlertHapusSemua(){
+        Button batal, kirim;
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        View view = getLayoutInflater().inflate(R.layout.alert_hapussemuariwayat,null);
+        batal = view.findViewById(R.id.alertxbtnbatal);
+        kirim = view.findViewById(R.id.alertxbtnkirim);
+        builder.setView(view);
+        dialog = builder.create();
+        batal.setOnClickListener(view1 -> {
+            HomeFragment hfg = new HomeFragment();
+            apiInterface = API.getService().create(APIInterface.class);
+            Call<ResponseTransaksi> riwayatCall = apiInterface.hapusSemuaRiwayat(hfg.teksuser.getText().toString());
+            riwayatCall.enqueue(new Callback<ResponseTransaksi>() {
+                @Override
+                public void onResponse(Call<ResponseTransaksi> call, Response<ResponseTransaksi> response) {
+                    riwayatList.clear();
+                    addData = new HistRvAdapter(getContext(), riwayatList, adapterItemListenerInterface);
+                    recyclerView.setAdapter(addData);
+                    addData.notifyDataSetChanged();
+                    riwayatList = null;
+                    teksttr.setVisibility(View.VISIBLE);
+                    btnhapussemua.setVisibility(View.GONE);
+                    btnhapussemua.startAnimation(easeOutQuadRightOut);
+                    Toast.makeText(getActivity(), "Riwayat berhasil dikosongkan!", Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onFailure(Call<ResponseTransaksi> call, Throwable t) {
+                    Toast.makeText(getActivity(), t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+            dialog.dismiss();
+        });
+        kirim.setOnClickListener(view12 -> dialog.dismiss());
+    }
+
     private void showAlertFilter1(){
-        final String[] dateString = new String[1];
         TextView tgl1, tgl2;
         Button batal, kirim;
         RadioButton rBtn1, rBtn2, rBtn3;
@@ -184,26 +229,17 @@ public class RiwayatFragment extends Fragment {
         builder.setView(view);
         dialog = builder.create();
 
-        rBtn1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                rBtn2.setChecked(false);
-                rBtn3.setChecked(false);
-            }
+        rBtn1.setOnClickListener(view1 -> {
+            rBtn2.setChecked(false);
+            rBtn3.setChecked(false);
         });
-        rBtn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                rBtn1.setChecked(false);
-                rBtn3.setChecked(false);
-            }
+        rBtn2.setOnClickListener(view12 -> {
+            rBtn1.setChecked(false);
+            rBtn3.setChecked(false);
         });
-        rBtn3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                rBtn1.setChecked(false);
-                rBtn2.setChecked(false);
-            }
+        rBtn3.setOnClickListener(view13 -> {
+            rBtn1.setChecked(false);
+            rBtn2.setChecked(false);
         });
 
         final Calendar cldr = Calendar.getInstance();
@@ -212,114 +248,111 @@ public class RiwayatFragment extends Fragment {
         tgl1.setText(simpleDateFormat.format(cldr.getTime()));
         tgl2.setText(simpleDateFormat2.format(cldr.getTime()));
 
-        tgl1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int day = cldr.get(Calendar.DAY_OF_MONTH);
-                int month = cldr.get(Calendar.MONTH);
-                int year = cldr.get(Calendar.YEAR);
-                tgl1.setOnClickListener(new View.OnClickListener() {
+        tgl1.setOnClickListener(view14 -> {
+            int day = cldr.get(Calendar.DAY_OF_MONTH);
+            int month = cldr.get(Calendar.MONTH);
+            int year = cldr.get(Calendar.YEAR);
+            tgl1.setOnClickListener(view141 -> {
+                picker = new DatePickerDialog(getActivity(), (datePicker, year1, month1, day1) -> {
+                    tgl1.setText(String.valueOf(day1) + " " + getMonth((month1 +1)) + " " + String.valueOf(year1));
+                    tgl2.setText(String.valueOf(year1) + "-" + String.valueOf(month1 +1) + "-" + String.valueOf(day1));
+                },year,month,day);
+                picker.show();
+                rBtn1.setChecked(true);
+            });
+        });
+
+        kirim.setOnClickListener(view15 -> {
+            if (rBtn1.isChecked()){
+                HomeFragment hfg = new HomeFragment();
+                apiInterface = API.getService().create(APIInterface.class);
+                Call<ResponseTransaksi> riwayatCall = apiInterface.filterRiwayatTanggal(hfg.teksuser.getText().toString(), tgl2.getText().toString());
+                riwayatCall.enqueue(new Callback<ResponseTransaksi>() {
                     @Override
-                    public void onClick(View view) {
-                        picker = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
-                            @Override
-                            public void onDateSet(DatePicker datePicker, int year, int month , int day) {
-                                tgl1.setText(String.valueOf(day) + " " + getMonth((month+1)) + " " + String.valueOf(year));
-                                tgl2.setText(String.valueOf(year) + "-" + String.valueOf(month+1) + "-" + String.valueOf(day));
-                            }
-                        },year,month,day);
-                        picker.show();
-                        rBtn1.setChecked(true);
+                    public void onResponse(Call<ResponseTransaksi> call, Response<ResponseTransaksi> response) {
+                        riwayatList = response.body().getData();
+                        if (riwayatList != null) {
+                            addData = new HistRvAdapter(getContext(), riwayatList, adapterItemListenerInterface);
+                            recyclerView.setHasFixedSize(true);
+                            recyclerView.setAdapter(addData);
+                            addData.notifyDataSetChanged();
+                            btnhapusfilter.setVisibility(View.VISIBLE);
+                            btnhapusfilter.startAnimation(fadein);
+                        } else {
+                            Toast.makeText(getActivity(), "Tanggal yang anda pilih tidak ada di Riwayat Anda", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseTransaksi> call, Throwable t) {
+                        Toast.makeText(getActivity(), t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
-            }
-        });
+                dialog.dismiss();
+            } else if (rBtn2.isChecked()){
+                HomeFragment hfg = new HomeFragment();
+                apiInterface = API.getService().create(APIInterface.class);
+                Call<ResponseTransaksi> riwayatCall = apiInterface.filterRiwayatMakanan(hfg.teksuser.getText().toString());
+                riwayatCall.enqueue(new Callback<ResponseTransaksi>() {
+                    @Override
+                    public void onResponse(Call<ResponseTransaksi> call, Response<ResponseTransaksi> response) {
+                        riwayatList = response.body().getData();
+                        if (riwayatList != null) {
+                            addData = new HistRvAdapter(getContext(), riwayatList, adapterItemListenerInterface);
+                            recyclerView.setHasFixedSize(true);
+                            recyclerView.setAdapter(addData);
+                            addData.notifyDataSetChanged();
+                            btnhapusfilter.setVisibility(View.VISIBLE);
+                            btnhapusfilter.startAnimation(fadein);
+                        } else {
+                            Toast.makeText(getActivity(), "Tidak ada menu Makanan di Riwayat Anda", Toast.LENGTH_SHORT).show();
+                        }
+                    }
 
-        kirim.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (rBtn1.isChecked()){
-                    HomeFragment hfg = new HomeFragment();
-                    apiInterface = API.getService().create(APIInterface.class);
-                    Call<ResponseTransaksi> riwayatCall = apiInterface.filterRiwayatTanggal(hfg.teksuser.getText().toString(), tgl2.getText().toString());
-                    riwayatCall.enqueue(new Callback<ResponseTransaksi>() {
-                        @Override
-                        public void onResponse(Call<ResponseTransaksi> call, Response<ResponseTransaksi> response) {
-                            riwayatList = response.body().getData();
-                            if (riwayatList != null) {
-                                addData = new HistRvAdapter(getContext(), riwayatList, adapterItemListenerInterface);
-                                recyclerView.setHasFixedSize(true);
-                                recyclerView.setAdapter(addData);
-                                addData.notifyDataSetChanged();
-                            } else {
-                                Toast.makeText(getActivity(), "Tanggal yang anda pilih tidak ada di Riwayat Anda", Toast.LENGTH_SHORT).show();
-                            }
+                    @Override
+                    public void onFailure(Call<ResponseTransaksi> call, Throwable t) {
+                        Toast.makeText(getActivity(), t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+                dialog.dismiss();
+            } else if (rBtn3.isChecked()){
+                HomeFragment hfg = new HomeFragment();
+                apiInterface = API.getService().create(APIInterface.class);
+                Call<ResponseTransaksi> riwayatCall = apiInterface.filterRiwayatMinuman(hfg.teksuser.getText().toString());
+                riwayatCall.enqueue(new Callback<ResponseTransaksi>() {
+                    @Override
+                    public void onResponse(Call<ResponseTransaksi> call, Response<ResponseTransaksi> response) {
+                        riwayatList = response.body().getData();
+                        if (riwayatList != null) {
+                            addData = new HistRvAdapter(getContext(), riwayatList, adapterItemListenerInterface);
+                            recyclerView.setHasFixedSize(true);
+                            recyclerView.setAdapter(addData);
+                            addData.notifyDataSetChanged();
+                            btnhapusfilter.setVisibility(View.VISIBLE);
+                            btnhapusfilter.startAnimation(fadein);
+                        } else {
+                            Toast.makeText(getActivity(), "Tidak ada menu Minuman di Riwayat Anda", Toast.LENGTH_SHORT).show();
                         }
+                    }
 
-                        @Override
-                        public void onFailure(Call<ResponseTransaksi> call, Throwable t) {
-                            Toast.makeText(getActivity(), t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    dialog.dismiss();
-                } else if (rBtn2.isChecked()){
-                    HomeFragment hfg = new HomeFragment();
-                    apiInterface = API.getService().create(APIInterface.class);
-                    Call<ResponseTransaksi> riwayatCall = apiInterface.filterRiwayatMakanan(hfg.teksuser.getText().toString());
-                    riwayatCall.enqueue(new Callback<ResponseTransaksi>() {
-                        @Override
-                        public void onResponse(Call<ResponseTransaksi> call, Response<ResponseTransaksi> response) {
-                            riwayatList = response.body().getData();
-                            if (riwayatList != null) {
-                                addData = new HistRvAdapter(getContext(), riwayatList, adapterItemListenerInterface);
-                                recyclerView.setHasFixedSize(true);
-                                recyclerView.setAdapter(addData);
-                                addData.notifyDataSetChanged();
-                            } else {
-                                Toast.makeText(getActivity(), "Tidak ada menu Makanan di Riwayat Anda", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<ResponseTransaksi> call, Throwable t) {
-                            Toast.makeText(getActivity(), t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    dialog.dismiss();
-                } else if (rBtn3.isChecked()){
-                    HomeFragment hfg = new HomeFragment();
-                    apiInterface = API.getService().create(APIInterface.class);
-                    Call<ResponseTransaksi> riwayatCall = apiInterface.filterRiwayatMinuman(hfg.teksuser.getText().toString());
-                    riwayatCall.enqueue(new Callback<ResponseTransaksi>() {
-                        @Override
-                        public void onResponse(Call<ResponseTransaksi> call, Response<ResponseTransaksi> response) {
-                            riwayatList = response.body().getData();
-                            if (riwayatList != null) {
-                                addData = new HistRvAdapter(getContext(), riwayatList, adapterItemListenerInterface);
-                                recyclerView.setHasFixedSize(true);
-                                recyclerView.setAdapter(addData);
-                                addData.notifyDataSetChanged();
-                            } else {
-                                Toast.makeText(getActivity(), "Tidak ada menu Minuman di Riwayat Anda", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<ResponseTransaksi> call, Throwable t) {
-                            Toast.makeText(getActivity(), t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    dialog.dismiss();
-                } else {
-                    dialog.dismiss();
-                }
-            }
-        });
-        batal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+                    @Override
+                    public void onFailure(Call<ResponseTransaksi> call, Throwable t) {
+                        Toast.makeText(getActivity(), t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+                dialog.dismiss();
+            } else {
                 dialog.dismiss();
             }
+        });
+        batal.setOnClickListener(view16 -> dialog.dismiss());
+    }
+
+    private void hapusFilterClickable(){
+        btnhapusfilter.setOnClickListener(view -> {
+            getRiwayat();
+            btnhapusfilter.startAnimation(fadeout);
+            btnhapusfilter.setVisibility(View.GONE);
         });
     }
 

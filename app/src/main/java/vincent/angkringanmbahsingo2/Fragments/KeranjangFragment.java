@@ -1,5 +1,6 @@
 package vincent.angkringanmbahsingo2.Fragments;
 
+import android.graphics.Color;
 import android.opengl.Visibility;
 import android.os.Bundle;
 
@@ -14,34 +15,34 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import vincent.angkringanmbahsingo2.API.API;
+import vincent.angkringanmbahsingo2.API.APIInterface;
 import vincent.angkringanmbahsingo2.MainActivity.MainHome;
+import vincent.angkringanmbahsingo2.ModelAPI.DataItemTransaksi;
+import vincent.angkringanmbahsingo2.ModelAPI.ResponseTransaksi;
 import vincent.angkringanmbahsingo2.R;
 import vincent.angkringanmbahsingo2.RecycleviewAdapter.CartRvAdapter;
+import vincent.angkringanmbahsingo2.RecycleviewAdapter.HistRvAdapter;
 import vincent.angkringanmbahsingo2.RecycleviewModel.HistRvModel;
 
 public class KeranjangFragment extends Fragment {
 
     public static TextView datajudul, datatanggal, dataharga, datajumlah, hargabelitotal;
     Button btnbeli;
-    List<HistRvModel> listDataDaftar;
     RecyclerView recyclerView;
-    CartRvAdapter adapterItemDaftar;
-    CartRvAdapter.AdapterItemListener adapterItemListenerInterface;
+    HistRvAdapter.AdapterItemListener adapterItemListenerInterface;
 
-    // List Data pada Recycle View
-    void isiDataKeranjang(){
-        if(listDataDaftar == null){
-            listDataDaftar = new ArrayList<>();
-        }
-        listDataDaftar.add(new HistRvModel("Nasi Goreng", 10000, 20, R.drawable.imagefood));
-        listDataDaftar.add(new HistRvModel("Nasi Goreng Kecap", 12000, 30, R.drawable.imagefood));
-        listDataDaftar.add(new HistRvModel("Nasi Goreng Pedas", 13000, 40, R.drawable.imagefood2));
-        listDataDaftar.add(new HistRvModel("Nasi Goreng Ayam", 15000, 15, R.drawable.imagefood));
-        listDataDaftar.add(new HistRvModel("Nasi Goreng Spesial Mbah Singo",20000, 12, R.drawable.imagefood2));
-    }
+    APIInterface apiInterface;
+    RecyclerView.Adapter addData;
+    private List<DataItemTransaksi> dataListKeranjang = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -55,15 +56,13 @@ public class KeranjangFragment extends Fragment {
         btnbeli = view.findViewById(R.id.fkerxbtnbeli);
 
         // Memanggil List Data pada Recycle View
-        MainHome mh = new MainHome();
-        if (String.valueOf(mh.set5.getText()).equals("0")){
-            System.out.println("");
-        } else if (String.valueOf(mh.set5.getText()).equals("1")){
-            isiDataKeranjang();
-            mh.set5.setText("0");
-        }
-        adapterItemDaftar = new CartRvAdapter(listDataDaftar,adapterItemListenerInterface);
-        recyclerView.setAdapter(adapterItemDaftar);
+//        MainHome mh = new MainHome();
+//        if (String.valueOf(mh.set5.getText()).equals("0")){
+//            System.out.println("");
+//        } else if (String.valueOf(mh.set5.getText()).equals("1")){
+//            isiDataKeranjang();
+//            mh.set5.setText("0");
+//        }
 
         btnbeli.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,22 +72,31 @@ public class KeranjangFragment extends Fragment {
             }
         });
 
-//        hargabelitotal.setText(String.valueOf(listDataDaftar.get(adapterItemDaftar).getHarga()) * listDataDaftar.size());
-
-//        getKeranjangClicked();
+        getDataKeranjang();
         return view;
     }
 
-    public boolean getKeranjangClicked(){
-        adapterItemListenerInterface = new CartRvAdapter.AdapterItemListener() {
+    public void getDataKeranjang(){
+        HomeFragment hfg = new HomeFragment();
+        apiInterface = API.getService().create(APIInterface.class);
+        Call<ResponseTransaksi> transaksiCall = apiInterface.keranjangList(hfg.teksuser.getText().toString());
+        transaksiCall.enqueue(new Callback<ResponseTransaksi>() {
             @Override
-            public void clickItemListener(int adapterPosition) {
-                datajudul.setText(listDataDaftar.get(adapterPosition).getJudul());
-                dataharga.setText(String.valueOf(listDataDaftar.get(adapterPosition).getHarga()));
-                datajumlah.setText(String.valueOf(listDataDaftar.get(adapterPosition).getJumlah()));
-                Toast.makeText(getActivity(), listDataDaftar.get(adapterPosition).getJudul(), Toast.LENGTH_SHORT).show();
+            public void onResponse(Call<ResponseTransaksi> call, Response<ResponseTransaksi> response) {
+                dataListKeranjang = response.body().getData();
+                if (dataListKeranjang != null) {
+                    addData = new HistRvAdapter(getContext(), dataListKeranjang, adapterItemListenerInterface);
+                    recyclerView.setHasFixedSize(true);
+                    recyclerView.setAdapter(addData);
+                    addData.notifyDataSetChanged();
+                } else {
+                    Toast.makeText(getActivity(), "Anda tidak memiliki Riwayat apapun", Toast.LENGTH_SHORT).show();
+                }
             }
-        };
-        return true;
+            @Override
+            public void onFailure(Call<ResponseTransaksi> call, Throwable t) {
+                Toast.makeText(getActivity(), t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
