@@ -35,7 +35,7 @@ public class DetailAlamatFragment extends Fragment {
     ConstraintLayout consantar, consambil;
     LinearLayout linearlay;
     RadioButton btn1, btn2;
-    Button btngps, btntetapkan;
+    Button btndefault, btngps, btntetapkan;
     DetailPesananFragment dpf = new DetailPesananFragment();
     String alamat = dpf.teksalamat.getText().toString();
     EditText inputalamat;
@@ -45,12 +45,15 @@ public class DetailAlamatFragment extends Fragment {
     String alamatButtonAmbil = "Ambil di Angkringan Mbah Singo";
 
     // Mengisi data ID Transaksi dari Interface
-    private String dataIdTransaksi, dataAlamat;
+    private String dataIdTransaksi, dataAlamat, dataAlamatDefault;
     // Mengisi data ID Transaksi dari DetailPesananFragment
     public void setDataIdTransaksi(String dataIdTransaksi) {this.dataIdTransaksi = dataIdTransaksi;}
 
     // Mengisi data Alamat dari DetailPesananFragment
-    public void setDataAlamat(String dataAlamat) {this.dataAlamat = dataAlamat;}
+    public void setDataAlamat(String dataAlamat, String dataAlamatDefault) {
+        this.dataAlamat = dataAlamat;
+        this.dataAlamatDefault = dataAlamatDefault;
+    }
 
     // Mendapatkan data
     public String getDataAlamat() {return this.dataAlamat;}
@@ -68,6 +71,7 @@ public class DetailAlamatFragment extends Fragment {
         label2 = view.findViewById(R.id.daxlabel2);
         btn1 = view.findViewById(R.id.daxradioalamat);
         btn2 = view.findViewById(R.id.daxradioambil);
+        btndefault = view.findViewById(R.id.daxbtnalamatdefault);
         btngps = view.findViewById(R.id.daxbtngps);
         btntetapkan = view.findViewById(R.id.daxbtntetapkan);
         inputalamat = view.findViewById(R.id.damxinput);
@@ -75,7 +79,6 @@ public class DetailAlamatFragment extends Fragment {
         btnback = view.findViewById(R.id.daxbtnback);
 
         btnback.setOnClickListener(view1 -> {
-            DetailPesananFragment dpf = new DetailPesananFragment();
             dpf.setDataIdTransaksi(dataIdTransaksi);
             dpf.setDataAlamat(alamat);
             if (btn1.isChecked()){
@@ -120,9 +123,11 @@ public class DetailAlamatFragment extends Fragment {
         slide.setDuration(450);
         slide.setSlideEdge(Gravity.LEFT);
         TransitionManager.beginDelayedTransition(container, slide);
+        btndefault.setVisibility(View.GONE);
 
         cekDataAlamat();
         cekRadioButton();
+        btnDefaultClickable();
         btnGpsClickable();
         btnTetapkanClickable();
         linearlayClickable();
@@ -131,8 +136,9 @@ public class DetailAlamatFragment extends Fragment {
 
     private void cekDataAlamat(){
         txtalamat.setText(getDataAlamat());
-        if (txtalamat.getText().toString().equals(alamatButtonAmbil)){
+        if (txtalamat.getText().toString().equals(alamatButtonAmbil) || txtalamat.getText().toString().equals("Anda belum menentukan Alamat")){
             txtalamat.setText("Anda belum menentukan Alamat");
+            btndefault.setVisibility(View.VISIBLE);
         }
     }
 
@@ -149,13 +155,22 @@ public class DetailAlamatFragment extends Fragment {
         });
     }
 
+    public void btnDefaultClickable(){
+        btndefault.setOnClickListener(view -> {
+            if (btn1.isChecked()){
+                dpf.setDataAlamat(dataAlamatDefault);
+            }
+            txtalamat.setText(dataAlamatDefault);
+            btndefault.setVisibility(View.GONE);
+        });
+    }
+
     public void btnGpsClickable() {
         btngps.setOnClickListener(view -> startActivity(new Intent(getActivity(), Lokasi.class)));
     }
 
     public void btnTetapkanClickable() {
         btntetapkan.setOnClickListener(view -> {
-            DetailPesananFragment dpf = new DetailPesananFragment();
             dpf.setDataIdTransaksi(dataIdTransaksi);
             if (btn1.isChecked()){
                 dpf.setDataAlamat(txtalamat.getText().toString());

@@ -48,16 +48,29 @@
         android:textColor="@color/black"
         android:fontFamily="@font/inter_regular"/>
     <Button
-        android:id="@+id/daxbtngps"
-        android:layout_width="match_parent"
+        android:id="@+id/daxbtnalamatdefault"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         app:layout_constraintTop_toBottomOf="@id/daxdataalamat3"
         app:layout_constraintStart_toStartOf="parent"
-        android:backgroundTint="@color/dark_red"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:backgroundTint="@color/dark_green"
         android:paddingVertical="7dp"
+        android:text="Gunakan Alamat Default"
+        android:textSize="@dimen/hp.ukuranteksinfo"
+        app:cornerRadius="8dp" />
+    <Button
+        android:id="@+id/daxbtngps"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        app:layout_constraintTop_toBottomOf="@id/daxbtnalamatdefault"
+        app:layout_constraintStart_toStartOf="parent"
+        android:backgroundTint="@color/dark_red"
+        android:paddingVertical="5dp"
         android:text="Gunakan GPS"
-        android:textSize="@dimen/fh.ukuranteksjudul"
+        android:textSize="@dimen/fh.ukurantekssubjudul"
         app:cornerRadius="8dp" />
     <Button
         android:id="@+id/daxbtntetapkan"
@@ -65,9 +78,9 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/daxbtngps"
         android:backgroundTint="@color/dark_blue"
-        android:paddingVertical="7dp"
+        android:paddingVertical="5dp"
         android:text="Tetapkan Alamat"
-        android:textSize="@dimen/fh.ukuranteksjudul"
+        android:textSize="@dimen/fh.ukurantekssubjudul"
         app:cornerRadius="8dp"
         app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -143,6 +143,15 @@ public interface APIInterface {
     );
 
     @FormUrlEncoded
+    @POST("updatekeranjang.php")
+    Call<ResponseTransaksi> updateKeranjang(
+            @Field("id_produk") String id_produk,
+            @Field("username") String username,
+            @Field("jumlah") String jumlah,
+            @Field("totalhargaitem") String totalhargaitem
+    );
+
+    @FormUrlEncoded
     @POST("rangkumanpesanan.php")
     Call<ResponseTransaksi> rangkumanPesanan(
             @Field("id_transaksi") String id_transaksi,

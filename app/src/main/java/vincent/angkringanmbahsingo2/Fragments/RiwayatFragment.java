@@ -120,6 +120,7 @@ public class RiwayatFragment extends Fragment {
                     btnhapusfilter.setVisibility(View.GONE);
                 } else {
                     teksttr.setVisibility(View.VISIBLE);
+                    btnhapusfilter.setVisibility(View.GONE);
                     Toast.makeText(getActivity(), "Anda tidak memiliki Riwayat apapun", Toast.LENGTH_SHORT).show();
                 }
             }

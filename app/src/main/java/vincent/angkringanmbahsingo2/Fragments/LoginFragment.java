@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.transition.Slide;
@@ -167,13 +168,15 @@ public class LoginFragment extends Fragment implements Backpressedlistener {
             public void onResponse(Call<ResponseLogin> call, Response<ResponseLogin> response) {
                 if (response.body().getKode() == 1) {
                     dataLogin = response.body().getData();
-                    username.setText(dataLogin.get(0).getNamaLengkap());
+                    HomeSplashScreenFragment hssf =  new HomeSplashScreenFragment();
+                    hssf.setDataNama(dataLogin.get(0).getNamaLengkap());
                     frame.startAnimation(easeOutSineTopOut);
                     image.startAnimation(easeOutSineTopOut);
                     input.startAnimation(easeOutSineBottomOut);
                     button.startAnimation(easeOutSineBottomOut);
-                    FragmentTransaction fragtr = getFragmentManager().beginTransaction();
-                    fragtr.replace(R.id.fragmentcontainer, new HomeSplashScreenFragment()).commit();
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    FragmentTransaction fragtr = fragmentManager.beginTransaction();
+                    fragtr.replace(R.id.fragmentcontainer, hssf).commit();
                 }else{
                     Toast.makeText(getActivity(), "Login Gagal", Toast.LENGTH_SHORT).show();
                     lupapass.setVisibility(View.VISIBLE);

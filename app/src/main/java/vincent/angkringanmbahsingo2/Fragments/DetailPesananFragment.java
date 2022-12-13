@@ -62,7 +62,8 @@ public class DetailPesananFragment extends Fragment implements Backpressedlisten
     private List<DataItemTransaksi> dataPesanan = new ArrayList<>();
 
     // Mengisi data ID Transaksi dari Interface
-    private String dataIdTransaksi, dataPengiriman, dataAlamat, dataMetode, dataAlamatDefault = hfg.teksalamat.getText().toString();
+    private String dataIdTransaksi, dataPengiriman, dataAlamat, dataMetode;
+    public String dataAlamatDefault = hfg.teksalamat.getText().toString();
     public void setDataIdTransaksi(String dataIdTransaksi) {this.dataIdTransaksi = dataIdTransaksi;}
     // Mendapatkan data
     public String getDataIdTransaksi() {
@@ -120,7 +121,7 @@ public class DetailPesananFragment extends Fragment implements Backpressedlisten
             public void onClick(View view) {
                 DetailAlamatFragment daf = new DetailAlamatFragment();
                 daf.setDataIdTransaksi(getDataIdTransaksi());
-                daf.setDataAlamat(dataAlamat);
+                daf.setDataAlamat(dataAlamat, dataAlamatDefault);
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragtr = fragmentManager.beginTransaction();
                 fragtr.replace(R.id.fragmentcontainersplash, daf).commit();

@@ -38,7 +38,7 @@ public class KeranjangFragment extends Fragment {
     public static TextView datajudul, datatanggal, dataharga, datajumlah, hargabelitotal;
     Button btnbeli;
     RecyclerView recyclerView;
-    HistRvAdapter.AdapterItemListener adapterItemListenerInterface;
+    CartRvAdapter.AdapterItemListener adapterItemListenerInterface;
 
     APIInterface apiInterface;
     RecyclerView.Adapter addData;
@@ -85,7 +85,7 @@ public class KeranjangFragment extends Fragment {
             public void onResponse(Call<ResponseTransaksi> call, Response<ResponseTransaksi> response) {
                 dataListKeranjang = response.body().getData();
                 if (dataListKeranjang != null) {
-                    addData = new HistRvAdapter(getContext(), dataListKeranjang, adapterItemListenerInterface);
+                    addData = new CartRvAdapter(getContext(), dataListKeranjang, adapterItemListenerInterface);
                     recyclerView.setHasFixedSize(true);
                     recyclerView.setAdapter(addData);
                     addData.notifyDataSetChanged();

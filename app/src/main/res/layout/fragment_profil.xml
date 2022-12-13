@@ -48,7 +48,7 @@
                     android:id="@+id/profximageprofil"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:src="@drawable/imagedrink2"
+                    android:src="@drawable/bgprofiluser"
                     android:scaleType="centerCrop"/>
             </androidx.cardview.widget.CardView>
             <TextView

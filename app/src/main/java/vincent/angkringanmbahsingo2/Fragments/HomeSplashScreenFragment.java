@@ -28,7 +28,9 @@ public class HomeSplashScreenFragment extends Fragment {
 
     // Digunakan ketika Splash Screen berada di Activity Login
     TextView nama;
-    public static String namakamu;
+
+    String dataNama;
+    public void setDataNama(String dataNama) {this.dataNama = dataNama;}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -49,8 +51,7 @@ public class HomeSplashScreenFragment extends Fragment {
         nama = (TextView) view.findViewById(R.id.hssxtextNama);
 
         // Digunakan ketika Splash Screen berada di Activity Login
-        getNamakamu();
-        nama.setText(namakamu);
+        nama.setText(dataNama);
 
 //        // Digunakan ketika Splash Screen berada di Activity Home
 //        Bundle extras = getActivity().getIntent().getExtras();
@@ -73,11 +74,5 @@ public class HomeSplashScreenFragment extends Fragment {
             }
         }, 1400L); // Untuk mengatur waktu Splash Screen. 1000L = 1 detik
         return view;
-    }
-
-    // Digunakan ketika Splash Screen berada di Activity Login
-    public static void getNamakamu(){
-        LoginFragment logfrag = new LoginFragment();
-        namakamu = logfrag.username.getText().toString();
     }
 }

@@ -98,6 +98,16 @@
                     android:text="Rp. 10000"
                     android:textSize="@dimen/hpr.ukuranharga"
                     android:textColor="@color/red"/>
+                <TextView
+                    android:id="@+id/hpxidmenu"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_margin="5dp"
+                    android:gravity="right"
+                    app:layout_constraintTop_toBottomOf="@id/hpxjudul"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:text="Rp. 10000"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="0dp"

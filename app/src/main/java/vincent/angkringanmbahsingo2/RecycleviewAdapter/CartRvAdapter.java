@@ -13,10 +13,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import vincent.angkringanmbahsingo2.API.API;
+import vincent.angkringanmbahsingo2.API.APIInterface;
+import vincent.angkringanmbahsingo2.Fragments.HomeFragment;
 import vincent.angkringanmbahsingo2.ModelAPI.DataItemTransaksi;
+import vincent.angkringanmbahsingo2.ModelAPI.ResponseTransaksi;
 import vincent.angkringanmbahsingo2.R;
 import vincent.angkringanmbahsingo2.RecycleviewModel.HistRvModel;
 
@@ -27,6 +34,8 @@ public class CartRvAdapter extends RecyclerView.Adapter<CartRvAdapter.ViewHolder
     int currentNumber, addNumber, totalPrice;
     static String currency = "Rp. %,d";
     static String stock = "%,d";
+    APIInterface apiInterface;
+    private List<DataItemTransaksi> dataListKeranjang = new ArrayList<>();
 
     public interface AdapterItemListener{
         void clickItemListener(int adapterPosition);
@@ -49,30 +58,70 @@ public class CartRvAdapter extends RecyclerView.Adapter<CartRvAdapter.ViewHolder
     public void onBindViewHolder(@NonNull CartRvAdapter.ViewHolder holder, int position) {
         DataItemTransaksi db = listDataAdapter.get(position);
 
+        holder.idmenu.setText(db.getIdProduk());
         holder.judul.setText(db.getNamaProduk());
         holder.harga.setText(String.format(currency, Integer.parseInt(db.getHarga())));
         holder.jumlah.setText(String.format(stock, Integer.parseInt(db.getJumlah())));
         Picasso.get().load(API.BASE_GAMBAR+db.getPengiriman()).error(R.mipmap.ic_launcher).into(holder.gambar);
         holder.plusimage.setOnClickListener(view -> {
-            currentNumber = Integer.parseInt(String.valueOf(db.getJumlah()));
-            addNumber = currentNumber+1;
-            holder.jumlah.setText(String.valueOf(addNumber));
-            totalPrice = addNumber * Integer.parseInt(listDataAdapter.get(holder.getAdapterPosition()).getHarga());
-            holder.totalharga.setText(String.format(currency, Integer.parseInt(String.valueOf(totalPrice))));
+            if (dataListKeranjang == null) {
+                currentNumber = Integer.parseInt(db.getJumlah());
+                holder.judul.setText(String.valueOf(currentNumber));
+            } else {
+                addNumber = currentNumber + 1;
+                holder.jumlah.setText(String.valueOf(addNumber));
+                totalPrice = addNumber * Integer.parseInt(db.getHarga());
+                holder.totalharga.setText(String.format(currency, Integer.parseInt(String.valueOf(totalPrice))));
+
+                HomeFragment hfg = new HomeFragment();
+                apiInterface = API.getService().create(APIInterface.class);
+                Call<ResponseTransaksi> riwayatCall = apiInterface.updateKeranjang(holder.idmenu.getText().toString(), hfg.teksuser.getText().toString(), String.valueOf(addNumber), String.valueOf(totalPrice));
+                riwayatCall.enqueue(new Callback<ResponseTransaksi>() {
+                    @Override
+                    public void onResponse(Call<ResponseTransaksi> call, Response<ResponseTransaksi> response) {
+                        dataListKeranjang = response.body().getData();
+                        currentNumber = Integer.parseInt(dataListKeranjang.get(0).getJumlah());
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseTransaksi> call, Throwable t) {
+
+                    }
+                });
+            }
         });
         holder.minimage.setOnClickListener(view -> {
-            if (Integer.parseInt(String.valueOf(db.getJumlah())) <= 1){
+            if (currentNumber <= 1){
                 holder.jumlah.setText(String.valueOf(1));
             } else {
-                currentNumber = Integer.parseInt(String.valueOf(holder.jumlah.getText()));
-                addNumber = currentNumber-1;
-                holder.jumlah.setText(String.valueOf(addNumber));
-                totalPrice = addNumber * Integer.parseInt(listDataAdapter.get(holder.getAdapterPosition()).getHarga());
-                holder.totalharga.setText(String.format(currency, Integer.parseInt(String.valueOf(totalPrice))));
+                if (dataListKeranjang == null) {
+                    currentNumber = Integer.parseInt(db.getJumlah());
+                } else {
+                    addNumber = currentNumber - 1;
+                    holder.jumlah.setText(String.valueOf(addNumber));
+                    totalPrice = addNumber * Integer.parseInt(db.getHarga());
+                    holder.totalharga.setText(String.format(currency, Integer.parseInt(String.valueOf(totalPrice))));
+
+                    HomeFragment hfg = new HomeFragment();
+                    apiInterface = API.getService().create(APIInterface.class);
+                    Call<ResponseTransaksi> riwayatCall = apiInterface.updateKeranjang(holder.idmenu.getText().toString(), hfg.teksuser.getText().toString(), String.valueOf(addNumber), String.valueOf(totalPrice));
+                    riwayatCall.enqueue(new Callback<ResponseTransaksi>() {
+                        @Override
+                        public void onResponse(Call<ResponseTransaksi> call, Response<ResponseTransaksi> response) {
+                            dataListKeranjang = response.body().getData();
+                            currentNumber = Integer.parseInt(dataListKeranjang.get(0).getJumlah());
+                        }
+
+                        @Override
+                        public void onFailure(Call<ResponseTransaksi> call, Throwable t) {
+
+                        }
+                    });
+                }
             }
         });
         currentNumber = Integer.parseInt(String.valueOf(holder.jumlah.getText()));
-        totalPrice = currentNumber * Integer.parseInt(listDataAdapter.get(holder.getAdapterPosition()).getHarga());
+        totalPrice = currentNumber * Integer.parseInt(db.getHarga());
         holder.totalharga.setText(String.format(currency, Integer.parseInt(String.valueOf(totalPrice))));
     }
 
@@ -82,10 +131,11 @@ public class CartRvAdapter extends RecyclerView.Adapter<CartRvAdapter.ViewHolder
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder { //implements View.OnClickListener
-        TextView judul, harga, jumlah, totalharga;
+        TextView idmenu, judul, harga, jumlah, totalharga;
         ImageView gambar, minimage, plusimage;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            idmenu = itemView.findViewById(R.id.hpxidmenu);
             judul = itemView.findViewById(R.id.hpxjudul);
             harga = itemView.findViewById(R.id.hpxharga);
             jumlah = itemView.findViewById(R.id.hpxjumlah);
