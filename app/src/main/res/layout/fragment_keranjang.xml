@@ -26,6 +26,7 @@
             android:textStyle="bold"
             android:fontFamily="@font/inter_bold"/>
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/consoption"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
@@ -39,6 +40,16 @@
                 android:textSize="@dimen/hp.ukuranteksinfo"
                 android:textColor="@color/dark_blue"/>
             <TextView
+                android:id="@+id/fkerxbtnhapussemua"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="Hapus Semua"
+                android:textSize="@dimen/hp.ukuranteksinfo"
+                android:textColor="@color/red"/>
+            <TextView
                 android:id="@+id/fkerxbtnubah"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -48,7 +59,39 @@
                 android:text="Ubah"
                 android:textSize="@dimen/hp.ukuranteksinfo"
                 android:textColor="@color/dark_blue"/>
+            <TextView
+                android:id="@+id/fkerxbtnselesai"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:padding="8dp"
+                android:text="Selesai"
+                android:textSize="@dimen/hp.ukuranteksinfo"
+                android:textColor="@color/dark_green"/>
+            <TextView
+                android:id="@+id/fkerxbtnhapusfilter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:padding="8dp"
+                android:text="Hapus Filter"
+                android:textSize="@dimen/hp.ukuranteksinfo"
+                android:textColor="@color/red"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/fkerxteksttkeranjang"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/consoption"
+            android:gravity="center"
+            android:layout_marginVertical="20dp"
+            android:text="Keranjang Tidak Tersedia"
+            android:textSize="@dimen/fh.ukuranteksjudul"
+            android:textStyle="bold"
+            android:visibility="visible"/>
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -134,7 +177,7 @@
             android:backgroundTint="@color/dark_red"
             android:text="BELI"
             android:textSize="@dimen/hp.ukuranteksinfo"
-            app:cornerRadius="10dp"
+            app:cornerRadius="50dp"
             app:layout_constraintBottom_toBottomOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -26,10 +26,11 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import vincent.angkringanmbahsingo2.Dependencies.Backpressedlistener;
 import vincent.angkringanmbahsingo2.MainActivity.Lokasi;
 import vincent.angkringanmbahsingo2.R;
 
-public class DetailAlamatFragment extends Fragment {
+public class DetailAlamatFragment extends Fragment implements Backpressedlistener {
 
     View includeAntar, includeAmbil;
     ConstraintLayout consantar, consambil;
@@ -42,18 +43,34 @@ public class DetailAlamatFragment extends Fragment {
     public TextView label1, label2, txtalamat;
     ImageView btnback;
     Slide slide = new Slide();
+    public static Backpressedlistener backpressedlistener;
     String alamatButtonAmbil = "Ambil di Angkringan Mbah Singo";
 
     // Mengisi data ID Transaksi dari Interface
-    private String dataIdTransaksi, dataAlamat, dataAlamatDefault;
+    private String dataIdTransaksi, dataAlamat, dataMetode, dataAlamatDefault, dataIdkupon, dataIdkupon2, namaKupon, namaKupon2;
+    int check, nilai, nilai2;
     // Mengisi data ID Transaksi dari DetailPesananFragment
-    public void setDataIdTransaksi(String dataIdTransaksi) {this.dataIdTransaksi = dataIdTransaksi;}
+    public void setDataIdTransaksi(String dataIdTransaksi, int check) {
+        this.dataIdTransaksi = dataIdTransaksi;
+        this.check = check;
+    }
 
     // Mengisi data Alamat dari DetailPesananFragment
     public void setDataAlamat(String dataAlamat, String dataAlamatDefault) {
         this.dataAlamat = dataAlamat;
         this.dataAlamatDefault = dataAlamatDefault;
     }
+
+    public void setDataKupon(String idkupon, String idkupon2, String namakupon, String namakupon2, int nilai, int nilai2){
+        this.dataIdkupon = idkupon;
+        this.dataIdkupon2 = idkupon2;
+        this.namaKupon = namakupon;
+        this.namaKupon2 = namakupon2;
+        this.nilai = nilai;
+        this.nilai2 = nilai2;
+    }
+
+    public void setDataMetode(String dataMetode) {this.dataMetode = dataMetode;}
 
     // Mendapatkan data
     public String getDataAlamat() {return this.dataAlamat;}
@@ -79,8 +96,10 @@ public class DetailAlamatFragment extends Fragment {
         btnback = view.findViewById(R.id.daxbtnback);
 
         btnback.setOnClickListener(view1 -> {
-            dpf.setDataIdTransaksi(dataIdTransaksi);
+            dpf.setDataIdTransaksi(dataIdTransaksi, check);
             dpf.setDataAlamat(alamat);
+            dpf.setDataMetode(dataMetode);
+            dpf.setDataKupon(dataIdkupon, dataIdkupon2, namaKupon, namaKupon2, nilai, nilai2);
             if (btn1.isChecked()){
                 dpf.setDataAlamat(txtalamat.getText().toString());
                 dpf.setDataPengiriman(label1.getText().toString());
@@ -171,7 +190,9 @@ public class DetailAlamatFragment extends Fragment {
 
     public void btnTetapkanClickable() {
         btntetapkan.setOnClickListener(view -> {
-            dpf.setDataIdTransaksi(dataIdTransaksi);
+            dpf.setDataIdTransaksi(dataIdTransaksi, check);
+            dpf.setDataMetode(dataMetode);
+            dpf.setDataKupon( dataIdkupon, dataIdkupon2, namaKupon, namaKupon2, nilai, nilai2);
             if (btn1.isChecked()){
                 dpf.setDataAlamat(txtalamat.getText().toString());
                 dpf.setDataPengiriman(label1.getText().toString());
@@ -184,5 +205,35 @@ public class DetailAlamatFragment extends Fragment {
 
     private void linearlayClickable(){
         linearlay.setOnClickListener(view -> System.out.print("."));
+    }
+
+    @Override
+    public void onPause() {
+        backpressedlistener=null;
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        backpressedlistener=this;
+    }
+
+    @Override
+    public void onBackPressed() {
+        dpf.setDataIdTransaksi(dataIdTransaksi, check);
+        dpf.setDataAlamat(alamat);
+        dpf.setDataMetode(dataMetode);
+        dpf.setDataKupon( dataIdkupon, dataIdkupon2, namaKupon, namaKupon2, nilai, nilai2);
+        if (btn1.isChecked()){
+            dpf.setDataAlamat(txtalamat.getText().toString());
+            dpf.setDataPengiriman(label1.getText().toString());
+        } else if (btn2.isChecked()){
+            dpf.setDataAlamat(alamatButtonAmbil);
+            dpf.setDataPengiriman(label2.getText().toString());
+        }
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragtr = fragmentManager.beginTransaction();
+        fragtr.replace(R.id.fragmentcontainersplash, dpf).commit();
     }
 }

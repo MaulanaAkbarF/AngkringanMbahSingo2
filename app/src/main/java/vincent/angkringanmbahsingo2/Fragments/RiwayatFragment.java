@@ -4,8 +4,11 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -40,6 +43,7 @@ import vincent.angkringanmbahsingo2.ModelAPI.DataItemTransaksi;
 import vincent.angkringanmbahsingo2.ModelAPI.ResponseProduk;
 import vincent.angkringanmbahsingo2.ModelAPI.ResponseTransaksi;
 import vincent.angkringanmbahsingo2.R;
+import vincent.angkringanmbahsingo2.RecycleviewAdapter.AntrianRvAdapter;
 import vincent.angkringanmbahsingo2.RecycleviewAdapter.HistRvAdapter;
 import vincent.angkringanmbahsingo2.RecycleviewAdapter.HomeRvAdapter;
 import vincent.angkringanmbahsingo2.RecycleviewModel.HistRvModel;
@@ -47,21 +51,26 @@ import vincent.angkringanmbahsingo2.RecycleviewModel.HistRvModel;
 public class RiwayatFragment extends Fragment {
 
     Animation easeOutQuadLeft, easeOutQuadRight, easeOutQuadLeftOut, easeOutQuadRightOut, fadein, fadeout;
-    public static TextView btnfilter, btnubah, btnhapussemua, btnselesai, btnhapusfilter, teksttr;
+    public static TextView btnfilter, btnubah, btnhapussemua, btnselesai, btnhapusfilter, teksttr, btnrefresh;
+    ConstraintLayout consoption;
+    CardView cardleft, cardright;
     RecyclerView recyclerView;
     HistRvAdapter.AdapterItemListener adapterItemListenerInterface;
+    AntrianRvAdapter.AdapterItemListener adapterItemListenerInterface2;
     Dialog dialog;
     DatePickerDialog picker;
 
     APIInterface apiInterface;
     RecyclerView.Adapter addData;
     private List<DataItemTransaksi> riwayatList = new ArrayList<>();
+    private List<DataItemTransaksi> antrianList = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_riwayat, container, false);
 
         // Inisiasi komponen animasi
+        consoption = view.findViewById(R.id.consoption);
         btnfilter = view.findViewById(R.id.friwxbtnfilter);
         btnubah = view.findViewById(R.id.friwxbtnubah);
         btnhapussemua = view.findViewById(R.id.friwxbtnhapussemua);
@@ -77,12 +86,14 @@ public class RiwayatFragment extends Fragment {
         fadeout = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_out);
 
         recyclerView = view.findViewById(R.id.friwxrecycleriwayat);
-
+        cardleft = view.findViewById(R.id.driwxcardleft);
+        cardright = view.findViewById(R.id.driwxcardright);
         teksttr = view.findViewById(R.id.friwxteksttriwayat);
         btnubah.setVisibility(View.VISIBLE);
         btnfilter.setVisibility(View.VISIBLE);
         btnhapussemua.setVisibility(View.GONE);
         btnselesai.setVisibility(View.GONE);
+        btnrefresh = view.findViewById(R.id.friwxbtnrefresh);
 
         // Memanggil List Data pada Recycle View
 //        MainHome mh = new MainHome();
@@ -95,11 +106,14 @@ public class RiwayatFragment extends Fragment {
 
 //        getRiwayatClicked();
         getRiwayat();
+        riwayatClickable();
+        antrianClickable();
         ubahClickable();
         hapusFilterClickable();
         hapusSemuaClickable();
         selesaiClickable();
         filterClickable();
+        refreshClickable();
         return view;
     }
 
@@ -117,11 +131,43 @@ public class RiwayatFragment extends Fragment {
                     recyclerView.setAdapter(addData);
                     addData.notifyDataSetChanged();
                     teksttr.setVisibility(View.GONE);
+                    btnrefresh.setVisibility(View.VISIBLE);
                     btnhapusfilter.setVisibility(View.GONE);
                 } else {
                     teksttr.setVisibility(View.VISIBLE);
+                    teksttr.setText("Riwayat Kosong");
+                    btnrefresh.setVisibility(View.GONE);
                     btnhapusfilter.setVisibility(View.GONE);
                     Toast.makeText(getActivity(), "Anda tidak memiliki Riwayat apapun", Toast.LENGTH_SHORT).show();
+                }
+                cardleft.setBackgroundColor(Color.parseColor("#FFEAEAEA"));
+            }
+
+            @Override
+            public void onFailure(Call<ResponseTransaksi> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void getAntrian(){
+        HomeFragment hfg = new HomeFragment();
+        apiInterface = API.getService().create(APIInterface.class);
+        Call<ResponseTransaksi> riwayatCall = apiInterface.Antrian(hfg.teksuser.getText().toString());
+        riwayatCall.enqueue(new Callback<ResponseTransaksi>() {
+            @Override
+            public void onResponse(Call<ResponseTransaksi> call, Response<ResponseTransaksi> response) {
+                antrianList = response.body().getData();
+                if (antrianList != null) {
+                    addData = new AntrianRvAdapter(getContext(), antrianList, adapterItemListenerInterface2);
+                    recyclerView.setHasFixedSize(true);
+                    recyclerView.setAdapter(addData);
+                    addData.notifyDataSetChanged();
+                    teksttr.setVisibility(View.GONE);
+                } else {
+                    teksttr.setVisibility(View.VISIBLE);
+                    teksttr.setText("Antrian Pesanan Kosong");
+                    Toast.makeText(getActivity(), "Anda tidak memiliki Antrian Pesanan", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -132,11 +178,36 @@ public class RiwayatFragment extends Fragment {
         });
     }
 
+    private void riwayatClickable(){
+        cardleft.setOnClickListener(view -> {
+            getRiwayat();
+            consoption.startAnimation(fadein);
+            consoption.setVisibility(View.VISIBLE);
+            cardleft.setBackgroundColor(Color.parseColor("#FFEAEAEA"));
+            cardright.setBackgroundColor(Color.parseColor("#FFFFFFFF"));
+        });
+    }
+
+    private void antrianClickable(){
+        cardright.setOnClickListener(view -> {
+            getAntrian();
+            consoption.startAnimation(fadeout);
+            consoption.setVisibility(View.GONE);
+            cardright.setBackgroundColor(Color.parseColor("#FFEAEAEA"));
+            cardleft.setBackgroundColor(Color.parseColor("#FFFFFFFF"));
+
+        });
+    }
+
     public boolean ubahClickable(){
         btnubah.setOnClickListener(view -> {
+            HistRvAdapter hra = new HistRvAdapter(getContext(), riwayatList, adapterItemListenerInterface);
+            hra.showCheckCondition(true);
             if (riwayatList != null){
                 btnhapussemua.setVisibility(View.VISIBLE);
+                btnrefresh.setVisibility(View.GONE);
                 btnhapussemua.startAnimation(easeOutQuadRight);
+                btnrefresh.startAnimation(easeOutQuadLeftOut);
             }
             btnselesai.setVisibility(View.VISIBLE);
             btnubah.setVisibility(View.GONE);
@@ -199,6 +270,8 @@ public class RiwayatFragment extends Fragment {
                     addData.notifyDataSetChanged();
                     riwayatList = null;
                     teksttr.setVisibility(View.VISIBLE);
+                    btnrefresh.setVisibility(View.GONE);
+                    btnrefresh.startAnimation(fadeout);
                     btnhapussemua.setVisibility(View.GONE);
                     btnhapussemua.startAnimation(easeOutQuadRightOut);
                     Toast.makeText(getActivity(), "Riwayat berhasil dikosongkan!", Toast.LENGTH_SHORT).show();
@@ -279,6 +352,8 @@ public class RiwayatFragment extends Fragment {
                             addData.notifyDataSetChanged();
                             btnhapusfilter.setVisibility(View.VISIBLE);
                             btnhapusfilter.startAnimation(fadein);
+                            btnrefresh.setVisibility(View.GONE);
+                            btnrefresh.startAnimation(fadeout);
                         } else {
                             Toast.makeText(getActivity(), "Tanggal yang anda pilih tidak ada di Riwayat Anda", Toast.LENGTH_SHORT).show();
                         }
@@ -305,6 +380,8 @@ public class RiwayatFragment extends Fragment {
                             addData.notifyDataSetChanged();
                             btnhapusfilter.setVisibility(View.VISIBLE);
                             btnhapusfilter.startAnimation(fadein);
+                            btnrefresh.setVisibility(View.GONE);
+                            btnrefresh.startAnimation(fadeout);
                         } else {
                             Toast.makeText(getActivity(), "Tidak ada menu Makanan di Riwayat Anda", Toast.LENGTH_SHORT).show();
                         }
@@ -331,6 +408,8 @@ public class RiwayatFragment extends Fragment {
                             addData.notifyDataSetChanged();
                             btnhapusfilter.setVisibility(View.VISIBLE);
                             btnhapusfilter.startAnimation(fadein);
+                            btnrefresh.setVisibility(View.GONE);
+                            btnrefresh.startAnimation(fadeout);
                         } else {
                             Toast.makeText(getActivity(), "Tidak ada menu Minuman di Riwayat Anda", Toast.LENGTH_SHORT).show();
                         }
@@ -354,6 +433,14 @@ public class RiwayatFragment extends Fragment {
             getRiwayat();
             btnhapusfilter.startAnimation(fadeout);
             btnhapusfilter.setVisibility(View.GONE);
+        });
+    }
+
+    private void refreshClickable(){
+        btnrefresh.setOnClickListener(view -> {
+            getRiwayat();
+            btnrefresh.startAnimation(fadeout);
+            btnrefresh.setVisibility(View.GONE);
         });
     }
 

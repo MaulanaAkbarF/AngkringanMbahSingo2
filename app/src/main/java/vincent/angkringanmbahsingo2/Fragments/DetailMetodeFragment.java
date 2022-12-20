@@ -18,9 +18,10 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import vincent.angkringanmbahsingo2.Dependencies.Backpressedlistener;
 import vincent.angkringanmbahsingo2.R;
 
-public class DetailMetodeFragment extends Fragment {
+public class DetailMetodeFragment extends Fragment implements Backpressedlistener {
 
     View includeTransfer;
     LinearLayout linearlay;
@@ -28,12 +29,24 @@ public class DetailMetodeFragment extends Fragment {
     TextView label1, label2, label3, txtalamat;
     ImageView btnback;
     Slide slide = new Slide();
-    String dataIdTransaksi, dataAlamat, dataMetode;
+    String dataIdTransaksi, dataAlamat, dataMetode, dataIdkupon, dataIdkupon2, namaKupon, namaKupon2;
+    public static Backpressedlistener backpressedlistener;
+    int check, nilai, nilai2;
 
-    public void setDataMetode(String dataMetode, String dataIdTransaksi, String dataAlamat) {
+    public void setDataMetode(String dataMetode, String dataIdTransaksi, int check, String dataAlamat) {
         this.dataMetode = dataMetode;
         this.dataIdTransaksi = dataIdTransaksi;
+        this.check = check;
         this.dataAlamat = dataAlamat;
+    }
+
+    public void setDataKupon(String idkupon, String idkupon2, String namakupon, String namakupon2, int nilai, int nilai2){
+        this.dataIdkupon = idkupon;
+        this.dataIdkupon2 = idkupon2;
+        this.namaKupon = namakupon;
+        this.namaKupon2 = namakupon2;
+        this.nilai = nilai;
+        this.nilai2 = nilai2;
     }
 
     @Override
@@ -54,8 +67,9 @@ public class DetailMetodeFragment extends Fragment {
 
         btnback.setOnClickListener(view1 -> {
             DetailPesananFragment dpf = new DetailPesananFragment();
-            dpf.setDataIdTransaksi(dataIdTransaksi);
+            dpf.setDataIdTransaksi(dataIdTransaksi, check);
             dpf.setDataAlamat(dataAlamat);
+            dpf.setDataKupon(dataIdkupon, dataIdkupon2, namaKupon, namaKupon2, nilai, nilai2);
             if (btn1.isChecked()){
                 dpf.setDataMetode("Tunai");
             } else if (btn2.isChecked()){
@@ -101,5 +115,37 @@ public class DetailMetodeFragment extends Fragment {
 
     private void linearClickable(){
         linearlay.setOnClickListener(view -> System.out.println("OK"));
+    }
+
+    @Override
+    public void onPause() {
+        backpressedlistener=null;
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        backpressedlistener=this;
+    }
+
+    @Override
+    public void onBackPressed() {
+        DetailPesananFragment dpf = new DetailPesananFragment();
+        dpf.setDataIdTransaksi(dataIdTransaksi, check);
+        dpf.setDataAlamat(dataAlamat);
+        dpf.setDataKupon(dataIdkupon, dataIdkupon2, namaKupon, namaKupon2, nilai, nilai2);
+        if (btn1.isChecked()){
+            dpf.setDataMetode("Tunai");
+        } else if (btn2.isChecked()){
+            dpf.setDataMetode("COD");
+        } else if (btn3.isChecked()){
+            dpf.setDataMetode("Transfer");
+        } else {
+            dpf.setDataMetode(dataMetode);
+        }
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragtr = fragmentManager.beginTransaction();
+        fragtr.replace(R.id.fragmentcontainersplash, dpf).commit();
     }
 }

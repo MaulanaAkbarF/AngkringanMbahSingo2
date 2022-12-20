@@ -5,8 +5,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class API {
 
-    private static final String BASE_URL = "http://192.168.1.6/mysql/mysql/";
-    public static final String BASE_GAMBAR = "http://192.168.1.6/mysql/mysql/gambar/";
+    private static final String BASE_URL = "http://192.168.1.5/mysql/mysql/";
+    public static final String BASE_GAMBAR = "http://192.168.1.5/mysql/mysql/gambar/";
 
     private static Retrofit retrofit;
 

@@ -21,6 +21,9 @@ import com.google.android.material.navigation.NavigationBarView;
 import java.util.ArrayList;
 
 import vincent.angkringanmbahsingo2.Dependencies.AdapterViewPager;
+import vincent.angkringanmbahsingo2.Fragments.DetailAlamatFragment;
+import vincent.angkringanmbahsingo2.Fragments.DetailKuponFragment;
+import vincent.angkringanmbahsingo2.Fragments.DetailMetodeFragment;
 import vincent.angkringanmbahsingo2.Fragments.DetailPesananFragment;
 import vincent.angkringanmbahsingo2.Fragments.HomeFragment;
 import vincent.angkringanmbahsingo2.Fragments.InterfaceMenuFragment;
@@ -148,7 +151,7 @@ public class MainHome extends AppCompatActivity {
     // Fungsi ketika tombol Back Button di klik
     @Override
     public void onBackPressed() {
-        if (InterfaceMenuFragment.backpressedlistener!=null || ProfilFragment.backpressedlistener!=null || DetailPesananFragment.backpressedlistener!=null){
+        if (InterfaceMenuFragment.backpressedlistener!=null || ProfilFragment.backpressedlistener!=null || DetailPesananFragment.backpressedlistener!=null || DetailAlamatFragment.backpressedlistener!=null || DetailMetodeFragment.backpressedlistener!=null || DetailKuponFragment.backpressedlistener!=null){
             System.out.println("back");
         } else {
             if (mBackPressed + TIME_INTERVAL > System.currentTimeMillis()) {
@@ -164,6 +167,12 @@ public class MainHome extends AppCompatActivity {
             ProfilFragment.backpressedlistener.onBackPressed();
         } else if(DetailPesananFragment.backpressedlistener!=null){
             DetailPesananFragment.backpressedlistener.onBackPressed();
+        } else if(DetailAlamatFragment.backpressedlistener!=null){
+            DetailAlamatFragment.backpressedlistener.onBackPressed();
+        } else if(DetailMetodeFragment.backpressedlistener!=null){
+            DetailMetodeFragment.backpressedlistener.onBackPressed();
+        } else if(DetailKuponFragment.backpressedlistener!=null){
+            DetailKuponFragment.backpressedlistener.onBackPressed();
         }
     }
 }

@@ -1,6 +1,5 @@
 package vincent.angkringanmbahsingo2.RecycleviewAdapter;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,30 +8,30 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import vincent.angkringanmbahsingo2.API.API;
 import vincent.angkringanmbahsingo2.Fragments.RiwayatFragment;
-import vincent.angkringanmbahsingo2.ModelAPI.DataItemProduk;
 import vincent.angkringanmbahsingo2.ModelAPI.DataItemTransaksi;
 import vincent.angkringanmbahsingo2.R;
-import vincent.angkringanmbahsingo2.RecycleviewModel.HistRvModel;
 
 public class HistRvAdapter extends RecyclerView.Adapter<HistRvAdapter.ViewHolder> {
     Context context;
     List<DataItemTransaksi> listDataAdapter;
-    private List<RiwayatFragment> items;
+    private boolean showCheck = true;
     HistRvAdapter.AdapterItemListener adapterItemListener;
     static String currency = "Rp. %,d";
     static String stock = "x%,d";
+
+    public void showCheckCondition(boolean showCheck){
+        this.showCheck = showCheck;
+    }
 
     public interface AdapterItemListener{
         void clickItemListener(int adapterPosition);
@@ -52,7 +51,7 @@ public class HistRvAdapter extends RecyclerView.Adapter<HistRvAdapter.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull HistRvAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
+    public void onBindViewHolder(@NonNull HistRvAdapter.ViewHolder holder, int position) {
         DataItemTransaksi db = listDataAdapter.get(position);
 
         holder.judul.setText(db.getNamaProduk());
@@ -79,6 +78,12 @@ public class HistRvAdapter extends RecyclerView.Adapter<HistRvAdapter.ViewHolder
             jumlah = itemView.findViewById(R.id.hpxjumlah);
             gambar = itemView.findViewById(R.id.hpximage);
             check = itemView.findViewById(R.id.friwxcheckbox);
+
+            if (showCheck == true){
+                check.setVisibility(View.VISIBLE);
+            } else {
+                check.setVisibility(View.GONE);
+            }
 
             check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override

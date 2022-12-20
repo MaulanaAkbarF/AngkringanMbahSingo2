@@ -56,10 +56,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:backgroundTint="@color/dark_green"
+        android:fontFamily="@font/inter_regular"
         android:paddingVertical="7dp"
         android:text="Gunakan Alamat Default"
         android:textSize="@dimen/hp.ukuranteksinfo"
-        app:cornerRadius="8dp" />
+        app:cornerRadius="50dp"/>
     <Button
         android:id="@+id/daxbtngps"
         android:layout_width="match_parent"
@@ -68,19 +69,21 @@
         app:layout_constraintTop_toBottomOf="@id/daxbtnalamatdefault"
         app:layout_constraintStart_toStartOf="parent"
         android:backgroundTint="@color/dark_red"
+        android:fontFamily="@font/inter_regular"
         android:paddingVertical="5dp"
         android:text="Gunakan GPS"
         android:textSize="@dimen/fh.ukurantekssubjudul"
-        app:cornerRadius="8dp" />
+        app:cornerRadius="50dp"/>
     <Button
         android:id="@+id/daxbtntetapkan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/daxbtngps"
         android:backgroundTint="@color/dark_blue"
+        android:fontFamily="@font/inter_regular"
         android:paddingVertical="5dp"
         android:text="Tetapkan Alamat"
         android:textSize="@dimen/fh.ukurantekssubjudul"
-        app:cornerRadius="8dp"
+        app:cornerRadius="50dp"
         app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

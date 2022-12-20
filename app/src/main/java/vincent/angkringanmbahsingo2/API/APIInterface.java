@@ -5,6 +5,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import vincent.angkringanmbahsingo2.ModelAPI.ResponseKupon;
 import vincent.angkringanmbahsingo2.ModelAPI.ResponseLogin;
 import vincent.angkringanmbahsingo2.ModelAPI.ResponseProduk;
 import vincent.angkringanmbahsingo2.ModelAPI.ResponseRegister;
@@ -152,9 +153,42 @@ public interface APIInterface {
     );
 
     @FormUrlEncoded
+    @POST("pesananfromkeranjang.php")
+    Call<ResponseTransaksi> pesananFromKeranjang(
+            @Field("id_transaksi") String id_transaksi,
+            @Field("username") String username
+    );
+
+    @FormUrlEncoded
     @POST("rangkumanpesanan.php")
     Call<ResponseTransaksi> rangkumanPesanan(
             @Field("id_transaksi") String id_transaksi,
+            @Field("username") String username
+    );
+
+    @FormUrlEncoded
+    @POST("rangkumankeranjang.php")
+    Call<ResponseTransaksi> rangkumanKeranjang(
+            @Field("id_transaksi") String id_transaksi,
+            @Field("username") String username
+    );
+
+    @FormUrlEncoded
+    @POST("subtotalkeranjang.php")
+    Call<ResponseTransaksi> subtotalKeranjang(
+            @Field("id_transaksi") String id_transaksi,
+            @Field("username") String username
+    );
+
+    @FormUrlEncoded
+    @POST("kuponongkir.php")
+    Call<ResponseKupon> retrieveKuponOngkir(
+            @Field("username") String username
+    );
+
+    @FormUrlEncoded
+    @POST("kuponcashback.php")
+    Call<ResponseKupon> retrieveKuponCashback(
             @Field("username") String username
     );
 
@@ -180,6 +214,19 @@ public interface APIInterface {
     @POST("riwayat.php")
     Call<ResponseTransaksi> Riwayat(
             @Field("username") String username
+    );
+
+    @FormUrlEncoded
+    @POST("antrian.php")
+    Call<ResponseTransaksi> Antrian(
+            @Field("username") String username
+    );
+
+    @FormUrlEncoded
+    @POST("childpesanan.php")
+    Call<ResponseTransaksi> childPesanan(
+            @Field("username") String username,
+            @Field("id_transaksi") String id_transaksi
     );
 
     @FormUrlEncoded

@@ -166,7 +166,7 @@ public class InterfaceMenuFragment extends Fragment implements Backpressedlisten
 
     public void sendDataToPesanan() {
         DetailPesananFragment dpf = new DetailPesananFragment();
-        dpf.setDataIdTransaksi(interxidtransaksi.getText().toString());
+        dpf.setDataIdTransaksi(interxidtransaksi.getText().toString(), 0);
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction fragtr = fragmentManager.beginTransaction();
         fragtr.replace(R.id.fragmentcontainersplash, dpf).commit();

@@ -80,7 +80,7 @@ public class CartRvAdapter extends RecyclerView.Adapter<CartRvAdapter.ViewHolder
                     @Override
                     public void onResponse(Call<ResponseTransaksi> call, Response<ResponseTransaksi> response) {
                         dataListKeranjang = response.body().getData();
-                        currentNumber = Integer.parseInt(dataListKeranjang.get(0).getJumlah());
+                        currentNumber = Integer.parseInt(String.valueOf(listDataAdapter.get(holder.getAdapterPosition()).getJumlah()));
                     }
 
                     @Override
@@ -109,7 +109,7 @@ public class CartRvAdapter extends RecyclerView.Adapter<CartRvAdapter.ViewHolder
                         @Override
                         public void onResponse(Call<ResponseTransaksi> call, Response<ResponseTransaksi> response) {
                             dataListKeranjang = response.body().getData();
-                            currentNumber = Integer.parseInt(dataListKeranjang.get(0).getJumlah());
+                            currentNumber = Integer.parseInt(listDataAdapter.get(holder.getAdapterPosition()).getJumlah());
                         }
 
                         @Override
@@ -130,7 +130,7 @@ public class CartRvAdapter extends RecyclerView.Adapter<CartRvAdapter.ViewHolder
         return listDataAdapter.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder { //implements View.OnClickListener
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView idmenu, judul, harga, jumlah, totalharga;
         ImageView gambar, minimage, plusimage;
         public ViewHolder(@NonNull View itemView) {
@@ -143,12 +143,12 @@ public class CartRvAdapter extends RecyclerView.Adapter<CartRvAdapter.ViewHolder
             gambar = itemView.findViewById(R.id.hpximage);
             minimage = itemView.findViewById(R.id.fkerximagemin);
             plusimage = itemView.findViewById(R.id.fkerximageplus);
-//            itemView.setOnClickListener(this);
+            itemView.setOnClickListener(this);
         }
 
-//        @Override
-//        public void onClick(View v) {
-//            adapterItemListener.clickItemListener(getAdapterPosition());
-//        }
+        @Override
+        public void onClick(View v) {
+            adapterItemListener.clickItemListener(getAdapterPosition());
+        }
     }
 }
