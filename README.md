@@ -1,5 +1,5 @@
 <div align="center">
-<img src="https://images3.alphacoders.com/128/1288825.png" alt="V Angkringan" width="1920" />
+<img src="https://github.com/MaulanaAkbarF/gambar/blob/main/BannerGithub%204K.png" alt="V Angkringan" width="1920" />
 
 # V-Angkringan
 
