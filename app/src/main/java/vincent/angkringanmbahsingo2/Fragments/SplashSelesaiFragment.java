@@ -10,6 +10,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
@@ -41,7 +42,7 @@ import vincent.angkringanmbahsingo2.R;
 public class SplashSelesaiFragment extends Fragment {
 
     Animation easeOutSineBottom, easeOutSineTopOut;
-    TextView idtransaksi, subtotal, transfer, kirimbukti, kembali;
+    TextView idtransaksi, subtotal, labeltf, transfer, kirimbukti, chat, kembali;
     CardView salinsub, salintf;
     ImageView gambarbukti;
     ConstraintLayout consanimate;
@@ -73,54 +74,38 @@ public class SplashSelesaiFragment extends Fragment {
         consanimate.startAnimation(easeOutSineBottom);
         idtransaksi = view.findViewById(R.id.ssfxtxtidtrs);
         subtotal = view.findViewById(R.id.ssfxtxtsubtotal);
+        labeltf = view.findViewById(R.id.ssfxteks3);
         transfer = view.findViewById(R.id.ssfxtxttransfer);
         salinsub = view.findViewById(R.id.ssfxcardsub);
         salintf = view.findViewById(R.id.ssfxcardtf);
         kirimbukti = view.findViewById(R.id.ssfxbtnuploadimage);
+        chat = view.findViewById(R.id.ssfxbtnchat);
         kembali = view.findViewById(R.id.ssfxbtnback);
         gambarbukti = view.findViewById(R.id.ssfximage);
         clipboardManager = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
 
-//        final Handler handler = new Handler();
-//        handler.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                consanimate.startAnimation(easeOutSineTopOut);
-//                consanimate.setVisibility(View.GONE);
-//                closeFragment();
-//            }
-//        }, 1500L); // Untuk mengatur waktu Splash Screen. 1000L = 1 detik
-
-        salinsub.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                clipboardManager.setText(String.valueOf(subtotal));
-                Toast.makeText(getActivity(), "Subtotal disalin", Toast.LENGTH_SHORT).show();
-            }
+        salinsub.setOnClickListener(view15 -> {
+            clipboardManager.setText(String.valueOf(subtotal));
+            Toast.makeText(getActivity(), "Subtotal disalin", Toast.LENGTH_SHORT).show();
         });
 
-        salintf.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                clipboardManager.setText(dataTransfer);
-                Toast.makeText(getActivity(), "Nomor Rekening disalin", Toast.LENGTH_SHORT).show();
-            }
+        salintf.setOnClickListener(view14 -> {
+            clipboardManager.setText(dataTransfer);
+            Toast.makeText(getActivity(), "Nomor Rekening disalin", Toast.LENGTH_SHORT).show();
         });
 
-        kirimbukti.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getImg();
-            }
-        });
+        kirimbukti.setOnClickListener(view12 -> getImg());
 
-        kembali.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                consanimate.startAnimation(easeOutSineTopOut);
-                consanimate.setVisibility(View.GONE);
-                closeFragment();
-            }
+        chat.setOnClickListener(view1 -> {
+            String url = "https://wa.link/7kfdl4";
+            CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+            CustomTabsIntent customTabsIntent = builder.build();
+            customTabsIntent.launchUrl(getActivity(), Uri.parse(url));
+        });
+        kembali.setOnClickListener(view13 -> {
+            consanimate.startAnimation(easeOutSineTopOut);
+            consanimate.setVisibility(View.GONE);
+            closeFragment();
         });
 
         getData();
@@ -130,6 +115,11 @@ public class SplashSelesaiFragment extends Fragment {
     private void getData(){
         idtransaksi.setText(dataIdTransaksi);
         subtotal.setText(String.format(currency, dataSubtotal));
+        if (dataTransfer == null){
+            salintf.setVisibility(View.GONE);
+            transfer.setVisibility(View.GONE);
+            labeltf.setVisibility(View.GONE);
+        }
         transfer.setText(dataTransfer);
     }
 
@@ -162,7 +152,6 @@ public class SplashSelesaiFragment extends Fragment {
         File file = new File(path);
         RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), file);
         MultipartBody.Part body = MultipartBody.Part.createFormData("gambarbukti", file.getName(), requestFile);
-        HomeFragment hfg = new HomeFragment();
         apiInterface = API.getService().create(APIInterface.class);
         Call<ResponseTransaksi> riwayatCall = apiInterface.example(body);
         riwayatCall.enqueue(new Callback<ResponseTransaksi>() {

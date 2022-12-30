@@ -51,7 +51,7 @@ import vincent.angkringanmbahsingo2.RecycleviewModel.HistRvModel;
 public class RiwayatFragment extends Fragment {
 
     Animation easeOutQuadLeft, easeOutQuadRight, easeOutQuadLeftOut, easeOutQuadRightOut, fadein, fadeout;
-    public static TextView btnfilter, btnubah, btnhapussemua, btnselesai, btnhapusfilter, teksttr, btnrefresh;
+    public static TextView btnfilter, btnubah, btnhapussemua, btnselesai, btnhapusfilter, teksttr;
     ConstraintLayout consoption;
     CardView cardleft, cardright;
     RecyclerView recyclerView;
@@ -93,7 +93,6 @@ public class RiwayatFragment extends Fragment {
         btnfilter.setVisibility(View.VISIBLE);
         btnhapussemua.setVisibility(View.GONE);
         btnselesai.setVisibility(View.GONE);
-        btnrefresh = view.findViewById(R.id.friwxbtnrefresh);
 
         // Memanggil List Data pada Recycle View
 //        MainHome mh = new MainHome();
@@ -113,7 +112,6 @@ public class RiwayatFragment extends Fragment {
         hapusSemuaClickable();
         selesaiClickable();
         filterClickable();
-        refreshClickable();
         return view;
     }
 
@@ -131,12 +129,10 @@ public class RiwayatFragment extends Fragment {
                     recyclerView.setAdapter(addData);
                     addData.notifyDataSetChanged();
                     teksttr.setVisibility(View.GONE);
-                    btnrefresh.setVisibility(View.VISIBLE);
                     btnhapusfilter.setVisibility(View.GONE);
                 } else {
                     teksttr.setVisibility(View.VISIBLE);
                     teksttr.setText("Riwayat Kosong");
-                    btnrefresh.setVisibility(View.GONE);
                     btnhapusfilter.setVisibility(View.GONE);
                     Toast.makeText(getActivity(), "Anda tidak memiliki Riwayat apapun", Toast.LENGTH_SHORT).show();
                 }
@@ -205,9 +201,7 @@ public class RiwayatFragment extends Fragment {
             hra.showCheckCondition(true);
             if (riwayatList != null){
                 btnhapussemua.setVisibility(View.VISIBLE);
-                btnrefresh.setVisibility(View.GONE);
                 btnhapussemua.startAnimation(easeOutQuadRight);
-                btnrefresh.startAnimation(easeOutQuadLeftOut);
             }
             btnselesai.setVisibility(View.VISIBLE);
             btnubah.setVisibility(View.GONE);
@@ -270,8 +264,6 @@ public class RiwayatFragment extends Fragment {
                     addData.notifyDataSetChanged();
                     riwayatList = null;
                     teksttr.setVisibility(View.VISIBLE);
-                    btnrefresh.setVisibility(View.GONE);
-                    btnrefresh.startAnimation(fadeout);
                     btnhapussemua.setVisibility(View.GONE);
                     btnhapussemua.startAnimation(easeOutQuadRightOut);
                     Toast.makeText(getActivity(), "Riwayat berhasil dikosongkan!", Toast.LENGTH_SHORT).show();
@@ -352,8 +344,6 @@ public class RiwayatFragment extends Fragment {
                             addData.notifyDataSetChanged();
                             btnhapusfilter.setVisibility(View.VISIBLE);
                             btnhapusfilter.startAnimation(fadein);
-                            btnrefresh.setVisibility(View.GONE);
-                            btnrefresh.startAnimation(fadeout);
                         } else {
                             Toast.makeText(getActivity(), "Tanggal yang anda pilih tidak ada di Riwayat Anda", Toast.LENGTH_SHORT).show();
                         }
@@ -380,8 +370,6 @@ public class RiwayatFragment extends Fragment {
                             addData.notifyDataSetChanged();
                             btnhapusfilter.setVisibility(View.VISIBLE);
                             btnhapusfilter.startAnimation(fadein);
-                            btnrefresh.setVisibility(View.GONE);
-                            btnrefresh.startAnimation(fadeout);
                         } else {
                             Toast.makeText(getActivity(), "Tidak ada menu Makanan di Riwayat Anda", Toast.LENGTH_SHORT).show();
                         }
@@ -408,8 +396,6 @@ public class RiwayatFragment extends Fragment {
                             addData.notifyDataSetChanged();
                             btnhapusfilter.setVisibility(View.VISIBLE);
                             btnhapusfilter.startAnimation(fadein);
-                            btnrefresh.setVisibility(View.GONE);
-                            btnrefresh.startAnimation(fadeout);
                         } else {
                             Toast.makeText(getActivity(), "Tidak ada menu Minuman di Riwayat Anda", Toast.LENGTH_SHORT).show();
                         }
@@ -433,14 +419,6 @@ public class RiwayatFragment extends Fragment {
             getRiwayat();
             btnhapusfilter.startAnimation(fadeout);
             btnhapusfilter.setVisibility(View.GONE);
-        });
-    }
-
-    private void refreshClickable(){
-        btnrefresh.setOnClickListener(view -> {
-            getRiwayat();
-            btnrefresh.startAnimation(fadeout);
-            btnrefresh.setVisibility(View.GONE);
         });
     }
 

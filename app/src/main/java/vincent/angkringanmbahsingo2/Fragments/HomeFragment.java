@@ -2,6 +2,7 @@ package vincent.angkringanmbahsingo2.Fragments;
 
 import android.os.Bundle;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -39,6 +40,8 @@ public class HomeFragment extends Fragment {
     Animation easeOutSineTop, easeOutQuadLeft;
     LinearLayout judul;
     ScrollView rvdatalayout;
+    private SearchView searchView;
+    HomeRvAdapter AdapterCari;
 
     public static TextView teksttpr, tekstttr, teksnama, teksnomor, teksemail, teksuser, teksalamat;
     CardView btnprofil, searchall;
@@ -46,7 +49,6 @@ public class HomeFragment extends Fragment {
     HomeRvAdapter.AdapterItemListener adapterItemListenerInterface;
 
     APIInterface apiInterface;
-    RecyclerView.Adapter addData;
     private List<DataItemLogin> dataUserHome = new ArrayList<>();
     private List<DataItemProduk> produkList = new ArrayList<>();
 
@@ -97,11 +99,19 @@ public class HomeFragment extends Fragment {
             fragtr.replace(R.id.fragmentcontainersplash, new ProfilFragment()).addToBackStack("tag").commit();
         });
 
-        searchall.setOnClickListener(view12 -> {
-            CariMenuFragment cmf = new CariMenuFragment();
-            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-            FragmentTransaction fragtr = fragmentManager.beginTransaction();
-            fragtr.replace(R.id.fragmentcontainersplash, cmf).commit();
+        searchView = view.findViewById(R.id.search2);
+        searchView.clearFocus();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                FilterList(newText);
+                return true;
+            }
         });
 
         tekstttr.setVisibility(View.GONE);
@@ -118,6 +128,20 @@ public class HomeFragment extends Fragment {
             fragtr.replace(R.id.fragmentcontainersplash, imf).commit();
         };
         return true;
+    }
+
+    private void FilterList(String newText) {
+        List<DataItemProduk> FilteredList = new ArrayList<>();
+        for (DataItemProduk brg : produkList){
+            if (brg.getNamaProduk().toLowerCase().contains(newText.toLowerCase())){
+                FilteredList.add(brg);
+            }
+        }
+        if (FilteredList.isEmpty()){
+            Toast.makeText(getActivity(), "No Data", Toast.LENGTH_SHORT).show();
+        }else {
+            AdapterCari.setFilteredList(FilteredList);
+        }
     }
 
     private void getDataLoginRetrofit() {
@@ -148,12 +172,12 @@ public class HomeFragment extends Fragment {
             public void onResponse(Call<ResponseProduk> call, Response<ResponseProduk> response) {
                 produkList = response.body().getData();
                 if (produkList != null) {
-                    addData = new HomeRvAdapter(getContext(), produkList, adapterItemListenerInterface);
+                    AdapterCari = new HomeRvAdapter(getContext(), produkList, adapterItemListenerInterface);
                     recyclerView2 = getView().findViewById(R.id.hpxrvterakhir);
                     recyclerView2.setHasFixedSize(true);
                     recyclerView2.setLayoutManager(new GridLayoutManager(getActivity(), 3));
-                    recyclerView2.setAdapter(addData);
-                    addData.notifyDataSetChanged();
+                    recyclerView2.setAdapter(AdapterCari);
+                    AdapterCari.notifyDataSetChanged();
                     tekstttr.setVisibility(View.GONE);
                     recyclerView2.setVisibility(View.VISIBLE);
                 } else {

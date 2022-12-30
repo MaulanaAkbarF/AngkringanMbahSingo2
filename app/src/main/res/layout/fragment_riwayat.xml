@@ -108,6 +108,7 @@
                 android:padding="8dp"
                 android:text="Segarkan"
                 android:textSize="@dimen/hp.ukuranteksinfo"
+                android:visibility="gone"
                 android:textColor="@color/red"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
         <androidx.constraintlayout.widget.ConstraintLayout

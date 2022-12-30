@@ -1,12 +1,11 @@
 package vincent.angkringanmbahsingo2.Fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -14,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,25 +26,23 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import vincent.angkringanmbahsingo2.API.API;
 import vincent.angkringanmbahsingo2.API.APIInterface;
-import vincent.angkringanmbahsingo2.MainActivity.MainHome;
 import vincent.angkringanmbahsingo2.ModelAPI.DataItemProduk;
-import vincent.angkringanmbahsingo2.ModelAPI.ResponseLogin;
 import vincent.angkringanmbahsingo2.ModelAPI.ResponseProduk;
 import vincent.angkringanmbahsingo2.R;
 import vincent.angkringanmbahsingo2.RecycleviewAdapter.HomeRvAdapter;
-import vincent.angkringanmbahsingo2.RecycleviewModel.HomeRvModel;
 
 public class MakananFragment extends Fragment {
 
     Spinner spinner;
     public static TextView teksttmak;
-//    List<HomeRvModel> listDataDaftar;
     RecyclerView recyclerView;
-//    HomeRvAdapter adapterItemDaftar;
+    private SearchView searchView;
+    HomeRvAdapter AdapterCari;
     HomeRvAdapter.AdapterItemListener adapterItemListenerInterface;
+//    List<HomeRvModel> listDataDaftar;
+//    HomeRvAdapter adapterItemDaftar;
 
     APIInterface apiInterface;
-    RecyclerView.Adapter addData;
     private List<DataItemProduk> produkList = new ArrayList<>();
 
     // List Data pada Recycle View
@@ -87,9 +83,9 @@ public class MakananFragment extends Fragment {
             public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long id) {
                 Object item = adapterView.getItemAtPosition(pos);
                 if (item == adapterView.getItemAtPosition(0)){
+                    retrieveDataMakanan();
 //                    listDataDaftar.clear();
 //                    adapterItemDaftar.notifyDataSetChanged();
-                    retrieveDataMakanan();
 //                    adapterItemDaftar = new HomeRvAdapter(listDataDaftar,adapterItemListenerInterface);
 //                    recyclerView.setAdapter(adapterItemDaftar);
                 } else if (item == adapterView.getItemAtPosition(1)){
@@ -104,6 +100,21 @@ public class MakananFragment extends Fragment {
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
 
+            }
+        });
+
+        searchView = view.findViewById(R.id.search2);
+        searchView.clearFocus();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                FilterList(newText);
+                return true;
             }
         });
 
@@ -126,6 +137,20 @@ public class MakananFragment extends Fragment {
         return true;
     }
 
+    private void FilterList(String newText) {
+        List<DataItemProduk> FilteredList = new ArrayList<>();
+        for (DataItemProduk brg : produkList){
+            if (brg.getNamaProduk().toLowerCase().contains(newText.toLowerCase())){
+                FilteredList.add(brg);
+            }
+        }
+        if (FilteredList.isEmpty()){
+            Toast.makeText(getActivity(), "No Data", Toast.LENGTH_SHORT).show();
+        }else {
+            AdapterCari.setFilteredList(FilteredList);
+        }
+    }
+
     public void retrieveDataMakanan(){
         apiInterface = API.getService().create(APIInterface.class);
         Call<ResponseProduk> produkCall = apiInterface.getRetriveMakanan();
@@ -134,11 +159,11 @@ public class MakananFragment extends Fragment {
             public void onResponse(Call<ResponseProduk> call, Response<ResponseProduk> response) {
                 produkList = response.body().getData();
                 if (produkList != null) {
-                    addData = new HomeRvAdapter(getContext(), produkList, adapterItemListenerInterface);
+                    AdapterCari = new HomeRvAdapter(getContext(), produkList, adapterItemListenerInterface);
                     recyclerView = getView().findViewById(R.id.fmakxrecyclemakanan);
                     recyclerView.setHasFixedSize(true);
-                    recyclerView.setAdapter(addData);
-                    addData.notifyDataSetChanged();
+                    recyclerView.setAdapter(AdapterCari);
+                    AdapterCari.notifyDataSetChanged();
                     teksttmak.setVisibility(View.GONE);
                     recyclerView.setVisibility(View.VISIBLE);
                 } else {
@@ -162,11 +187,11 @@ public class MakananFragment extends Fragment {
             public void onResponse(Call<ResponseProduk> call, Response<ResponseProduk> response) {
                 produkList = response.body().getData();
                 if (produkList != null) {
-                    addData = new HomeRvAdapter(getContext(), produkList, adapterItemListenerInterface);
+                    AdapterCari = new HomeRvAdapter(getContext(), produkList, adapterItemListenerInterface);
                     recyclerView = getView().findViewById(R.id.fmakxrecyclemakanan);
                     recyclerView.setHasFixedSize(true);
-                    recyclerView.setAdapter(addData);
-                    addData.notifyDataSetChanged();
+                    recyclerView.setAdapter(AdapterCari);
+                    AdapterCari.notifyDataSetChanged();
                     teksttmak.setVisibility(View.GONE);
                     recyclerView.setVisibility(View.VISIBLE);
                 } else {
@@ -190,11 +215,11 @@ public class MakananFragment extends Fragment {
             public void onResponse(Call<ResponseProduk> call, Response<ResponseProduk> response) {
                 produkList = response.body().getData();
                 if (produkList != null) {
-                    addData = new HomeRvAdapter(getContext(), produkList, adapterItemListenerInterface);
+                    AdapterCari = new HomeRvAdapter(getContext(), produkList, adapterItemListenerInterface);
                     recyclerView = getView().findViewById(R.id.fmakxrecyclemakanan);
                     recyclerView.setHasFixedSize(true);
-                    recyclerView.setAdapter(addData);
-                    addData.notifyDataSetChanged();
+                    recyclerView.setAdapter(AdapterCari);
+                    AdapterCari.notifyDataSetChanged();
                     teksttmak.setVisibility(View.GONE);
                     recyclerView.setVisibility(View.VISIBLE);
                 } else {
@@ -218,11 +243,11 @@ public class MakananFragment extends Fragment {
             public void onResponse(Call<ResponseProduk> call, Response<ResponseProduk> response) {
                 produkList = response.body().getData();
                 if (produkList != null) {
-                    addData = new HomeRvAdapter(getContext(), produkList, adapterItemListenerInterface);
+                    AdapterCari = new HomeRvAdapter(getContext(), produkList, adapterItemListenerInterface);
                     recyclerView = getView().findViewById(R.id.fmakxrecyclemakanan);
                     recyclerView.setHasFixedSize(true);
-                    recyclerView.setAdapter(addData);
-                    addData.notifyDataSetChanged();
+                    recyclerView.setAdapter(AdapterCari);
+                    AdapterCari.notifyDataSetChanged();
                     teksttmak.setVisibility(View.GONE);
                     recyclerView.setVisibility(View.VISIBLE);
                 } else {

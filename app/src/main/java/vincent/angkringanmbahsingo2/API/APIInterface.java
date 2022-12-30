@@ -191,6 +191,12 @@ public interface APIInterface {
     );
 
     @FormUrlEncoded
+    @POST("hapussemuakeranjang.php")
+    Call<ResponseTransaksi> hapusSemuaKeranjang(
+            @Field("username") String username
+    );
+
+    @FormUrlEncoded
     @POST("kuponongkir.php")
     Call<ResponseKupon> retrieveKuponOngkir(
             @Field("username") String username

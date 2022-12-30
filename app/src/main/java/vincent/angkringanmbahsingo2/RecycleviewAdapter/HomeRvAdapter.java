@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
@@ -22,6 +23,8 @@ import vincent.angkringanmbahsingo2.R;
 public class HomeRvAdapter extends RecyclerView.Adapter<HomeRvAdapter.ViewHolder> {
     Context context;
     List<DataItemProduk> listDataAdapter;
+    private SearchView searchView;
+    HomeRvAdapter AdapterCari;
     HomeRvAdapter.AdapterItemListener adapterItemListener;
     static String currency = "Rp. %,d";
     static String stock = "%,d";
@@ -34,6 +37,11 @@ public class HomeRvAdapter extends RecyclerView.Adapter<HomeRvAdapter.ViewHolder
         this.context = context;
         this.listDataAdapter = listDataAdapter;
         this.adapterItemListener = adapterItemListener;
+    }
+
+    public void setFilteredList(List<DataItemProduk> filteredList) {
+        this.listDataAdapter = filteredList;
+        notifyDataSetChanged();
     }
 
     @NonNull

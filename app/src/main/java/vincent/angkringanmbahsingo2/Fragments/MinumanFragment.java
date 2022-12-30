@@ -3,6 +3,7 @@ package vincent.angkringanmbahsingo2.Fragments;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -41,10 +42,11 @@ public class MinumanFragment extends Fragment {
     Spinner spinner;
     public static TextView teksttmin;
     RecyclerView recyclerView;
+    private SearchView searchView;
+    HomeRvAdapter AdapterCari;
     HomeRvAdapter.AdapterItemListener adapterItemListenerInterface;
 
     APIInterface apiInterface;
-    RecyclerView.Adapter addData;
     private List<DataItemProduk> produkList = new ArrayList<>();
 
     @Override
@@ -92,6 +94,21 @@ public class MinumanFragment extends Fragment {
             }
         });
 
+        searchView = view.findViewById(R.id.search2);
+        searchView.clearFocus();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                FilterList(newText);
+                return true;
+            }
+        });
+
         teksttmin.setVisibility(View.GONE);
         getMinumanClicked();
         return view;
@@ -111,6 +128,20 @@ public class MinumanFragment extends Fragment {
         return true;
     }
 
+    private void FilterList(String newText) {
+        List<DataItemProduk> FilteredList = new ArrayList<>();
+        for (DataItemProduk brg : produkList){
+            if (brg.getNamaProduk().toLowerCase().contains(newText.toLowerCase())){
+                FilteredList.add(brg);
+            }
+        }
+        if (FilteredList.isEmpty()){
+            Toast.makeText(getActivity(), "No Data", Toast.LENGTH_SHORT).show();
+        }else {
+            AdapterCari.setFilteredList(FilteredList);
+        }
+    }
+
     public void retrieveDataMinumanPanas(){
         apiInterface = API.getService().create(APIInterface.class);
         Call<ResponseProduk> produkCall = apiInterface.getRetriveMinumanPanas();
@@ -119,11 +150,11 @@ public class MinumanFragment extends Fragment {
             public void onResponse(Call<ResponseProduk> call, Response<ResponseProduk> response) {
                 produkList = response.body().getData();
                 if (produkList != null) {
-                    addData = new HomeRvAdapter(getContext(), produkList, adapterItemListenerInterface);
+                    AdapterCari = new HomeRvAdapter(getContext(), produkList, adapterItemListenerInterface);
                     recyclerView = getView().findViewById(R.id.fminxrecycleminuman);
                     recyclerView.setHasFixedSize(true);
-                    recyclerView.setAdapter(addData);
-                    addData.notifyDataSetChanged();
+                    recyclerView.setAdapter(AdapterCari);
+                    AdapterCari.notifyDataSetChanged();
                     teksttmin.setVisibility(View.GONE);
                     recyclerView.setVisibility(View.VISIBLE);
                 } else {
@@ -147,11 +178,11 @@ public class MinumanFragment extends Fragment {
             public void onResponse(Call<ResponseProduk> call, Response<ResponseProduk> response) {
                 produkList = response.body().getData();
                 if (produkList != null) {
-                    addData = new HomeRvAdapter(getContext(), produkList, adapterItemListenerInterface);
+                    AdapterCari = new HomeRvAdapter(getContext(), produkList, adapterItemListenerInterface);
                     recyclerView = getView().findViewById(R.id.fminxrecycleminuman);
                     recyclerView.setHasFixedSize(true);
-                    recyclerView.setAdapter(addData);
-                    addData.notifyDataSetChanged();
+                    recyclerView.setAdapter(AdapterCari);
+                    AdapterCari.notifyDataSetChanged();
                     teksttmin.setVisibility(View.GONE);
                     recyclerView.setVisibility(View.VISIBLE);
                 } else {
@@ -175,11 +206,11 @@ public class MinumanFragment extends Fragment {
             public void onResponse(Call<ResponseProduk> call, Response<ResponseProduk> response) {
                 produkList = response.body().getData();
                 if (produkList != null) {
-                    addData = new HomeRvAdapter(getContext(), produkList, adapterItemListenerInterface);
+                    AdapterCari = new HomeRvAdapter(getContext(), produkList, adapterItemListenerInterface);
                     recyclerView = getView().findViewById(R.id.fminxrecycleminuman);
                     recyclerView.setHasFixedSize(true);
-                    recyclerView.setAdapter(addData);
-                    addData.notifyDataSetChanged();
+                    recyclerView.setAdapter(AdapterCari);
+                    AdapterCari.notifyDataSetChanged();
                     teksttmin.setVisibility(View.GONE);
                     recyclerView.setVisibility(View.VISIBLE);
                 } else {
@@ -203,11 +234,11 @@ public class MinumanFragment extends Fragment {
             public void onResponse(Call<ResponseProduk> call, Response<ResponseProduk> response) {
                 produkList = response.body().getData();
                 if (produkList != null) {
-                    addData = new HomeRvAdapter(getContext(), produkList, adapterItemListenerInterface);
+                    AdapterCari = new HomeRvAdapter(getContext(), produkList, adapterItemListenerInterface);
                     recyclerView = getView().findViewById(R.id.fminxrecycleminuman);
                     recyclerView.setHasFixedSize(true);
-                    recyclerView.setAdapter(addData);
-                    addData.notifyDataSetChanged();
+                    recyclerView.setAdapter(AdapterCari);
+                    AdapterCari.notifyDataSetChanged();
                     teksttmin.setVisibility(View.GONE);
                     recyclerView.setVisibility(View.VISIBLE);
                 } else {
@@ -231,11 +262,11 @@ public class MinumanFragment extends Fragment {
             public void onResponse(Call<ResponseProduk> call, Response<ResponseProduk> response) {
                 produkList = response.body().getData();
                 if (produkList != null) {
-                    addData = new HomeRvAdapter(getContext(), produkList, adapterItemListenerInterface);
+                    AdapterCari = new HomeRvAdapter(getContext(), produkList, adapterItemListenerInterface);
                     recyclerView = getView().findViewById(R.id.fminxrecycleminuman);
                     recyclerView.setHasFixedSize(true);
-                    recyclerView.setAdapter(addData);
-                    addData.notifyDataSetChanged();
+                    recyclerView.setAdapter(AdapterCari);
+                    AdapterCari.notifyDataSetChanged();
                     teksttmin.setVisibility(View.GONE);
                     recyclerView.setVisibility(View.VISIBLE);
                 } else {

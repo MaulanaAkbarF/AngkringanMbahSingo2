@@ -232,6 +232,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:drawableLeft="@drawable/note_icon_1"
+                android:drawablePadding="5dp"
                 android:backgroundTint="#FFFFFF" />
         </androidx.constraintlayout.widget.ConstraintLayout>
         <androidx.constraintlayout.widget.ConstraintLayout

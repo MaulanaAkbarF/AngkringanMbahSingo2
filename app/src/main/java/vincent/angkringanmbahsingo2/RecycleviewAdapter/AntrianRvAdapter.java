@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.File;
@@ -96,7 +97,18 @@ public class AntrianRvAdapter extends RecyclerView.Adapter<AntrianRvAdapter.View
                 holder.tekstampilkan.setText("Tampilkan Pesanan");
             }
         });
-        holder.tekstampilkan.setOnClickListener(new View.OnClickListener() {
+
+        holder.tekskirim.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String url = "https://wa.link/7kfdl4";
+                CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+                CustomTabsIntent customTabsIntent = builder.build();
+                customTabsIntent.launchUrl(context.getApplicationContext(), Uri.parse(url));
+            }
+        });
+
+        holder.tekskirim.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
             }
@@ -158,17 +170,6 @@ public class AntrianRvAdapter extends RecyclerView.Adapter<AntrianRvAdapter.View
             });
 //            itemView.setOnClickListener(this);
         }
-
-
-
-//        @Override
-//        protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//            super.onActivityResult(requestCode, resultCode, data);
-//            if(resultCode == RESULT_OK){
-//                ur = data.getData();
-//                img.setImageURI(ur);
-//            }
-//        }
 
 //        @Override
 //        public void onClick(View v) {

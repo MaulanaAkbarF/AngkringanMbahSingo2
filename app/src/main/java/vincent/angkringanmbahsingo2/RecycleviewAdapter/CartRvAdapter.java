@@ -57,6 +57,7 @@ public class CartRvAdapter extends RecyclerView.Adapter<CartRvAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull CartRvAdapter.ViewHolder holder, int position) {
         DataItemTransaksi db = listDataAdapter.get(position);
+        DataItemTransaksi dbpos = listDataAdapter.get(holder.getAdapterPosition());
 
         holder.idmenu.setText(db.getIdProduk());
         holder.judul.setText(db.getNamaProduk());
@@ -64,13 +65,36 @@ public class CartRvAdapter extends RecyclerView.Adapter<CartRvAdapter.ViewHolder
         holder.jumlah.setText(String.format(stock, Integer.parseInt(db.getJumlah())));
         Picasso.get().load(API.BASE_GAMBAR+db.getPengiriman()).error(R.mipmap.ic_launcher).into(holder.gambar);
         holder.plusimage.setOnClickListener(view -> {
-            if (dataListKeranjang == null) {
-                currentNumber = Integer.parseInt(db.getJumlah());
-                holder.judul.setText(String.valueOf(currentNumber));
+            currentNumber = Integer.parseInt(String.valueOf(holder.jumlah.getText().toString()));
+            addNumber = currentNumber + 1;
+            holder.jumlah.setText(String.valueOf(addNumber));
+            totalPrice = addNumber * Integer.parseInt(dbpos.getHarga());
+            holder.totalharga.setText(String.format(currency, Integer.parseInt(String.valueOf(totalPrice))));
+
+            HomeFragment hfg = new HomeFragment();
+            apiInterface = API.getService().create(APIInterface.class);
+            Call<ResponseTransaksi> riwayatCall = apiInterface.updateKeranjang(holder.idmenu.getText().toString(), hfg.teksuser.getText().toString(), String.valueOf(addNumber), String.valueOf(totalPrice));
+            riwayatCall.enqueue(new Callback<ResponseTransaksi>() {
+                @Override
+                public void onResponse(Call<ResponseTransaksi> call, Response<ResponseTransaksi> response) {
+                    dataListKeranjang = response.body().getData();
+                    currentNumber = Integer.parseInt(String.valueOf(listDataAdapter.get(holder.getAdapterPosition()).getJumlah()));
+                }
+
+                @Override
+                public void onFailure(Call<ResponseTransaksi> call, Throwable t) {
+
+                }
+            });
+        });
+        holder.minimage.setOnClickListener(view -> {
+            if (currentNumber <= 1){
+                holder.jumlah.setText(String.valueOf(1));
             } else {
-                addNumber = currentNumber + 1;
+                currentNumber = Integer.parseInt(String.valueOf(holder.jumlah.getText().toString()));
+                addNumber = currentNumber - 1;
                 holder.jumlah.setText(String.valueOf(addNumber));
-                totalPrice = addNumber * Integer.parseInt(db.getHarga());
+                totalPrice = addNumber * Integer.parseInt(dbpos.getHarga());
                 holder.totalharga.setText(String.format(currency, Integer.parseInt(String.valueOf(totalPrice))));
 
                 HomeFragment hfg = new HomeFragment();
@@ -88,36 +112,6 @@ public class CartRvAdapter extends RecyclerView.Adapter<CartRvAdapter.ViewHolder
 
                     }
                 });
-            }
-        });
-        holder.minimage.setOnClickListener(view -> {
-            if (currentNumber <= 1){
-                holder.jumlah.setText(String.valueOf(1));
-            } else {
-                if (dataListKeranjang == null) {
-                    currentNumber = Integer.parseInt(db.getJumlah());
-                } else {
-                    addNumber = currentNumber - 1;
-                    holder.jumlah.setText(String.valueOf(addNumber));
-                    totalPrice = addNumber * Integer.parseInt(db.getHarga());
-                    holder.totalharga.setText(String.format(currency, Integer.parseInt(String.valueOf(totalPrice))));
-
-                    HomeFragment hfg = new HomeFragment();
-                    apiInterface = API.getService().create(APIInterface.class);
-                    Call<ResponseTransaksi> riwayatCall = apiInterface.updateKeranjang(holder.idmenu.getText().toString(), hfg.teksuser.getText().toString(), String.valueOf(addNumber), String.valueOf(totalPrice));
-                    riwayatCall.enqueue(new Callback<ResponseTransaksi>() {
-                        @Override
-                        public void onResponse(Call<ResponseTransaksi> call, Response<ResponseTransaksi> response) {
-                            dataListKeranjang = response.body().getData();
-                            currentNumber = Integer.parseInt(listDataAdapter.get(holder.getAdapterPosition()).getJumlah());
-                        }
-
-                        @Override
-                        public void onFailure(Call<ResponseTransaksi> call, Throwable t) {
-
-                        }
-                    });
-                }
             }
         });
         currentNumber = Integer.parseInt(String.valueOf(holder.jumlah.getText()));

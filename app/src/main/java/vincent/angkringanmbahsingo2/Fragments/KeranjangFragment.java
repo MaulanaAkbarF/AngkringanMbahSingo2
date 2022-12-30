@@ -240,7 +240,7 @@ public class KeranjangFragment extends Fragment {
         batal.setOnClickListener(view1 -> {
             HomeFragment hfg = new HomeFragment();
             apiInterface = API.getService().create(APIInterface.class);
-            Call<ResponseTransaksi> riwayatCall = apiInterface.hapusSemuaRiwayat(hfg.teksuser.getText().toString());
+            Call<ResponseTransaksi> riwayatCall = apiInterface.hapusSemuaKeranjang(hfg.teksuser.getText().toString());
             riwayatCall.enqueue(new Callback<ResponseTransaksi>() {
                 @Override
                 public void onResponse(Call<ResponseTransaksi> call, Response<ResponseTransaksi> response) {
@@ -252,7 +252,7 @@ public class KeranjangFragment extends Fragment {
                     teksttk.setVisibility(View.VISIBLE);
                     btnhapussemua.setVisibility(View.GONE);
                     btnhapussemua.startAnimation(easeOutQuadRightOut);
-                    Toast.makeText(getActivity(), "Riwayat berhasil dikosongkan!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Keranjang berhasil dikosongkan!", Toast.LENGTH_SHORT).show();
                 }
 
                 @Override

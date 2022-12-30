@@ -203,8 +203,8 @@ public class RegisterFragment extends Fragment implements Backpressedlistener {
                 user.setError("Username tidak boleh kosong!");
             } else if (pass.getText().toString().equals("") && pass.getText().toString().isEmpty()) {
                 pass.setError("Password tidak boleh kosong!");
-//                } else if (password != password2){
-//                    pass.setError("Password tidak sama dengan password dibawah!");
+            } else if (!pass.getText().toString().equals(pass2.getText().toString())){
+                pass.setError("Password tidak sama dengan password dibawah!");
             } else {
                 apiInterface = API.getService().create(APIInterface.class);
                 Call<ResponseRegister> simpan = apiInterface.registerResponse(username, emailkamu, password, namalengkap, nomorhp, alamatlengkap);
