@@ -1,5 +1,5 @@
 <div align="center">
-<img src="https://images3.alphacoders.com/128/1288825.png" alt="V Angkringan" width="1920" />
+<img src="https://github.com/MaulanaAkbarF/gambar/blob/main/BannerGithub%204K.png" alt="V Angkringan" width="1920" />
 
 # V-Angkringan
 
@@ -49,13 +49,13 @@ V-Angkringan adalah aplikasi mobile UMKM yang dikembangkan oleh Kelompok Vincent
 </div>
   
 Download Project :
-* [Direct Link Download](https://github.com/MaulanaAkbarF/AngkringanMbahSingo2/archive/refs/heads/master.zip) (Zip File)
+* [V-Angkringan Project](https://github.com/MaulanaAkbarF/AngkringanMbahSingo2/archive/refs/heads/master.zip) (Zip File)
 
 Download File PHP Android :
-* [Coming Soon](https://github.com/MaulanaAkbarF/AngkringanMbahSingo2) (Zip File)
+* [PHP File](https://drive.google.com/u/0/uc?id=11h6oQHsUf-QGoUYWs73gcigfoU7tslfb&export=download) (Zip File)
 
 Download File SQL Database :
-* [Database SQL](https://drive.google.com/u/0/uc?id=1X5FaUpn5F_SHwKKrCBI2syEK2R5e2p5i&export=download) (SQL File)
+* [Database SQL](https://drive.google.com/u/0/uc?id=1mLuBao8P3TtiEsorhz62XpGuHOzdsumo&export=download) (SQL File)
 
 # Minimum Spesification
 * Intel Xeon Platinum / AMD Ryzen Threadripper / AMD Epyc
