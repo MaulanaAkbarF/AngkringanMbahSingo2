@@ -47,7 +47,7 @@ public class DetailAlamatFragment extends Fragment implements Backpressedlistene
     String alamatButtonAmbil = "Ambil di Angkringan Mbah Singo";
 
     // Mengisi data ID Transaksi dari Interface
-    private String dataIdTransaksi, dataAlamat, dataMetode, dataAlamatDefault, dataIdkupon, dataIdkupon2, namaKupon, namaKupon2;
+    private String dataIdTransaksi, dataAlamat, dataMetode, dataRekening, dataAlamatDefault, dataIdkupon, dataIdkupon2, namaKupon, namaKupon2;
     int check, nilai, nilai2;
     // Mengisi data ID Transaksi dari DetailPesananFragment
     public void setDataIdTransaksi(String dataIdTransaksi, int check) {
@@ -71,6 +71,8 @@ public class DetailAlamatFragment extends Fragment implements Backpressedlistene
     }
 
     public void setDataMetode(String dataMetode) {this.dataMetode = dataMetode;}
+
+    public void setDataRekening(String dataRekening) {this.dataRekening = dataRekening;}
 
     // Mendapatkan data
     public String getDataAlamat() {return this.dataAlamat;}
@@ -99,6 +101,7 @@ public class DetailAlamatFragment extends Fragment implements Backpressedlistene
             dpf.setDataIdTransaksi(dataIdTransaksi, check);
             dpf.setDataAlamat(alamat);
             dpf.setDataMetode(dataMetode);
+            dpf.setDataRekening(dataRekening);
             dpf.setDataKupon(dataIdkupon, dataIdkupon2, namaKupon, namaKupon2, nilai, nilai2);
             if (btn1.isChecked()){
                 dpf.setDataAlamat(txtalamat.getText().toString());
@@ -192,6 +195,7 @@ public class DetailAlamatFragment extends Fragment implements Backpressedlistene
         btntetapkan.setOnClickListener(view -> {
             dpf.setDataIdTransaksi(dataIdTransaksi, check);
             dpf.setDataMetode(dataMetode);
+            dpf.setDataRekening(dataRekening);
             dpf.setDataKupon( dataIdkupon, dataIdkupon2, namaKupon, namaKupon2, nilai, nilai2);
             if (btn1.isChecked()){
                 dpf.setDataAlamat(txtalamat.getText().toString());
@@ -224,6 +228,7 @@ public class DetailAlamatFragment extends Fragment implements Backpressedlistene
         dpf.setDataIdTransaksi(dataIdTransaksi, check);
         dpf.setDataAlamat(alamat);
         dpf.setDataMetode(dataMetode);
+        dpf.setDataRekening(dataRekening);
         dpf.setDataKupon( dataIdkupon, dataIdkupon2, namaKupon, namaKupon2, nilai, nilai2);
         if (btn1.isChecked()){
             dpf.setDataAlamat(txtalamat.getText().toString());

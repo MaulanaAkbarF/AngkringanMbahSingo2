@@ -1,10 +1,13 @@
 package vincent.angkringanmbahsingo2.API;
 
+import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import vincent.angkringanmbahsingo2.ModelAPI.ResponseKupon;
 import vincent.angkringanmbahsingo2.ModelAPI.ResponseLogin;
 import vincent.angkringanmbahsingo2.ModelAPI.ResponseProduk;
@@ -58,6 +61,13 @@ public interface APIInterface {
     Call<ResponseLogin> setUserEmail(
             @Field("nama_lengkap") String nama_lengkap,
             @Field("email") String email
+    );
+
+    @FormUrlEncoded
+    @POST("updateresetpassword.php")
+    Call<ResponseLogin> setResetPassword(
+            @Field("email") String email,
+            @Field("password") String password
     );
 
     @FormUrlEncoded
@@ -207,7 +217,8 @@ public interface APIInterface {
             @Field("subtotal") String subtotal,
             @Field("pengiriman") String pengiriman,
             @Field("metode") String metode,
-            @Field("status") String status
+            @Field("status") String status,
+            @Field("id_produk") String catatan
     );
 
     @FormUrlEncoded
@@ -252,5 +263,31 @@ public interface APIInterface {
     @POST("hapussemuariwayat.php")
     Call<ResponseTransaksi> hapusSemuaRiwayat(
             @Field("username") String username
+    );
+
+    @FormUrlEncoded
+    @POST("kirimkodeverify.php")
+    Call<ResponseRegister> kirimKodeVerify(
+            @Field("email") String email,
+            @Field("username") String judulpesan,
+            @Field("alamat") String deskripsipesan
+    );
+
+    @FormUrlEncoded
+    @POST("cekkodeverify.php")
+    Call<ResponseLogin> cekKodeVerify(
+            @Field("email") String emailverify
+    );
+
+    @FormUrlEncoded
+    @POST("hapusregister.php")
+    Call<ResponseRegister> hapusRegister(
+            @Field("email") String email
+    );
+
+    @Multipart
+    @POST("hapusregister.php")
+    Call<ResponseTransaksi> example(
+            @Part MultipartBody.Part gambar
     );
 }

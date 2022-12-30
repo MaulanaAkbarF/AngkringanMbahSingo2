@@ -66,12 +66,28 @@
             app:layout_constraintTop_toBottomOf="@id/dpxscrollrv"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
+            <TextView
+                android:id="@+id/dpxlabelteks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginVertical="10dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/dpxview1"
+                android:layout_marginTop="10dp"
+                android:text="Rincian Pesanan"
+                android:textSize="@dimen/fh.ukurantekssubjudul"
+                android:fontFamily="@font/inter_semibold"
+                android:textColor="@color/black"/>
             <View
                 android:id="@+id/dpxview1"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/dpxlabelteks"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/dpxlabelpengiriman"
                 android:background="#bdbdbd" />
             <TextView
                 android:id="@+id/dpxlabelpengiriman"
@@ -182,11 +198,48 @@
                 android:maxLines="2"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/dpxconssubtotal"
+            android:id="@+id/dpxconscatatan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             app:layout_constraintTop_toBottomOf="@id/dpxconskupon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+            <View
+                android:id="@+id/dpxview5"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:background="#bdbdbd" />
+            <TextView
+                android:id="@+id/dpxlabelcatatan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/dpxview5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="10dp"
+                android:text="Catatan : "
+                android:textSize="@dimen/fh.ukurantekssubjudul"
+                android:fontFamily="@font/inter_semibold"
+                android:textColor="@color/dark_red"/>
+            <EditText
+                android:id="@+id/dpxtxtcatatan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/dpxlabelcatatan"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:drawableLeft="@drawable/note_icon_1"
+                android:backgroundTint="#FFFFFF" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/dpxconssubtotal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@id/dpxconscatatan"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
             <View

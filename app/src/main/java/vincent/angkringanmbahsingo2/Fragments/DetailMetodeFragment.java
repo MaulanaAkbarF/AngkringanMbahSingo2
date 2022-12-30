@@ -26,10 +26,10 @@ public class DetailMetodeFragment extends Fragment implements Backpressedlistene
     View includeTransfer;
     LinearLayout linearlay;
     RadioButton btn1, btn2, btn3, rb1, rb2;
-    TextView label1, label2, label3, txtalamat;
+    TextView label1, label2, label3, txtalamat, rek1, rek2;
     ImageView btnback;
     Slide slide = new Slide();
-    String dataIdTransaksi, dataAlamat, dataMetode, dataIdkupon, dataIdkupon2, namaKupon, namaKupon2;
+    String dataIdTransaksi, dataAlamat, dataMetode, noRek, dataIdkupon, dataIdkupon2, namaKupon, namaKupon2;
     public static Backpressedlistener backpressedlistener;
     int check, nilai, nilai2;
 
@@ -58,6 +58,8 @@ public class DetailMetodeFragment extends Fragment implements Backpressedlistene
         label1 = view.findViewById(R.id.dmxlabel1);
         label2 = view.findViewById(R.id.dmxlabel2);
         label3 = view.findViewById(R.id.dmxlabel3);
+        rek1 = view.findViewById(R.id.dtxrek1);
+        rek2 = view.findViewById(R.id.dtxrek2);
         btn1 = view.findViewById(R.id.dmxradiotunai);
         btn2 = view.findViewById(R.id.dmxradiocod);
         btn3 = view.findViewById(R.id.dmxradiotransfer);
@@ -76,6 +78,19 @@ public class DetailMetodeFragment extends Fragment implements Backpressedlistene
                 dpf.setDataMetode("COD");
             } else if (btn3.isChecked()){
                 dpf.setDataMetode("Transfer");
+                if (rb1.isChecked()){
+                    noRek = rek1.getText().toString();
+                    if (noRek.contains(" ")){
+                        noRek = noRek.replace(" ", "");
+                    }
+                    dpf.setDataRekening(noRek);
+                } else if (rb2.isChecked()){
+                    noRek = rek2.getText().toString();
+                    if (noRek.contains(" ")){
+                        noRek = noRek.replace(" ", "");
+                    }
+                    dpf.setDataRekening(noRek);
+                }
             } else {
                 dpf.setDataMetode(dataMetode);
             }

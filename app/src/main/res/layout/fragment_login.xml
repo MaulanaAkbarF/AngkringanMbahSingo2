@@ -14,7 +14,6 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
             <LinearLayout
                 android:id="@+id/flxlinearimage"
                 android:layout_width="wrap_content"
@@ -24,13 +23,11 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
-
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/logovincentbiru" />
             </LinearLayout>
-
             <LinearLayout
                 android:id="@+id/flxlinearinput"
                 android:layout_width="match_parent"
@@ -44,7 +41,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/flxlinearimage">
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -54,7 +50,6 @@
                     android:text="Masukkan Data Anda"
                     android:textColor="@color/dark_blue"
                     android:textSize="@dimen/lp.ukuranfonttombol" />
-
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
@@ -67,7 +62,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/imageView"
                     app:passwordToggleTint="@color/teal_200">
-
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/lpxusername"
                         android:layout_width="match_parent"
@@ -75,13 +69,12 @@
                         android:drawableLeft="@drawable/usernameicon"
                         android:drawablePadding="10dp"
                         android:hint="Username"
-                        android:inputType="textEmailAddress"
+                        android:inputType="text"
                         android:maxLength="30"
                         android:textColor="@color/black"
                         android:textColorHint="@color/dark_blue"
                         android:textSize="@dimen/lp.ukuranteksinput" />
                 </com.google.android.material.textfield.TextInputLayout>
-
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
@@ -93,7 +86,6 @@
                     app:layout_constraintTop_toBottomOf="@+id/imageView"
                     app:passwordToggleEnabled="true"
                     app:passwordToggleTint="@color/dark_blue">
-
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/lpxpassword"
                         android:layout_width="match_parent"
@@ -107,7 +99,6 @@
                         android:textColorHint="@color/dark_blue"
                         android:textSize="@dimen/lp.ukuranteksinput" />
                 </com.google.android.material.textfield.TextInputLayout>
-
                 <TextView
                     android:id="@+id/lpxtxtlupapass"
                     android:layout_width="wrap_content"
@@ -120,7 +111,6 @@
                     android:textSize="@dimen/lp.ukuranteksinput"
                     android:textStyle="italic" />
             </LinearLayout>
-
             <LinearLayout
                 android:id="@+id/flxlinearbutton"
                 android:layout_width="wrap_content"
@@ -130,7 +120,6 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent">
-
                 <Button
                     android:id="@+id/lpxbtnMasuk"
                     android:layout_width="wrap_content"
@@ -145,7 +134,6 @@
                     android:textSize="@dimen/lp.ukuranfonttombol"
                     android:textStyle="bold"
                     app:cornerRadius="50dp" />
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -154,7 +142,6 @@
                     android:text="Anda belum punya akun?"
                     android:textColor="@color/black"
                     android:textSize="@dimen/lp.ukuranfontdaftar" />
-
                 <TextView
                     android:id="@+id/flxtxtDaftar"
                     android:layout_width="wrap_content"
@@ -168,5 +155,4 @@
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
-
 </FrameLayout>

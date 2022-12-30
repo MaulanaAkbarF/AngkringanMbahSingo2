@@ -41,7 +41,7 @@ public class HomeFragment extends Fragment {
     ScrollView rvdatalayout;
 
     public static TextView teksttpr, tekstttr, teksnama, teksnomor, teksemail, teksuser, teksalamat;
-    CardView btnprofil;
+    CardView btnprofil, searchall;
     RecyclerView recyclerView1, recyclerView2;
     HomeRvAdapter.AdapterItemListener adapterItemListenerInterface;
 
@@ -68,6 +68,7 @@ public class HomeFragment extends Fragment {
         judul.startAnimation(easeOutSineTop);
         rvdatalayout.startAnimation(easeOutQuadLeft);
 
+        searchall = view.findViewById(R.id.searchall);
         teksttpr = view.findViewById(R.id.fhxteksttpromo);
         tekstttr = view.findViewById(R.id.fhxteksttterakhir);
         teksnama = view.findViewById(R.id.fhxtxtnama);
@@ -94,6 +95,13 @@ public class HomeFragment extends Fragment {
         btnprofil.setOnClickListener(view1 -> {
             FragmentTransaction fragtr = getFragmentManager().beginTransaction();
             fragtr.replace(R.id.fragmentcontainersplash, new ProfilFragment()).addToBackStack("tag").commit();
+        });
+
+        searchall.setOnClickListener(view12 -> {
+            CariMenuFragment cmf = new CariMenuFragment();
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            FragmentTransaction fragtr = fragmentManager.beginTransaction();
+            fragtr.replace(R.id.fragmentcontainersplash, cmf).commit();
         });
 
         tekstttr.setVisibility(View.GONE);

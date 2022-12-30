@@ -57,12 +57,13 @@ public class DetailKuponFragment extends Fragment implements Backpressedlistener
     List<DataItemKupon> kuponList = new ArrayList<>();
     List<DataItemKupon> kuponList2 = new ArrayList<>();
 
-    private String dataIdTransaksi, dataAlamat, dataMetode, idkupon, idkupon2, namakupon, namakupon2;
+    private String dataIdTransaksi, dataAlamat, dataMetode, dataRekening, idkupon, idkupon2, namakupon, namakupon2;
     private int check, subtotal, nilai, nilai2, minimal, minimal2;
-    public void setDataDefaultPesanan(String dataIdTransaksi, String dataAlamat, String dataMetode, int subtotal, int check) {
+    public void setDataDefaultPesanan(String dataIdTransaksi, String dataAlamat, String dataMetode, String dataRekening, int subtotal, int check) {
         this.dataIdTransaksi = dataIdTransaksi;
         this.dataAlamat = dataAlamat;
         this.dataMetode = dataMetode;
+        this.dataRekening = dataRekening;
         this.subtotal = subtotal;
         this.check = check;
     }
@@ -98,6 +99,7 @@ public class DetailKuponFragment extends Fragment implements Backpressedlistener
             dpf.setDataIdTransaksi(dataIdTransaksi, check);
             dpf.setDataAlamat(dataAlamat);
             dpf.setDataMetode(dataMetode);
+            dpf.setDataRekening(dataRekening);
             scrollanimate.startAnimation(easeOutQuadRight);
             recyclerView.startAnimation(easeOutQuadLeft);
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
@@ -116,6 +118,7 @@ public class DetailKuponFragment extends Fragment implements Backpressedlistener
                 dpf.setDataIdTransaksi(dataIdTransaksi, check);
                 dpf.setDataAlamat(dataAlamat);
                 dpf.setDataMetode(dataMetode);
+                dpf.setDataRekening(dataRekening);
                 dpf.setDataKupon(idkupon, idkupon2, namakupon, namakupon2, nilai, nilai2);
                 scrollanimate.startAnimation(easeOutQuadRight);
                 recyclerView.startAnimation(easeOutQuadLeft);
@@ -258,6 +261,7 @@ public class DetailKuponFragment extends Fragment implements Backpressedlistener
         dpf.setDataIdTransaksi(dataIdTransaksi, check);
         dpf.setDataAlamat(dataAlamat);
         dpf.setDataMetode(dataMetode);
+        dpf.setDataRekening(dataRekening);
         scrollanimate.startAnimation(easeOutQuadRight);
         recyclerView.startAnimation(easeOutQuadLeft);
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();

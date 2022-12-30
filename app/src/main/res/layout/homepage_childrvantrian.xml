@@ -28,7 +28,7 @@
             app:layout_constraintStart_toEndOf="@id/hpximage"
             app:layout_constraintEnd_toEndOf="parent"
             android:text="Judul Menu"
-            android:textSize="@dimen/hp.ukuranteksinfo"
+            android:textSize="@dimen/hpr.ukuranjudul"
             android:textColor="@color/black"
             android:textStyle="bold"
             android:ellipsize="end"
@@ -42,7 +42,7 @@
             app:layout_constraintEnd_toStartOf="@id/hpxhargatotal"
             app:layout_constraintBottom_toBottomOf="parent"
             android:text="x10"
-            android:textSize="@dimen/hp.ukuranteksinfo"/>
+            android:textSize="@dimen/hpr.ukuranharga"/>
         <TextView
             android:id="@+id/hpxhargatotal"
             android:layout_width="0dp"
@@ -53,7 +53,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:gravity="right"
             android:text="x10"
-            android:textSize="@dimen/hp.ukuranteksinfo"
+            android:textSize="@dimen/hpr.ukuranharga"
             android:textColor="@color/red"
             android:textStyle="bold"
             android:ellipsize="end"

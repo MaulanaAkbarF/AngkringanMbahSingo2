@@ -25,24 +25,26 @@
             android:textColor="@color/dark_blue"
             android:textStyle="bold"
             android:fontFamily="@font/inter_bold"/>
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            app:boxBackgroundMode="outline"
-            app:boxStrokeColor="@color/dark_blue"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cariii"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/fminxinput"
-                android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:padding="10dp"
+            android:background="@drawable/edittext_bg"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="5dp">
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="5dp"
                 android:drawableLeft="@drawable/searchgreyicon"
-                android:drawablePadding="10dp"
-                android:hint="Ketik nama minuman..."
-                android:inputType="text"
-                android:textColor="@color/black"
-                android:textColorHint="@color/dark_blue"
-                android:textSize="@dimen/lp.ukuranteksinput" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:text="Cari"
+                android:textSize="15sp"
+                android:drawablePadding="10dp"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/fminxconsspinner"
             android:layout_width="match_parent"

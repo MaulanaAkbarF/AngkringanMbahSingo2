@@ -378,7 +378,7 @@ public class ProfilFragment extends Fragment implements Backpressedlistener {
                 loginCall.enqueue(new Callback<ResponseLogin>() {
                     @Override
                     public void onResponse(Call<ResponseLogin> call, Response<ResponseLogin> response) {
-                        Toast.makeText(getActivity(), "Passowrd berhasil diubah!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Password berhasil diubah!", Toast.LENGTH_SHORT).show();
                     }
                     @Override
                     public void onFailure(Call<ResponseLogin> call, Throwable t) {

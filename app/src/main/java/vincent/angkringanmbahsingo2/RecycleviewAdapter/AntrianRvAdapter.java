@@ -1,12 +1,17 @@
 package vincent.angkringanmbahsingo2.RecycleviewAdapter;
 
-import android.annotation.SuppressLint;
+import static androidx.core.app.ActivityCompat.startActivityForResult;
+
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -15,18 +20,19 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.squareup.picasso.Picasso;
-
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import vincent.angkringanmbahsingo2.API.API;
 import vincent.angkringanmbahsingo2.API.APIInterface;
 import vincent.angkringanmbahsingo2.Fragments.HomeFragment;
-import vincent.angkringanmbahsingo2.Fragments.RiwayatFragment;
 import vincent.angkringanmbahsingo2.ModelAPI.DataItemTransaksi;
 import vincent.angkringanmbahsingo2.ModelAPI.ResponseTransaksi;
 import vincent.angkringanmbahsingo2.R;
@@ -90,6 +96,11 @@ public class AntrianRvAdapter extends RecyclerView.Adapter<AntrianRvAdapter.View
                 holder.tekstampilkan.setText("Tampilkan Pesanan");
             }
         });
+        holder.tekstampilkan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            }
+        });
 
         HomeFragment hfg = new HomeFragment();
         apiInterface = API.getService().create(APIInterface.class);
@@ -99,12 +110,12 @@ public class AntrianRvAdapter extends RecyclerView.Adapter<AntrianRvAdapter.View
             public void onResponse(Call<ResponseTransaksi> call, Response<ResponseTransaksi> response) {
                 childList = response.body().getData();
                 if (childList != null) {
-                    addData = new ChildAntrianRvAdapter(context.getApplicationContext(), childList, adapterItemListenerInterface);
+                    addData = new ChildAntrianRvAdapter(context, childList, adapterItemListenerInterface);
                     holder.recyclerView.setHasFixedSize(true);
                     holder.recyclerView.setAdapter(addData);
                     addData.notifyDataSetChanged();
                 } else {
-                    Toast.makeText(context.getApplicationContext(), "Anda tidak memiliki Antrian Pesanan", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Anda tidak memiliki Antrian Pesanan", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -114,6 +125,8 @@ public class AntrianRvAdapter extends RecyclerView.Adapter<AntrianRvAdapter.View
             }
         });
     }
+
+
 
     @Override
     public int getItemCount() {
@@ -137,8 +150,25 @@ public class AntrianRvAdapter extends RecyclerView.Adapter<AntrianRvAdapter.View
             scrollView = itemView.findViewById(R.id.hpxscrollpesanan);
             recyclerView = itemView.findViewById(R.id.fantxrvchildantrian);
 
+            tekskirim.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
 //            itemView.setOnClickListener(this);
         }
+
+
+
+//        @Override
+//        protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//            super.onActivityResult(requestCode, resultCode, data);
+//            if(resultCode == RESULT_OK){
+//                ur = data.getData();
+//                img.setImageURI(ur);
+//            }
+//        }
 
 //        @Override
 //        public void onClick(View v) {

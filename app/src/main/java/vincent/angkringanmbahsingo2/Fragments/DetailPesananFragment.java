@@ -24,6 +24,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -51,6 +52,7 @@ public class DetailPesananFragment extends Fragment implements Backpressedlisten
     ConstraintLayout linearlay, btnalamat, btnmetode, btnkupon;
     public static TextView teksalamat, teksmetode, teksmetode2, tekskupon, teksongkir, teksongkir2, tekssubtotal, tekssubtotal2, labelpengiriman;
     ImageView btnback;
+    EditText catatan;
     Button btnpesan;
     Dialog dialog;
     StrikethroughSpan span = new StrikethroughSpan();
@@ -58,7 +60,7 @@ public class DetailPesananFragment extends Fragment implements Backpressedlisten
     static String currency = "Rp. %,d";
     static String stock = "%,d";
     String alamatButtonAmbil = "Anda belum menentukan Alamat";
-    public String dataIdTransaksi, dataPengiriman, dataAlamat, dataMetode, dataIdkupon, dataIdkupon2, namaKupon, namaKupon2;
+    public String dataIdTransaksi, dataPengiriman, dataAlamat, dataMetode, dataRekening, dataIdkupon, dataIdkupon2, namaKupon, namaKupon2;
     public int check, subtotal, nilai, nilai2, biayaongkir = 8000;
     public int totalbayar, totalbiayaongkir, totalsubtotaldefault, totalsubtotal;
     public static Backpressedlistener backpressedlistener;
@@ -100,6 +102,8 @@ public class DetailPesananFragment extends Fragment implements Backpressedlisten
 
     public String getDataMetode() {return this.dataMetode;}
 
+    public void setDataRekening(String dataRekening) {this.dataRekening = dataRekening;}
+
     public void setDataKupon(String idkupon, String idkupon2, String namakupon, String namakupon2, int nilai, int nilai2){
         this.dataIdkupon = idkupon;
         this.dataIdkupon2 = idkupon2;
@@ -129,6 +133,7 @@ public class DetailPesananFragment extends Fragment implements Backpressedlisten
         tekssubtotal2 = view.findViewById(R.id.dpxsubtotal2);
         btnback = view.findViewById(R.id.dpxbtnback);
         btnpesan = view.findViewById(R.id.dpxbtnpesan);
+        catatan = view.findViewById(R.id.dpxtxtcatatan);
 
         // Membuat animasi
         easeOutQuadLeft = AnimationUtils.loadAnimation(getActivity(), R.anim.ease_out_quad_left);
@@ -158,7 +163,7 @@ public class DetailPesananFragment extends Fragment implements Backpressedlisten
 
         btnkupon.setOnClickListener(view15 -> {
             DetailKuponFragment dmf = new DetailKuponFragment();
-            dmf.setDataDefaultPesanan(getDataIdTransaksi(), dataAlamat, dataMetode, subtotal, check);
+            dmf.setDataDefaultPesanan(getDataIdTransaksi(), dataAlamat, dataMetode, dataRekening, subtotal, check);
             dmf.setDataMetode(teksmetode.getText().toString());
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             FragmentTransaction fragtr = fragmentManager.beginTransaction();
@@ -351,14 +356,17 @@ public class DetailPesananFragment extends Fragment implements Backpressedlisten
             }
             String idtransaksi = getDataIdTransaksi(), username = hfg.teksuser.getText().toString();
             apiInterface = API.getService().create(APIInterface.class);
-            Call<ResponseTransaksi> pesananCall = apiInterface.transaksiBeliFinal(idtransaksi, username, String.valueOf(totalbayar), pengiriman, dataMetode, "0");
+            Call<ResponseTransaksi> pesananCall = apiInterface.transaksiBeliFinal(idtransaksi, username, String.valueOf(totalbayar), pengiriman, dataMetode, "0", catatan.getText().toString());
             pesananCall.enqueue(new Callback<ResponseTransaksi>() {
                 @Override
                 public void onResponse(Call<ResponseTransaksi> call, Response<ResponseTransaksi> response) {
                     dataPesanan = response.body().getData();
                     scrollanimate.startAnimation(easeOutSineTopOut);
-                    FragmentTransaction fragtr = getFragmentManager().beginTransaction();
-                    fragtr.replace(R.id.fragmentcontainersplash, new SplashSelesaiFragment()).commit();
+                    SplashSelesaiFragment ssf = new SplashSelesaiFragment();
+                    ssf.setDataTransaksi(getDataIdTransaksi(), subtotal, dataRekening);
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    FragmentTransaction fragtr = fragmentManager.beginTransaction();
+                    fragtr.replace(R.id.fragmentcontainersplash, ssf).commit();
                     dataIdTransaksi = null;
                 }
 
