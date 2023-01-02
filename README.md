@@ -9,7 +9,7 @@ V-Angkringan adalah aplikasi mobile UMKM yang dikembangkan oleh Kelompok Vincent
   <a href="https://github.com/MaulanaAkbarF/AngkringanMbahSingo2"><img title="Author" src="https://img.shields.io/badge/Author-Maulana Akbar F.-purple.svg?style=for-the-badge&logo=github" /></a>
 </p>
 <p align="center">
-  <a href="https://github.com/MaulanaAkbarF/AngkringanMbahSingo2"><img title="RATING" src="https://img.shields.io/badge/RATING SAAT INI-64%20%2F%20100-green?colorA=%23555555&colorB=%23FC5E00&style=for-the-badge"></a>
+  <a href="https://github.com/MaulanaAkbarF/AngkringanMbahSingo2"><img title="RATING" src="https://img.shields.io/badge/RATING SAAT INI-74%20%2F%20100-green?colorA=%23555555&colorB=%23FC5E00&style=for-the-badge"></a>
 </p>
 <p align="center">
   <a href="https://github.com/MaulanaAkbarF/AngkringanMbahSingo2"><img title="RATING" src="https://img.shields.io/badge/TARGET RATING-80%20%2F%20100-green?colorA=%23555555&colorB=%23017e40&style=for-the-badge"></a>
