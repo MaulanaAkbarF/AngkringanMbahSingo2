@@ -9,7 +9,7 @@ V-Angkringan adalah aplikasi mobile UMKM yang dikembangkan oleh Kelompok Vincent
   <a href="https://github.com/MaulanaAkbarF/AngkringanMbahSingo2"><img title="Author" src="https://img.shields.io/badge/Author-Maulana Akbar F.-purple.svg?style=for-the-badge&logo=github" /></a>
 </p>
 <p align="center">
-  <a href="https://github.com/MaulanaAkbarF/AngkringanMbahSingo2"><img title="RATING" src="https://img.shields.io/badge/RATING SAAT INI-64%20%2F%20100-green?colorA=%23555555&colorB=%23FC5E00&style=for-the-badge"></a>
+  <a href="https://github.com/MaulanaAkbarF/AngkringanMbahSingo2"><img title="RATING" src="https://img.shields.io/badge/RATING SAAT INI-74%20%2F%20100-green?colorA=%23555555&colorB=%23FC5E00&style=for-the-badge"></a>
 </p>
 <p align="center">
   <a href="https://github.com/MaulanaAkbarF/AngkringanMbahSingo2"><img title="RATING" src="https://img.shields.io/badge/TARGET RATING-80%20%2F%20100-green?colorA=%23555555&colorB=%23017e40&style=for-the-badge"></a>
@@ -135,6 +135,16 @@ Karena aplikasi ini masih dalam tahap pengembangan, hanya beberapa fitur yang te
 | List Menu Minuman   |       ✔️       |
 | Profil              |       ✔️       |
 | Detail Pesanan Beli |       ✔️       |
+| Verifikasi Pass     |       ✔️       |
+| Homepage            |       ✔️       |
+| Detail Pesanan      |       ✔️       |
+| Detail Alamat       |       ✔️       |
+| Detail Metode       |       ✔️       |
+| Detail Kupon        |       ✔️       |
+| Interface Menu      |       ✔️       |
+| Riwayat             |       ✔️       |
+| Antrian             |       ✔️       |
+| Keranjang           |       ✔️       |
 
 Catatan : Fitur diatas sudah berhasil terhubung ke SQL
 
@@ -143,14 +153,7 @@ Fitur yang masih dikembangkan :
 
 |      Fitur       |  Ketersediaan  |
 | :--------------: | :------------: |
-| Verifikasi Pass  |  Belum Selesai |
-| Homepage         |  Belum Selesai |
-| Detail Pesanan   |  Belum Selesai |
-| Detail Alamat    |  Belum Selesai |
-| Detail Metode    |  Belum Selesai |
-| Interface Menu   |  Belum Selesai |
-| Riwayat          |  Belum Selesai |
-| Keranjang        |  Belum Selesai |
+| Upload Bukti     |  Belum Selesai |
 | Connect ke Server|  Belum Selesai |
 
 # Thanks to
