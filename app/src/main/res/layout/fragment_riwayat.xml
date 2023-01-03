@@ -20,28 +20,29 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_marginVertical="@dimen/fh.margininput"
-            android:text="Riwayat Pembelian"
+            android:text="Riwayat Transaksi"
             android:textSize="@dimen/fh.ukuranteksjudul"
             android:textColor="@color/dark_blue"
             android:textStyle="bold"
             android:fontFamily="@font/inter_bold"/>
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            app:boxBackgroundMode="outline"
-            app:boxStrokeColor="@color/dark_blue"
+            android:id="@+id/search_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/friwxinput"
+            android:layout_height="wrap_content"
+            android:background="@drawable/search_view_border"
+            android:hint="Search...">
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/search2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/searchgreyicon"
-                android:drawablePadding="10dp"
-                android:hint="Cari Riwayat..."
-                android:inputType="text"
-                android:textColor="@color/black"
-                android:textColorHint="@color/dark_blue"
-                android:textSize="@dimen/lp.ukuranteksinput" />
+                android:background="@color/white"
+                android:textColorHint="@color/white"
+                app:iconifiedByDefault="false"
+                android:layout_margin="5dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:queryHint="Cari Riwayat"/>
         </com.google.android.material.textfield.TextInputLayout>
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/consoption"
@@ -128,7 +129,7 @@
                     android:layout_height="match_parent"
                     android:paddingVertical="10dp"
                     android:gravity="center"
-                    android:text="Riwayat Pembelian"
+                    android:text="Pesanan Selesai"
                     android:textSize="@dimen/hp.ukuranteksinfo"
                     android:textColor="@color/black"
                     android:textStyle="bold"
@@ -188,6 +189,6 @@
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:spanCount="1"
             android:orientation="vertical"
-            tools:listitem="@layout/homepage_rvriwayat"/>
+            tools:listitem="@layout/homepage_rvantrian"/>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

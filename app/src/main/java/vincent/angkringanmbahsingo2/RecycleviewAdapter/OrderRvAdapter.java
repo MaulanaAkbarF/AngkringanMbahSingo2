@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,10 +15,8 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import vincent.angkringanmbahsingo2.API.API;
-import vincent.angkringanmbahsingo2.ModelAPI.DataItemProduk;
 import vincent.angkringanmbahsingo2.ModelAPI.DataItemTransaksi;
 import vincent.angkringanmbahsingo2.R;
-import vincent.angkringanmbahsingo2.RecycleviewModel.HistRvModel;
 
 public class OrderRvAdapter extends RecyclerView.Adapter<OrderRvAdapter.ViewHolder> {
     Context context;

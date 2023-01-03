@@ -2,109 +2,227 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:paddingBottom="20dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:backgroundTint="@color/semiwhite"
-        app:cardCornerRadius="10dp">
+        android:layout_margin="5dp"
+        app:cardCornerRadius="7dp"
+        android:backgroundTint="@color/semiwhite">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <ImageView
-                android:id="@+id/hpximagestatus"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
+            android:layout_height="wrap_content">
+            <androidx.cardview.widget.CardView
+                android:id="@+id/arvxcardimage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                android:src="@drawable/imagefood"/>
-            <TextView
-                android:id="@+id/hpxteksidtrs"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:paddingVertical="3dp"
-                android:paddingHorizontal="7dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toEndOf="@id/hpximagestatus"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:text="TRS0000001"
-                android:textColor="@color/black"
-                android:textSize="@dimen/hp.ukuranteksinfo"
-                android:visibility="gone"/>
+                android:layout_margin="5dp"
+                app:cardCornerRadius="7dp">
+                <ImageView
+                    android:id="@+id/hpximagestatus"
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"
+                    android:src="@drawable/waitingicon"
+                    android:scaleType="centerCrop"/>
+            </androidx.cardview.widget.CardView>
             <TextView
                 android:id="@+id/hpxteksstatus"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:paddingVertical="3dp"
-                android:paddingHorizontal="7dp"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toEndOf="@id/hpximagestatus"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:text="Menunggu Konfirmasi Penjual"
-                android:textColor="@color/black"
-                android:textSize="@dimen/hpr.ukuranjudul"/>
+                app:layout_constraintStart_toEndOf="@id/arvxcardimage"
+                android:layout_marginHorizontal="5dp"
+                android:layout_marginVertical="5dp"
+                android:paddingHorizontal="5dp"
+                android:text="Menunggu Konfirmasi"
+                android:textSize="@dimen/hpr.ukuranharga"
+                android:fontFamily="@font/inter_regular"
+                android:textStyle="italic"/>
             <TextView
-                android:id="@+id/hpxteksproduk"
+                android:id="@+id/hpxstatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingVertical="3dp"
-                android:paddingHorizontal="7dp"
-                app:layout_constraintTop_toBottomOf="@id/hpxteksstatus"
-                app:layout_constraintStart_toEndOf="@id/hpximagestatus"
-                app:layout_constraintEnd_toStartOf="@id/hpxtekskirimbukti"
-                android:text="3 Produk"
-                android:textSize="@dimen/hpr.ukuranharga"/>
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginHorizontal="5dp"
+                android:layout_marginVertical="5dp"
+                android:paddingHorizontal="5dp"
+                android:text="0"
+                android:visibility="gone"/>
             <TextView
-                android:id="@+id/hpxtekskirimbukti"
+                android:id="@+id/hpxteksidtrs"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:paddingVertical="3dp"
-                android:paddingHorizontal="7dp"
-                android:gravity="right"
                 app:layout_constraintTop_toBottomOf="@id/hpxteksstatus"
-                app:layout_constraintStart_toEndOf="@id/hpxteksproduk"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:text="Kirim Bukti Transfer"
-                android:textColor="@color/dark_blue"
-                android:textSize="@dimen/hpr.ukuranharga"/>
-            <ScrollView
-                android:id="@+id/hpxscrollpesanan"
+                app:layout_constraintStart_toEndOf="@id/arvxcardimage"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginVertical="5dp"
+                android:text="ID Transaksi :"
+                android:textSize="@dimen/hpr.ukuranharga"
+                android:textColor="@color/black"
+                android:fontFamily="@font/inter_semibold"/>
+            <TextView
+                android:id="@+id/hpxtxtidtransaksi"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/hpxteksproduk"
-                app:layout_constraintStart_toEndOf="@id/hpximagestatus"
+                app:layout_constraintTop_toBottomOf="@id/hpxteksstatus"
+                app:layout_constraintStart_toEndOf="@id/hpxteksidtrs"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/hpxtekstampilkan"
-                android:visibility="gone">
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/fantxrvchildantrian"
+                android:gravity="right"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginVertical="5dp"
+                android:text="TRS0000001"
+                android:textSize="@dimen/hpr.ukuranharga"
+                android:textColor="@color/dark_green"
+                android:fontFamily="@font/inter_semibold"/>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/hpxcardkirim"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/hpxteksidtrs"
+                app:layout_constraintStart_toEndOf="@id/arvxcardimage"
+                app:layout_constraintEnd_toStartOf="@id/hpxcardterima"
+                android:layout_marginVertical="5dp"
+                android:layout_marginHorizontal="10dp"
+                app:cardCornerRadius="3dp"
+                android:backgroundTint="@color/white">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_gravity="center"
+                    android:text="Kirim Bukti"
+                    android:textSize="@dimen/hpr.ukuranharga"
+                    android:textColor="@color/dark_red"
+                    android:fontFamily="@font/inter_semibold"/>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/hpxcardterima"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/hpxteksidtrs"
+                app:layout_constraintStart_toEndOf="@+id/hpxcardkirim"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginVertical="5dp"
+                android:layout_marginHorizontal="10dp"
+                app:cardCornerRadius="3dp"
+                android:backgroundTint="@color/white"
+                android:visibility="visible">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_gravity="center"
+                    android:text="Terima Pesanan"
+                    android:textSize="@dimen/hpr.ukuranharga"
+                    android:textColor="@color/dark_blue"
+                    android:fontFamily="@font/inter_semibold"/>
+            </androidx.cardview.widget.CardView>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                app:layout_constraintTop_toBottomOf="@id/arvxcardimage"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+                <TextView
+                    android:id="@+id/hpxtekssub"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/hpxsubtotal"
+                    android:text="Subtotal :"
+                    android:textSize="@dimen/hpr.ukuranharga"
+                    android:textStyle="italic"
+                    android:fontFamily="@font/inter_medium"/>
+                <TextView
+                    android:id="@+id/hpxsubtotal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/hpxtekssub"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:gravity="right"
+                    android:text="Rp. 20,000"
+                    android:textSize="@dimen/hpr.ukuranharga"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/inter_medium"/>
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/hpxlinearcatatan"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                    app:spanCount="1"
-                    android:orientation="vertical"
-                    tools:listitem="@layout/homepage_childrvantrian"/>
-            </ScrollView>
-            <TextView
-                android:id="@+id/hpxtekstampilkan"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:paddingVertical="3dp"
-                android:paddingHorizontal="7dp"
-                android:gravity="center"
-                app:layout_constraintTop_toBottomOf="@id/hpxscrollpesanan"
-                app:layout_constraintStart_toEndOf="@id/hpximagestatus"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:text="Tampilkan Pesanan"
-                android:textColor="@color/red"
-                android:fontFamily="@font/inter_semibold"
-                android:textSize="@dimen/hpr.ukuranharga"/>
+                    android:layout_marginVertical="5dp"
+                    app:layout_constraintTop_toBottomOf="@id/hpxsubtotal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:backgroundTint="@color/white"
+                    app:cardCornerRadius="5dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/hpxtekscat"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Catatan Kamu :"
+                            android:textSize="@dimen/hpr.ukuranharga"
+                            android:textStyle="italic"
+                            android:fontFamily="@font/inter_medium"/>
+                        <TextView
+                            android:id="@+id/hpxtxtcatatan"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingVertical="5dp"
+                            android:text="Duitmu kurang"
+                            android:textSize="@dimen/hpr.ukuranharga"
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/inter_semibold"/>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+                <ScrollView
+                    android:id="@+id/hpxscrollpesanan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="5dp"
+                    app:layout_constraintTop_toBottomOf="@id/hpxlinearcatatan"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/hpxtekstampilkan"
+                    android:visibility="gone">
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/fantxrvchildantrian"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                        app:spanCount="1"
+                        android:orientation="vertical"/>
+                </ScrollView>
+                <TextView
+                    android:id="@+id/hpxtekstampilkan"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:gravity="center"
+                    app:layout_constraintTop_toBottomOf="@id/hpxscrollpesanan"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:text="Tampilkan Pesanan"
+                    android:textColor="@color/red"
+                    android:fontFamily="@font/inter_semibold"
+                    android:textSize="@dimen/hpr.ukuranharga"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,15 +3,7 @@ package vincent.angkringanmbahsingo2.Fragments;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.graphics.Color;
-import android.opengl.Visibility;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,11 +14,12 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.squareup.picasso.Picasso;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.RecyclerView;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import retrofit2.Call;
@@ -34,19 +27,15 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import vincent.angkringanmbahsingo2.API.API;
 import vincent.angkringanmbahsingo2.API.APIInterface;
-import vincent.angkringanmbahsingo2.MainActivity.MainHome;
 import vincent.angkringanmbahsingo2.ModelAPI.DataItemTransaksi;
 import vincent.angkringanmbahsingo2.ModelAPI.ResponseTransaksi;
 import vincent.angkringanmbahsingo2.R;
 import vincent.angkringanmbahsingo2.RecycleviewAdapter.CartRvAdapter;
-import vincent.angkringanmbahsingo2.RecycleviewAdapter.HistRvAdapter;
-import vincent.angkringanmbahsingo2.RecycleviewAdapter.HomeRvAdapter;
-import vincent.angkringanmbahsingo2.RecycleviewModel.HistRvModel;
 
 public class KeranjangFragment extends Fragment {
 
     Animation easeOutQuadLeft, easeOutQuadRight, easeOutQuadLeftOut, easeOutQuadRightOut, fadein, fadeout;
-    public static TextView btnfilter, btnubah, btnhapussemua, btnselesai, btnhapusfilter, teksttk;
+    public static TextView btnfilter, btnubah, btnhapussemua, btnselesai, btnhapusfilter, teksttk, tekssubtotal;
     Button btnbeli;
     RecyclerView recyclerView;
     Dialog dialog;
@@ -54,6 +43,7 @@ public class KeranjangFragment extends Fragment {
     CartRvAdapter.AdapterItemListener adapterItemListenerInterface;
 
     private String idTransaksiKeranjang;
+    private String subtotal;
     APIInterface apiInterface;
     RecyclerView.Adapter addData;
     private List<DataItemTransaksi> dataListKeranjang = new ArrayList<>();
@@ -81,6 +71,7 @@ public class KeranjangFragment extends Fragment {
         recyclerView = view.findViewById(R.id.fkerxrecyclekeranjang);
         btnbeli = view.findViewById(R.id.fkerxbtnbeli);
         teksttk = view.findViewById(R.id.fkerxteksttkeranjang);
+        tekssubtotal = view.findViewById(R.id.dataxhargabelitotal);
         btnubah.setVisibility(View.VISIBLE);
         btnfilter.setVisibility(View.VISIBLE);
         btnhapussemua.setVisibility(View.GONE);
@@ -103,6 +94,7 @@ public class KeranjangFragment extends Fragment {
         });
 
         getKeranjangClicked();
+        getDataSubtotal();
         getDataKeranjang();
         ubahClickable();
         hapusFilterClickable();
@@ -185,6 +177,13 @@ public class KeranjangFragment extends Fragment {
                 Toast.makeText(getActivity(),t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void getDataSubtotal() {
+        CartRvAdapter.setDataSubtotal setDataSubtotal = (subtotal) -> {
+            KeranjangFragment.this.subtotal = subtotal;
+            tekssubtotal.setText(subtotal);
+        };
     }
 
     public boolean ubahClickable(){

@@ -6,11 +6,9 @@
     android:layout_margin="10dp"
     android:background="#FEDFE0"
     android:backgroundTint="@color/semiwhite">
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
         <TextView
             android:id="@+id/alertxjudul"
             android:layout_width="match_parent"
@@ -22,7 +20,6 @@
             android:textSize="@dimen/hp.ukuranteksinfo"
             android:textStyle="bold"
             app:layout_constraintTop_toTopOf="parent" />
-
         <TextView
             android:id="@+id/alertxtxtfiltertgl"
             android:layout_width="match_parent"
@@ -32,7 +29,6 @@
             android:textSize="@dimen/hp.ukuranteksinfo"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/alertxjudul" />
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/alertxlayoutinput"
             android:layout_width="match_parent"
@@ -40,7 +36,6 @@
             android:layout_margin="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/alertxtxtfiltertgl">
-
             <LinearLayout
                 android:id="@+id/filter1xlinear1"
                 android:layout_width="match_parent"
@@ -48,12 +43,10 @@
                 android:backgroundTint="#FEDFE0"
                 android:orientation="horizontal"
                 app:layout_constraintTop_toTopOf="parent">
-
                 <RadioButton
                     android:id="@+id/daxradioalamat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
-
                 <TextView
                     android:id="@+id/filter1xtxttgl1"
                     android:layout_width="wrap_content"
@@ -62,7 +55,6 @@
                     android:text="1 Januari 2000"
                     android:textColor="@color/dark_blue"
                     android:textSize="@dimen/hp.ukuranteksinfo" />
-
                 <TextView
                     android:id="@+id/filter1xtxttgl2"
                     android:layout_width="wrap_content"
@@ -74,17 +66,15 @@
                     android:visibility="gone" />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
-
         <TextView
             android:id="@+id/alertxtxtfiltermenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text="Filter Menu"
+            android:text="Filter Pencarian"
             android:textSize="@dimen/hp.ukuranteksinfo"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/alertxlayoutinput" />
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/alertxlayoutinput2"
             android:layout_width="match_parent"
@@ -92,50 +82,44 @@
             android:layout_margin="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/alertxtxtfiltermenu">
-
             <LinearLayout
                 android:id="@+id/filter1xlinear2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 app:layout_constraintTop_toTopOf="parent">
-
                 <RadioButton
                     android:id="@+id/daxradiomakanan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
-
                 <TextView
                     android:id="@+id/filter1xtxtmakanan"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="Semua Makanan"
+                    android:text="Berdasarkan Subtotal Terbesar"
                     android:textColor="@color/dark_blue"
                     android:textSize="@dimen/hp.ukuranteksinfo" />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/alertxlayoutinput3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/alertxlayoutinput2">
-
             <LinearLayout
                 android:id="@+id/filter1xlinear3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 app:layout_constraintTop_toTopOf="parent">
-
                 <RadioButton
                     android:id="@+id/daxradiominuman"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
-
                 <TextView
                     android:id="@+id/filter1xtxtminuman"
                     android:layout_width="wrap_content"
@@ -146,7 +130,6 @@
                     android:textSize="@dimen/hp.ukuranteksinfo" />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
-
         <Button
             android:id="@+id/alertxbtnbatal"
             android:layout_width="wrap_content"
@@ -161,7 +144,6 @@
             app:cornerRadius="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/alertxbtnkirim" />
-
         <Button
             android:id="@+id/alertxbtnkirim"
             android:layout_width="wrap_content"

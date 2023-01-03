@@ -4,20 +4,9 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.os.Bundle;
-
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.StrikethroughSpan;
-import android.transition.Slide;
-import android.transition.TransitionManager;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,10 +15,17 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +45,8 @@ public class DetailPesananFragment extends Fragment implements Backpressedlisten
 
     Animation easeOutQuadLeft, easeOutQuadRight, easeOutSineTopOut, easeOutQuadRightOut;
     ScrollView scrollanimate;
-    ConstraintLayout linearlay, btnalamat, btnmetode, btnkupon;
+    ConstraintLayout linearlay;
+    CardView btnalamat, btnmetode, btnkupon;
     public static TextView teksalamat, teksmetode, teksmetode2, tekskupon, teksongkir, teksongkir2, tekssubtotal, tekssubtotal2, labelpengiriman;
     ImageView btnback;
     EditText catatan;
@@ -60,6 +57,7 @@ public class DetailPesananFragment extends Fragment implements Backpressedlisten
     static String currency = "Rp. %,d";
     static String stock = "%,d";
     String alamatButtonAmbil = "Anda belum menentukan Alamat";
+    String alamatAmbil = "Ambil di Angkringan Mbah Singo";
     public String dataIdTransaksi, dataPengiriman, dataAlamat, dataMetode, dataRekening, dataIdkupon, dataIdkupon2, namaKupon, namaKupon2;
     public int check, subtotal, nilai, nilai2, biayaongkir = 8000;
     public int totalbayar, totalbiayaongkir, totalsubtotaldefault, totalsubtotal;
@@ -237,7 +235,7 @@ public class DetailPesananFragment extends Fragment implements Backpressedlisten
                     tekssubtotal2.setVisibility(View.GONE);
                     if (String.valueOf(nilai) != null && nilai > 0){
                         totalbiayaongkir = biayaongkir - nilai;
-                        if (totalbiayaongkir <= 0){
+                        if (totalbiayaongkir <= 0 && dataAlamat == alamatAmbil || totalbiayaongkir <= 0 || dataAlamat == alamatAmbil){
                             totalbiayaongkir = 0;
                         }
                         SpannableString spannableString1 = new SpannableString(String.format(currency, Integer.parseInt(String.valueOf(biayaongkir))));
@@ -247,7 +245,10 @@ public class DetailPesananFragment extends Fragment implements Backpressedlisten
                         teksongkir2.setVisibility(View.VISIBLE);
                     } else {
                         totalbiayaongkir = biayaongkir;
-                        teksongkir.setText(String.format(currency, biayaongkir));
+                        if (dataAlamat == alamatAmbil){
+                            totalbiayaongkir = 0;
+                        }
+                        teksongkir.setText(String.format(currency, totalbiayaongkir));
                     }
                     if (String.valueOf(nilai2) != null && nilai2 > 0){
                         totalsubtotal = subtotal - nilai2;
@@ -299,7 +300,7 @@ public class DetailPesananFragment extends Fragment implements Backpressedlisten
                             tekssubtotal2.setVisibility(View.GONE);
                             if (String.valueOf(nilai) != null && nilai > 0){
                                 totalbiayaongkir = biayaongkir - nilai;
-                                if (totalbiayaongkir <= 0){
+                                if (totalbiayaongkir <= 0 && dataAlamat == alamatAmbil || totalbiayaongkir <= 0 || dataAlamat == alamatAmbil){
                                     totalbiayaongkir = 0;
                                 }
                                 SpannableString spannableString1 = new SpannableString(String.format(currency, Integer.parseInt(String.valueOf(biayaongkir))));
@@ -309,7 +310,10 @@ public class DetailPesananFragment extends Fragment implements Backpressedlisten
                                 teksongkir2.setVisibility(View.VISIBLE);
                             } else {
                                 totalbiayaongkir = biayaongkir;
-                                teksongkir.setText(String.format(currency, biayaongkir));
+                                if (dataAlamat == alamatAmbil){
+                                    totalbiayaongkir = 0;
+                                }
+                                teksongkir.setText(String.format(currency, totalbiayaongkir));
                             }
                             if (String.valueOf(nilai2) != null && nilai2 > 0){
                                 totalsubtotal = subtotal - nilai2;
@@ -363,7 +367,7 @@ public class DetailPesananFragment extends Fragment implements Backpressedlisten
                     dataPesanan = response.body().getData();
                     scrollanimate.startAnimation(easeOutSineTopOut);
                     SplashSelesaiFragment ssf = new SplashSelesaiFragment();
-                    ssf.setDataTransaksi(getDataIdTransaksi(), subtotal, dataRekening);
+                    ssf.setDataTransaksi(getDataIdTransaksi(), totalbayar, dataMetode, dataRekening);
                     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                     FragmentTransaction fragtr = fragmentManager.beginTransaction();
                     fragtr.replace(R.id.fragmentcontainersplash, ssf).commit();

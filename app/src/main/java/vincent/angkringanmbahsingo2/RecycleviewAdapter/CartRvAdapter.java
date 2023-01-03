@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,7 +24,6 @@ import vincent.angkringanmbahsingo2.Fragments.HomeFragment;
 import vincent.angkringanmbahsingo2.ModelAPI.DataItemTransaksi;
 import vincent.angkringanmbahsingo2.ModelAPI.ResponseTransaksi;
 import vincent.angkringanmbahsingo2.R;
-import vincent.angkringanmbahsingo2.RecycleviewModel.HistRvModel;
 
 public class CartRvAdapter extends RecyclerView.Adapter<CartRvAdapter.ViewHolder> {
     Context context;
@@ -35,6 +33,7 @@ public class CartRvAdapter extends RecyclerView.Adapter<CartRvAdapter.ViewHolder
     static String currency = "Rp. %,d";
     static String stock = "%,d";
     APIInterface apiInterface;
+    CartRvAdapter.setDataSubtotal dataSubtotal;
     private List<DataItemTransaksi> dataListKeranjang = new ArrayList<>();
 
     public interface AdapterItemListener{
@@ -61,14 +60,14 @@ public class CartRvAdapter extends RecyclerView.Adapter<CartRvAdapter.ViewHolder
 
         holder.idmenu.setText(db.getIdProduk());
         holder.judul.setText(db.getNamaProduk());
-        holder.harga.setText(String.format(currency, Integer.parseInt(db.getHarga())));
+        holder.harga.setText(String.format(currency, db.getHarga()));
         holder.jumlah.setText(String.format(stock, Integer.parseInt(db.getJumlah())));
         Picasso.get().load(API.BASE_GAMBAR+db.getPengiriman()).error(R.mipmap.ic_launcher).into(holder.gambar);
         holder.plusimage.setOnClickListener(view -> {
-            currentNumber = Integer.parseInt(String.valueOf(holder.jumlah.getText().toString()));
+            currentNumber = Integer.parseInt(holder.jumlah.getText().toString());
             addNumber = currentNumber + 1;
             holder.jumlah.setText(String.valueOf(addNumber));
-            totalPrice = addNumber * Integer.parseInt(dbpos.getHarga());
+            totalPrice = addNumber * db.getHarga();
             holder.totalharga.setText(String.format(currency, Integer.parseInt(String.valueOf(totalPrice))));
 
             HomeFragment hfg = new HomeFragment();
@@ -91,10 +90,10 @@ public class CartRvAdapter extends RecyclerView.Adapter<CartRvAdapter.ViewHolder
             if (currentNumber <= 1){
                 holder.jumlah.setText(String.valueOf(1));
             } else {
-                currentNumber = Integer.parseInt(String.valueOf(holder.jumlah.getText().toString()));
+                currentNumber = Integer.parseInt(holder.jumlah.getText().toString());
                 addNumber = currentNumber - 1;
                 holder.jumlah.setText(String.valueOf(addNumber));
-                totalPrice = addNumber * Integer.parseInt(dbpos.getHarga());
+                totalPrice = addNumber * db.getHarga();
                 holder.totalharga.setText(String.format(currency, Integer.parseInt(String.valueOf(totalPrice))));
 
                 HomeFragment hfg = new HomeFragment();
@@ -115,13 +114,26 @@ public class CartRvAdapter extends RecyclerView.Adapter<CartRvAdapter.ViewHolder
             }
         });
         currentNumber = Integer.parseInt(String.valueOf(holder.jumlah.getText()));
-        totalPrice = currentNumber * Integer.parseInt(db.getHarga());
+        totalPrice = currentNumber * db.getHarga();
         holder.totalharga.setText(String.format(currency, Integer.parseInt(String.valueOf(totalPrice))));
     }
 
     @Override
     public int getItemCount() {
         return listDataAdapter.size();
+    }
+
+    public void getSubtotalForFragments(){
+        List<Integer> values = new ArrayList<>();
+        for (int i = 0; i < listDataAdapter.size(); i++) {
+            values.add(listDataAdapter.get(i).getHarga());
+            dataSubtotal.setSubtotal(String.valueOf(values));
+        }
+    }
+
+    public interface setDataSubtotal{
+        void setSubtotal(String subtotal);
+
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

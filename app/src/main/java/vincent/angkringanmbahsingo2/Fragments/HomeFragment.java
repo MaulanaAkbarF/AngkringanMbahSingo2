@@ -1,15 +1,6 @@
 package vincent.angkringanmbahsingo2.Fragments;
 
 import android.os.Bundle;
-
-import androidx.appcompat.widget.SearchView;
-import androidx.cardview.widget.CardView;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +10,14 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.widget.SearchView;
+import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +43,7 @@ public class HomeFragment extends Fragment {
     HomeRvAdapter AdapterCari;
 
     public static TextView teksttpr, tekstttr, teksnama, teksnomor, teksemail, teksuser, teksalamat;
-    CardView btnprofil, searchall;
+    CardView btnprofil;
     RecyclerView recyclerView1, recyclerView2;
     HomeRvAdapter.AdapterItemListener adapterItemListenerInterface;
 
@@ -70,7 +69,6 @@ public class HomeFragment extends Fragment {
         judul.startAnimation(easeOutSineTop);
         rvdatalayout.startAnimation(easeOutQuadLeft);
 
-        searchall = view.findViewById(R.id.searchall);
         teksttpr = view.findViewById(R.id.fhxteksttpromo);
         tekstttr = view.findViewById(R.id.fhxteksttterakhir);
         teksnama = view.findViewById(R.id.fhxtxtnama);

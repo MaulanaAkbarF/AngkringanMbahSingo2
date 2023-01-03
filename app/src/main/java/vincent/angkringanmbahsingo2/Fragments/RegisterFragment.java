@@ -1,14 +1,7 @@
 package vincent.angkringanmbahsingo2.Fragments;
 
 import android.content.ContentValues;
-import android.graphics.Color;
 import android.os.Bundle;
-
-import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.transition.Slide;
 import android.transition.TransitionManager;
 import android.view.Gravity;
@@ -23,6 +16,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,9 +34,7 @@ import vincent.angkringanmbahsingo2.Dependencies.DataHelper;
 import vincent.angkringanmbahsingo2.ModelAPI.DataItemLogin;
 import vincent.angkringanmbahsingo2.ModelAPI.ResponseLogin;
 import vincent.angkringanmbahsingo2.ModelAPI.ResponseRegister;
-import vincent.angkringanmbahsingo2.ModelAPI.ResponseTransaksi;
 import vincent.angkringanmbahsingo2.R;
-import vincent.angkringanmbahsingo2.RecycleviewAdapter.AntrianRvAdapter;
 
 public class RegisterFragment extends Fragment implements Backpressedlistener {
 

@@ -3,32 +3,28 @@ package vincent.angkringanmbahsingo2.Fragments;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-
-import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.widget.SearchView;
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -36,17 +32,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import vincent.angkringanmbahsingo2.API.API;
 import vincent.angkringanmbahsingo2.API.APIInterface;
-import vincent.angkringanmbahsingo2.MainActivity.MainHome;
-import vincent.angkringanmbahsingo2.MainActivity.MainLogin;
-import vincent.angkringanmbahsingo2.ModelAPI.DataItemProduk;
 import vincent.angkringanmbahsingo2.ModelAPI.DataItemTransaksi;
-import vincent.angkringanmbahsingo2.ModelAPI.ResponseProduk;
 import vincent.angkringanmbahsingo2.ModelAPI.ResponseTransaksi;
 import vincent.angkringanmbahsingo2.R;
 import vincent.angkringanmbahsingo2.RecycleviewAdapter.AntrianRvAdapter;
 import vincent.angkringanmbahsingo2.RecycleviewAdapter.HistRvAdapter;
-import vincent.angkringanmbahsingo2.RecycleviewAdapter.HomeRvAdapter;
-import vincent.angkringanmbahsingo2.RecycleviewModel.HistRvModel;
 
 public class RiwayatFragment extends Fragment {
 
@@ -61,7 +51,10 @@ public class RiwayatFragment extends Fragment {
     DatePickerDialog picker;
 
     APIInterface apiInterface;
-    RecyclerView.Adapter addData;
+    private SearchView searchView;
+    HistRvAdapter AdapterCari;
+    AntrianRvAdapter AdapterCari2;
+    private boolean session;
     private List<DataItemTransaksi> riwayatList = new ArrayList<>();
     private List<DataItemTransaksi> antrianList = new ArrayList<>();
 
@@ -103,7 +96,23 @@ public class RiwayatFragment extends Fragment {
 //            mh.set4.setText("0");
 //        }
 
+        searchView = view.findViewById(R.id.search2);
+        searchView.clearFocus();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                FilterList(newText);
+                return true;
+            }
+        });
+
 //        getRiwayatClicked();
+        session = false;
         getRiwayat();
         riwayatClickable();
         antrianClickable();
@@ -124,10 +133,10 @@ public class RiwayatFragment extends Fragment {
             public void onResponse(Call<ResponseTransaksi> call, Response<ResponseTransaksi> response) {
                 riwayatList = response.body().getData();
                 if (riwayatList != null) {
-                    addData = new HistRvAdapter(getContext(), riwayatList, adapterItemListenerInterface);
+                    AdapterCari = new HistRvAdapter(getContext(), riwayatList, adapterItemListenerInterface);
                     recyclerView.setHasFixedSize(true);
-                    recyclerView.setAdapter(addData);
-                    addData.notifyDataSetChanged();
+                    recyclerView.setAdapter(AdapterCari);
+                    AdapterCari.notifyDataSetChanged();
                     teksttr.setVisibility(View.GONE);
                     btnhapusfilter.setVisibility(View.GONE);
                 } else {
@@ -155,10 +164,10 @@ public class RiwayatFragment extends Fragment {
             public void onResponse(Call<ResponseTransaksi> call, Response<ResponseTransaksi> response) {
                 antrianList = response.body().getData();
                 if (antrianList != null) {
-                    addData = new AntrianRvAdapter(getContext(), antrianList, adapterItemListenerInterface2);
+                    AdapterCari2 = new AntrianRvAdapter(getContext(), antrianList, adapterItemListenerInterface2);
                     recyclerView.setHasFixedSize(true);
-                    recyclerView.setAdapter(addData);
-                    addData.notifyDataSetChanged();
+                    recyclerView.setAdapter(AdapterCari2);
+                    AdapterCari2.notifyDataSetChanged();
                     teksttr.setVisibility(View.GONE);
                 } else {
                     teksttr.setVisibility(View.VISIBLE);
@@ -174,9 +183,38 @@ public class RiwayatFragment extends Fragment {
         });
     }
 
+    private void FilterList(String newText) {
+        if (session == false){
+            List<DataItemTransaksi> FilteredList = new ArrayList<>();
+            for (DataItemTransaksi brg : riwayatList){
+                if (brg.getNamaProduk().toLowerCase().contains(newText.toLowerCase())){
+                    FilteredList.add(brg);
+                }
+            }
+            if (FilteredList.isEmpty()){
+                Toast.makeText(getActivity(), "No Data", Toast.LENGTH_SHORT).show();
+            }else {
+                AdapterCari.setFilteredList(FilteredList);
+            }
+        } else {
+            List<DataItemTransaksi> FilteredList = new ArrayList<>();
+            for (DataItemTransaksi brg : antrianList){
+                if (brg.getIdTransaksi().toLowerCase().contains(newText.toLowerCase())){
+                    FilteredList.add(brg);
+                }
+            }
+            if (FilteredList.isEmpty()){
+                Toast.makeText(getActivity(), "No Data", Toast.LENGTH_SHORT).show();
+            }else {
+                AdapterCari.setFilteredList(FilteredList);
+            }
+        }
+    }
+
     private void riwayatClickable(){
         cardleft.setOnClickListener(view -> {
             getRiwayat();
+            session = false;
             consoption.startAnimation(fadein);
             consoption.setVisibility(View.VISIBLE);
             cardleft.setBackgroundColor(Color.parseColor("#FFEAEAEA"));
@@ -187,11 +225,11 @@ public class RiwayatFragment extends Fragment {
     private void antrianClickable(){
         cardright.setOnClickListener(view -> {
             getAntrian();
+            session = true;
             consoption.startAnimation(fadeout);
             consoption.setVisibility(View.GONE);
             cardright.setBackgroundColor(Color.parseColor("#FFEAEAEA"));
             cardleft.setBackgroundColor(Color.parseColor("#FFFFFFFF"));
-
         });
     }
 
@@ -259,9 +297,9 @@ public class RiwayatFragment extends Fragment {
                 @Override
                 public void onResponse(Call<ResponseTransaksi> call, Response<ResponseTransaksi> response) {
                     riwayatList.clear();
-                    addData = new HistRvAdapter(getContext(), riwayatList, adapterItemListenerInterface);
-                    recyclerView.setAdapter(addData);
-                    addData.notifyDataSetChanged();
+                    AdapterCari = new HistRvAdapter(getContext(), riwayatList, adapterItemListenerInterface);
+                    recyclerView.setAdapter(AdapterCari);
+                    AdapterCari.notifyDataSetChanged();
                     riwayatList = null;
                     teksttr.setVisibility(View.VISIBLE);
                     btnhapussemua.setVisibility(View.GONE);
@@ -338,10 +376,10 @@ public class RiwayatFragment extends Fragment {
                     public void onResponse(Call<ResponseTransaksi> call, Response<ResponseTransaksi> response) {
                         riwayatList = response.body().getData();
                         if (riwayatList != null) {
-                            addData = new HistRvAdapter(getContext(), riwayatList, adapterItemListenerInterface);
+                            AdapterCari = new HistRvAdapter(getContext(), riwayatList, adapterItemListenerInterface);
                             recyclerView.setHasFixedSize(true);
-                            recyclerView.setAdapter(addData);
-                            addData.notifyDataSetChanged();
+                            recyclerView.setAdapter(AdapterCari);
+                            AdapterCari.notifyDataSetChanged();
                             btnhapusfilter.setVisibility(View.VISIBLE);
                             btnhapusfilter.startAnimation(fadein);
                         } else {
@@ -364,10 +402,10 @@ public class RiwayatFragment extends Fragment {
                     public void onResponse(Call<ResponseTransaksi> call, Response<ResponseTransaksi> response) {
                         riwayatList = response.body().getData();
                         if (riwayatList != null) {
-                            addData = new HistRvAdapter(getContext(), riwayatList, adapterItemListenerInterface);
+                            AdapterCari = new HistRvAdapter(getContext(), riwayatList, adapterItemListenerInterface);
                             recyclerView.setHasFixedSize(true);
-                            recyclerView.setAdapter(addData);
-                            addData.notifyDataSetChanged();
+                            recyclerView.setAdapter(AdapterCari);
+                            AdapterCari.notifyDataSetChanged();
                             btnhapusfilter.setVisibility(View.VISIBLE);
                             btnhapusfilter.startAnimation(fadein);
                         } else {
@@ -390,10 +428,10 @@ public class RiwayatFragment extends Fragment {
                     public void onResponse(Call<ResponseTransaksi> call, Response<ResponseTransaksi> response) {
                         riwayatList = response.body().getData();
                         if (riwayatList != null) {
-                            addData = new HistRvAdapter(getContext(), riwayatList, adapterItemListenerInterface);
+                            AdapterCari = new HistRvAdapter(getContext(), riwayatList, adapterItemListenerInterface);
                             recyclerView.setHasFixedSize(true);
-                            recyclerView.setAdapter(addData);
-                            addData.notifyDataSetChanged();
+                            recyclerView.setAdapter(AdapterCari);
+                            AdapterCari.notifyDataSetChanged();
                             btnhapusfilter.setVisibility(View.VISIBLE);
                             btnhapusfilter.startAnimation(fadein);
                         } else {

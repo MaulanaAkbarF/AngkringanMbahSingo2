@@ -17,7 +17,6 @@ import java.util.List;
 
 import vincent.angkringanmbahsingo2.API.API;
 import vincent.angkringanmbahsingo2.ModelAPI.DataItemProduk;
-import vincent.angkringanmbahsingo2.RecycleviewModel.HomeRvModel;
 import vincent.angkringanmbahsingo2.R;
 
 public class HomeRvAdapter extends RecyclerView.Adapter<HomeRvAdapter.ViewHolder> {

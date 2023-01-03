@@ -126,7 +126,6 @@
                 android:gravity="center"
                 android:orientation="horizontal">
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/searchall"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     app:boxBackgroundMode="outline"
                     app:boxStrokeColor="@color/dark_blue"

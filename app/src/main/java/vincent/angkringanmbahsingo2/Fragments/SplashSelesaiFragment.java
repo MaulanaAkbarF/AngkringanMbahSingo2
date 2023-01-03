@@ -9,13 +9,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.browser.customtabs.CustomTabsIntent;
-import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +18,12 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.browser.customtabs.CustomTabsIntent;
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import java.io.File;
 
@@ -42,8 +41,8 @@ import vincent.angkringanmbahsingo2.R;
 public class SplashSelesaiFragment extends Fragment {
 
     Animation easeOutSineBottom, easeOutSineTopOut;
-    TextView idtransaksi, subtotal, labeltf, transfer, kirimbukti, chat, kembali;
-    CardView salinsub, salintf;
+    TextView idtransaksi, subtotal, labeltf, transfer, kembali;
+    CardView salinsub, salintf, kirimbukti, chat;
     ImageView gambarbukti;
     ConstraintLayout consanimate;
     APIInterface apiInterface;
@@ -52,11 +51,12 @@ public class SplashSelesaiFragment extends Fragment {
 
     public Uri ur;
 
-    String dataIdTransaksi, dataTransfer;
+    String dataIdTransaksi, dataMetode, dataTransfer;
     int dataSubtotal;
-    public void setDataTransaksi(String dataIdTransaksi, int dataSubtotal, String dataTransfer) {
+    public void setDataTransaksi(String dataIdTransaksi, int dataSubtotal, String dataMetode, String dataTransfer) {
         this.dataIdTransaksi = dataIdTransaksi;
         this.dataSubtotal = dataSubtotal;
+        this.dataMetode = dataMetode;
         this.dataTransfer = dataTransfer;
     }
 
@@ -97,7 +97,7 @@ public class SplashSelesaiFragment extends Fragment {
         kirimbukti.setOnClickListener(view12 -> getImg());
 
         chat.setOnClickListener(view1 -> {
-            String url = "https://wa.link/7kfdl4";
+            String url = "https://wa.link/fsejvy";
             CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
             CustomTabsIntent customTabsIntent = builder.build();
             customTabsIntent.launchUrl(getActivity(), Uri.parse(url));
@@ -117,10 +117,12 @@ public class SplashSelesaiFragment extends Fragment {
         subtotal.setText(String.format(currency, dataSubtotal));
         if (dataTransfer == null){
             salintf.setVisibility(View.GONE);
-            transfer.setVisibility(View.GONE);
-            labeltf.setVisibility(View.GONE);
+            labeltf.setText("Metode :");
+            transfer.setText(dataMetode);
+        } else {
+            labeltf.setText("Transfer :");
+            transfer.setText(dataTransfer);
         }
-        transfer.setText(dataTransfer);
     }
 
     private void closeFragment(){

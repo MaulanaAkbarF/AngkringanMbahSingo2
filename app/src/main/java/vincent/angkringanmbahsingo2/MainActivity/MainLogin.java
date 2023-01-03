@@ -1,15 +1,15 @@
 package vincent.angkringanmbahsingo2.MainActivity;
 
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.os.Bundle;
-
 import vincent.angkringanmbahsingo2.Fragments.LoginFragment;
 import vincent.angkringanmbahsingo2.Fragments.RegisterFragment;
+import vincent.angkringanmbahsingo2.Fragments.WelcomeFragment;
 import vincent.angkringanmbahsingo2.Fragments.WelcomeSplashFragment;
 import vincent.angkringanmbahsingo2.R;
-import vincent.angkringanmbahsingo2.Fragments.WelcomeFragment;
 
 public class MainLogin extends AppCompatActivity {
 

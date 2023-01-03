@@ -1,33 +1,24 @@
 package vincent.angkringanmbahsingo2.RecycleviewAdapter;
 
-import static androidx.core.app.ActivityCompat.startActivityForResult;
-
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.browser.customtabs.CustomTabsIntent;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -40,6 +31,7 @@ import vincent.angkringanmbahsingo2.R;
 
 public class AntrianRvAdapter extends RecyclerView.Adapter<AntrianRvAdapter.ViewHolder> {
     Context context;
+    Dialog dialog;
     List<DataItemTransaksi> listDataAdapter;
     AntrianRvAdapter.AdapterItemListener adapterItemListener;
     ChildAntrianRvAdapter.AdapterItemListener adapterItemListenerInterface;
@@ -53,6 +45,11 @@ public class AntrianRvAdapter extends RecyclerView.Adapter<AntrianRvAdapter.View
 
     public interface AdapterItemListener{
         void clickItemListener(int adapterPosition);
+    }
+
+    public void setFilteredList(List<DataItemTransaksi> filteredList) {
+        this.listDataAdapter = filteredList;
+        notifyDataSetChanged();
     }
 
     public AntrianRvAdapter(Context context, List<DataItemTransaksi> listDataAdapter, AdapterItemListener adapterItemListener) {
@@ -73,19 +70,22 @@ public class AntrianRvAdapter extends RecyclerView.Adapter<AntrianRvAdapter.View
         DataItemTransaksi db = listDataAdapter.get(position);
 
         holder.teksidtrans.setText(db.getIdTransaksi());
-        holder.teksstatus.setText(db.getMetode());
-        holder.jumlah.setText(item+" Produk");
-        holder.tekskirim.setText("Kirim Bukti Transfer");
+        holder.status.setText(db.getMetode());
+        holder.subtotal.setText(String.format(currency, Integer.parseInt(String.valueOf(db.getSubtotal()))));
         holder.tekstampilkan.setText("Tampilkan Pesanan");
 
-        if (holder.teksstatus.getText().toString().equals("0")){
+        if (holder.status.getText().toString().equals("0")){
             holder.teksstatus.setText("Menunggu Konfirmasi Penjual");
-        }
-
-        if (holder.tekskirim.getText().toString().equals("Kirim Bukti Transfer")){
-            holder.gambar.setImageResource(R.drawable.kupondiskonc);
-        } else {
-            holder.gambar.setImageResource(R.drawable.kuponongkirs);
+            holder.gambar.setImageResource(R.drawable.waitingicon);
+            holder.catatan.setText(db.getNamaProduk());
+            holder.tekscatatan.setText("Catatan :");
+            holder.teksterima.setVisibility(View.GONE);
+        } else if (holder.status.getText().toString().equals("1")){
+            holder.teksstatus.setText("Pesanan sedang diproses");
+            holder.gambar.setImageResource(R.drawable.finishedicon);
+            holder.catatan.setText(db.getNamaProduk());
+            holder.tekscatatan.setText("Catatan :");
+            holder.tekskirim.setVisibility(View.GONE);
         }
 
         holder.tekstampilkan.setOnClickListener(view -> {
@@ -98,20 +98,37 @@ public class AntrianRvAdapter extends RecyclerView.Adapter<AntrianRvAdapter.View
             }
         });
 
-        holder.tekskirim.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String url = "https://wa.link/7kfdl4";
-                CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
-                CustomTabsIntent customTabsIntent = builder.build();
-                customTabsIntent.launchUrl(context.getApplicationContext(), Uri.parse(url));
-            }
-        });
+        holder.teksterima.setOnClickListener(view -> {
+            TextView idtransaksi;
+            Button batal, kirim;
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            LayoutInflater layoutInflater = LayoutInflater.from(context);
+            View view2 = layoutInflater.inflate(R.layout.alert_terimapesanan, null);
+            idtransaksi = view2.findViewById(R.id.alertxtxtidtrs);
+            batal = view2.findViewById(R.id.alertxbtnbatal);
+            kirim = view2.findViewById(R.id.alertxbtnkirim);
+            builder.setView(view2);
+            dialog = builder.create();
+            idtransaksi.setText(holder.teksidtrans.getText().toString());
+            dialog.show();
+            batal.setOnClickListener(view1 -> {
+                HomeFragment hfg = new HomeFragment();
+                apiInterface = API.getService().create(APIInterface.class);
+                Call<ResponseTransaksi> riwayatCall = apiInterface.updateTransaksiToFinished(holder.teksidtrans.getText().toString(), hfg.teksuser.getText().toString());
+                riwayatCall.enqueue(new Callback<ResponseTransaksi>() {
+                    @Override
+                    public void onResponse(Call<ResponseTransaksi> call, Response<ResponseTransaksi> response) {
+                        Toast.makeText(context, "Pesanan Diterima!", Toast.LENGTH_SHORT).show();
+                    }
 
-        holder.tekskirim.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            }
+                    @Override
+                    public void onFailure(Call<ResponseTransaksi> call, Throwable t) {
+                        Toast.makeText(context, t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+                dialog.dismiss();
+            });
+            kirim.setOnClickListener(view12 -> dialog.dismiss());
         });
 
         HomeFragment hfg = new HomeFragment();
@@ -122,7 +139,7 @@ public class AntrianRvAdapter extends RecyclerView.Adapter<AntrianRvAdapter.View
             public void onResponse(Call<ResponseTransaksi> call, Response<ResponseTransaksi> response) {
                 childList = response.body().getData();
                 if (childList != null) {
-                    addData = new ChildAntrianRvAdapter(context, childList, adapterItemListenerInterface);
+                    addData = new ChildAntrianRvAdapter(context, childList, null);
                     holder.recyclerView.setHasFixedSize(true);
                     holder.recyclerView.setAdapter(addData);
                     addData.notifyDataSetChanged();
@@ -147,16 +164,21 @@ public class AntrianRvAdapter extends RecyclerView.Adapter<AntrianRvAdapter.View
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{ // implements View.OnClickListener
-        TextView teksidtrans, teksstatus, jumlah, tekskirim, tekstampilkan;
+        TextView teksidtrans, teksstatus, status, jumlah, subtotal, catatan, tekscatatan, tekstampilkan;
+        CardView tekskirim, teksterima;
         ScrollView scrollView;
         RecyclerView recyclerView;
         ImageView gambar;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            teksidtrans = itemView.findViewById(R.id.hpxteksidtrs);
+            teksidtrans = itemView.findViewById(R.id.hpxtxtidtransaksi);
             teksstatus = itemView.findViewById(R.id.hpxteksstatus);
-            jumlah = itemView.findViewById(R.id.hpxteksproduk);
-            tekskirim = itemView.findViewById(R.id.hpxtekskirimbukti);
+            status = itemView.findViewById(R.id.hpxstatus);
+            subtotal = itemView.findViewById(R.id.hpxsubtotal);
+            catatan = itemView.findViewById(R.id.hpxtxtcatatan);
+            tekscatatan = itemView.findViewById(R.id.hpxtekscat);
+            tekskirim = itemView.findViewById(R.id.hpxcardkirim);
+            teksterima = itemView.findViewById(R.id.hpxcardterima);
             tekstampilkan = itemView.findViewById(R.id.hpxtekstampilkan);
             gambar = itemView.findViewById(R.id.hpximagestatus);
             scrollView = itemView.findViewById(R.id.hpxscrollpesanan);

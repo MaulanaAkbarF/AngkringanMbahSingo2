@@ -4,21 +4,26 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.squareup.picasso.Picasso;
-
+import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import vincent.angkringanmbahsingo2.API.API;
-import vincent.angkringanmbahsingo2.Fragments.RiwayatFragment;
+import vincent.angkringanmbahsingo2.API.APIInterface;
+import vincent.angkringanmbahsingo2.Fragments.HomeFragment;
 import vincent.angkringanmbahsingo2.ModelAPI.DataItemTransaksi;
+import vincent.angkringanmbahsingo2.ModelAPI.ResponseTransaksi;
 import vincent.angkringanmbahsingo2.R;
 
 public class HistRvAdapter extends RecyclerView.Adapter<HistRvAdapter.ViewHolder> {
@@ -29,12 +34,21 @@ public class HistRvAdapter extends RecyclerView.Adapter<HistRvAdapter.ViewHolder
     static String currency = "Rp. %,d";
     static String stock = "x%,d";
 
+    APIInterface apiInterface;
+    RecyclerView.Adapter addData;
+    private List<DataItemTransaksi> childList = new ArrayList<>();
+
     public void showCheckCondition(boolean showCheck){
         this.showCheck = showCheck;
     }
 
     public interface AdapterItemListener{
         void clickItemListener(int adapterPosition);
+    }
+
+    public void setFilteredList(List<DataItemTransaksi> filteredList) {
+        this.listDataAdapter = filteredList;
+        notifyDataSetChanged();
     }
 
     public HistRvAdapter(Context context, List<DataItemTransaksi> listDataAdapter, AdapterItemListener adapterItemListener) {
@@ -54,11 +68,57 @@ public class HistRvAdapter extends RecyclerView.Adapter<HistRvAdapter.ViewHolder
     public void onBindViewHolder(@NonNull HistRvAdapter.ViewHolder holder, int position) {
         DataItemTransaksi db = listDataAdapter.get(position);
 
-        holder.judul.setText(db.getNamaProduk());
-        holder.harga.setText(String.format(currency, Integer.parseInt(db.getHarga())));
-        holder.jumlah.setText(String.format(stock, Integer.parseInt(db.getJumlah())));
-        holder.tanggal.setText(db.getSubtotal());
-        Picasso.get().load(API.BASE_GAMBAR+db.getPengiriman()).error(R.mipmap.ic_launcher).into(holder.gambar);
+        holder.teksidtrans.setText(db.getIdTransaksi());
+        holder.tekstanggal.setText(db.getJumlah());
+        holder.status.setText(db.getMetode());
+        holder.subtotal.setText(String.format(currency, Integer.parseInt(String.valueOf(db.getSubtotal()))));
+        holder.tekstampilkan.setText("Tampilkan Pesanan");
+
+        if (holder.status.getText().toString().equals("2")){
+            holder.teksstatus.setText("Pesanan Selesai");
+            holder.gambar.setImageResource(R.drawable.finishedicon);
+            holder.catatan.setText(db.getNamaProduk());
+            holder.catatanpj.setVisibility(View.GONE);
+        } else if (holder.status.getText().toString().equals("3")){
+            holder.teksstatus.setText("Pesanan dibatalkan");
+            holder.gambar.setImageResource(R.drawable.canceledicon);
+            holder.catatan.setText(db.getNamaProduk());
+            holder.catatanpj.setVisibility(View.VISIBLE);
+            holder.tekscatatanpj.setText(db.getTotalhargaitem());
+        }
+
+        holder.tekstampilkan.setOnClickListener(view -> {
+            if (holder.tekstampilkan.getText().toString().equals("Tampilkan Pesanan")){
+                holder.scrollView.setVisibility(View.VISIBLE);
+                holder.tekstampilkan.setText("Sembunyikan Pesanan");
+            } else if (holder.tekstampilkan.getText().toString().equals("Sembunyikan Pesanan")){
+                holder.scrollView.setVisibility(View.GONE);
+                holder.tekstampilkan.setText("Tampilkan Pesanan");
+            }
+        });
+
+        HomeFragment hfg = new HomeFragment();
+        apiInterface = API.getService().create(APIInterface.class);
+        Call<ResponseTransaksi> riwayatCall = apiInterface.childPesanan(hfg.teksuser.getText().toString(), holder.teksidtrans.getText().toString());
+        riwayatCall.enqueue(new Callback<ResponseTransaksi>() {
+            @Override
+            public void onResponse(Call<ResponseTransaksi> call, Response<ResponseTransaksi> response) {
+                childList = response.body().getData();
+                if (childList != null) {
+                    addData = new ChildAntrianRvAdapter(context, childList, null);
+                    holder.recyclerView.setHasFixedSize(true);
+                    holder.recyclerView.setAdapter(addData);
+                    addData.notifyDataSetChanged();
+                } else {
+                    Toast.makeText(context, "Anda tidak memiliki Antrian Pesanan", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseTransaksi> call, Throwable t) {
+
+            }
+        });
     }
 
     @Override
@@ -67,34 +127,26 @@ public class HistRvAdapter extends RecyclerView.Adapter<HistRvAdapter.ViewHolder
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{ // implements View.OnClickListener
-        TextView tanggal, judul, harga, jumlah;
-        CheckBox check;
+        TextView teksidtrans, tekstanggal, teksstatus, status, jumlah, subtotal, catatan, tekscatatan, tekscatatanpj, tekstampilkan;
+        ScrollView scrollView;
+        CardView catatanpj;
+        RecyclerView recyclerView;
         ImageView gambar;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            tanggal = itemView.findViewById(R.id.hpxtanggal);
-            judul = itemView.findViewById(R.id.hpxjudul);
-            harga = itemView.findViewById(R.id.hpxharga);
-            jumlah = itemView.findViewById(R.id.hpxjumlah);
-            gambar = itemView.findViewById(R.id.hpximage);
-            check = itemView.findViewById(R.id.friwxcheckbox);
-
-            if (showCheck == true){
-                check.setVisibility(View.VISIBLE);
-            } else {
-                check.setVisibility(View.GONE);
-            }
-
-            check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked){
-
-                    } else {
-
-                    }
-                }
-            });
+            teksidtrans = itemView.findViewById(R.id.hpxtxtidtransaksi);
+            tekstanggal = itemView.findViewById(R.id.hpxtxttanggaltransaksi);
+            teksstatus = itemView.findViewById(R.id.hpxteksstatus);
+            status = itemView.findViewById(R.id.hpxstatus);
+            subtotal = itemView.findViewById(R.id.hpxsubtotal);
+            catatan = itemView.findViewById(R.id.hpxtxtcatatan);
+            catatanpj = itemView.findViewById(R.id.hpxlinearcatatanpj);
+            tekscatatan = itemView.findViewById(R.id.hpxtekscat);
+            tekscatatanpj = itemView.findViewById(R.id.hpxtxtcatatanpj);
+            tekstampilkan = itemView.findViewById(R.id.hpxtekstampilkan);
+            gambar = itemView.findViewById(R.id.hpximagestatus);
+            scrollView = itemView.findViewById(R.id.hpxscrollpesanan);
+            recyclerView = itemView.findViewById(R.id.fantxrvchildantrian);
 
 //            itemView.setOnClickListener(this);
         }
@@ -104,14 +156,4 @@ public class HistRvAdapter extends RecyclerView.Adapter<HistRvAdapter.ViewHolder
 //            adapterItemListener.clickItemListener(getAdapterPosition());
 //        }
     }
-
-//    public List<RiwayatFragment> getSelectedItems() {
-//        List<RiwayatFragment> selectedItems = new ArrayList<>();
-//        for (RiwayatFragment item : items) {
-//            if (item.isSelected()) {
-//                selectedItems.add(item);
-//            }
-//        }
-//        return selectedItems;
-//    }
 }

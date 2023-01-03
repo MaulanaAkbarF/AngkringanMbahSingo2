@@ -20,7 +20,7 @@ public class DataItemTransaksi {
 	private String namaProduk;
 
 	@SerializedName("harga")
-	private String harga;
+	private int harga;
 
 	@SerializedName("jumlah")
 	private String jumlah;
@@ -74,11 +74,11 @@ public class DataItemTransaksi {
 		return namaProduk;
 	}
 
-	public void setHarga(String harga){
+	public void setHarga(int harga){
 		this.harga = harga;
 	}
 
-	public String getHarga(){
+	public int getHarga(){
 		return harga;
 	}
 

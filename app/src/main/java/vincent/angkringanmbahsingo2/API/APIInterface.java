@@ -250,7 +250,7 @@ public interface APIInterface {
     @POST("filterriwayattanggal.php")
     Call<ResponseTransaksi> filterRiwayatTanggal(
             @Field("username") String username,
-            @Field("tanggal_transaksi") String subtotal
+            @Field("tanggal_transaksi") String tanggal
     );
 
     @FormUrlEncoded
@@ -262,6 +262,13 @@ public interface APIInterface {
     @FormUrlEncoded
     @POST("filterriwayatminuman.php")
     Call<ResponseTransaksi> filterRiwayatMinuman(
+            @Field("username") String username
+    );
+
+    @FormUrlEncoded
+    @POST("updatetransaksitofinished.php")
+    Call<ResponseTransaksi> updateTransaksiToFinished(
+            @Field("id_transaksi") String id_transaksi,
             @Field("username") String username
     );
 
