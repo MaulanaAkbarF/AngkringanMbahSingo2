@@ -6,7 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class API {
 
     private static final String BASE_URL = "https://workshopjti.com/vangkringanmobile/";
-    public static final String BASE_GAMBAR = "https://workshopjti.com/vangkringanmobile/gambar/";
+    public static final String BASE_GAMBAR = "https://workshopjti.com/v-angkringan/admin/gambarproduk/";
 
     private static Retrofit retrofit;
 
